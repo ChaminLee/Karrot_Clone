@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class HomeViewController: UIViewController {
-
+    
     let hometable : UITableView = {
         let tv = UITableView(frame:CGRect.zero, style: .plain)
         tv.register(HomeCell.self, forCellReuseIdentifier: "HomeCell")
@@ -38,9 +38,23 @@ class HomeViewController: UIViewController {
         hometable.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
+        
+        hometable.refreshControl = UIRefreshControl()
+        hometable.refreshControl?.addTarget(self, action: #selector(pullRefresh(_:)), for: .valueChanged)
+        
+        
+    }
+    
+    @objc func pullRefresh(_ sender: Any) {
+        print("업데이트중")
+        self.hometable.reloadData()
+        hometable.refreshControl?.endRefreshing()
+        
     }
     
     func setNavMenu() {
+        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
+        UINavigationBar.appearance().isTranslucent = false
         
         // left
         let locationButton : UIButton = {
@@ -137,7 +151,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,19 +159,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         
-        cell.titleLabel.text = "캐논 g7x mark3 풀박스 2020년 10월 구입 제품 팔아요"
+        cell.titleLabel.text = "캐논 g7x mark3 풀박스 2020년 10월 구입 제품 팔아요 캐논 g7x mark3 풀박스"
         cell.thumbnail.image = UIImage(named: "당근이")
-        
-        if indexPath.row % 2 == 0 {
-            cell.chatIcon.image = UIImage(systemName: "bubble.left.and.bubble.right")
-            cell.chatLabel.text = "50"
-        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = ContentsViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+//        DispatchQueue.main.async {
+//
+//        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -60,39 +60,43 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
-    let heartIcon: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(systemName: "heart")
-        img.tintColor = UIColor(named: CustomColor.badge.rawValue)
-        img.contentMode = .scaleAspectFill
-        return img
+    let heartIcon: UIButton = {
+        let bt = UIButton()
+        bt.setImage(UIImage(systemName: "heart"), for: .normal)
+        bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
+        bt.contentMode = .scaleAspectFill
+        return bt
     }()
     
     let heartLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "2351"
+        lb.text = "45"
         lb.textColor = UIColor(named: CustomColor.badge.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 13)
+        lb.font = UIFont(name: "Helvetica", size: 15)
         return lb
     }()
     
-    let chatIcon: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(systemName: "bubble,left.and.bubble.right")
-        img.tintColor = UIColor(named: CustomColor.badge.rawValue)
-        img.contentMode = .scaleAspectFill
-        return img
+    let chatIcon: UIButton = {
+        let bt = UIButton()
+        bt.setImage(UIImage(systemName: "bubble.left.and.bubble.right"), for: .normal)
+        bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
+//        let size: CGFloat = 5
+//        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        
+        return bt
     }()
     
     let chatLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.badge.rawValue)
+        lb.text = "50"
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 13)
+        lb.font = UIFont(name: "Helvetica", size: 15)
         return lb
     }()
 
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,7 +105,7 @@ class HomeCell: UITableViewCell {
     
     func config() {
         
-        [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,heartIcon,heartLabel,chatIcon,chatLabel].forEach { item in
+        [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,heartLabel,heartIcon,chatIcon,chatLabel].forEach { item in
             contentView.addSubview(item)
         }
         
@@ -112,7 +116,7 @@ class HomeCell: UITableViewCell {
         
         titleLabel.snp.makeConstraints {
             $0.leading.equalTo(thumbnail.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().inset(30)
+            $0.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(thumbnail.snp.top)
         }
         
@@ -131,27 +135,30 @@ class HomeCell: UITableViewCell {
             $0.top.equalTo(locationLabel.snp.bottom).offset(10)
         }
         
+        
         heartLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(15)
+        }
+
+        heartIcon.snp.makeConstraints {
+            $0.trailing.equalTo(heartLabel.snp.leading).offset(-5)
+            $0.centerY.equalTo(heartLabel.snp.centerY)
+            $0.width.equalTo(20)
+            $0.height.equalTo(15)
+        }
+
+        chatLabel.snp.makeConstraints {
+            $0.trailing.equalTo(heartIcon.snp.leading).offset(-5)
+            $0.centerY.equalTo(heartLabel.snp.centerY)
             
         }
-        
-        heartIcon.snp.makeConstraints {
-            $0.trailing.equalTo(heartLabel.snp.leading)
-            $0.centerY.equalTo(heartLabel.snp.centerY)
-            $0.width.height.equalTo(17)
-        }
-        
-        chatLabel.snp.makeConstraints {
-            $0.trailing.equalTo((heartIcon.snp.leading))
-            $0.centerY.equalTo(heartLabel.snp.centerY)
-        }
-        
+
         chatIcon.snp.makeConstraints {
             $0.trailing.equalTo(chatLabel.snp.leading).offset(-5)
             $0.centerY.equalTo(chatLabel.snp.centerY)
-            $0.width.height.equalTo(17)
+            $0.width.equalTo(20)
+            $0.height.equalTo(15)
         }
         
     }
@@ -167,4 +174,13 @@ extension UIImage {
             draw(in: CGRect(origin: .zero, size: size))
         }
     }
+}
+
+extension HomeCell {
+    func stackViewConfig(_ stackview: UIStackView) {
+        stackview.distribution = .fill
+        stackview.axis = .horizontal
+        stackview.alignment = .center
+    }
+    
 }

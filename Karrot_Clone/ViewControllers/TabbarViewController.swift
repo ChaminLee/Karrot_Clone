@@ -29,7 +29,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         // home
         let homeview = UINavigationController(rootViewController: HomeViewController())
         let homeitem = UITabBarItem(title: "홈" ,image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        
+        homeitem
         homeview.tabBarItem = homeitem
         
         // Town
@@ -64,5 +64,9 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [homeview, townview, aroundview, chatview, myview]
         
     }
-
+   
+    // [ ] 탭바 아이템 클릭시 최상단 이동
 }
+
+
+
