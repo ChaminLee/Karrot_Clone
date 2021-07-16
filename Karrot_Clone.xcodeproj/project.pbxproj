@@ -1,0 +1,800 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3747E46AF420CEEF9C1235 /* Pods_Karrot_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9931746E2B955A02B37A8F5A /* Pods_Karrot_Clone.framework */; };
+		43BD4F56AF8FD05186C76BE7 /* Pods_Karrot_Clone_Karrot_CloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */; };
+		6A9221C0223619BC11545946 /* Pods_Karrot_CloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */; };
+		C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCE626A04AFD009E58A1 /* AppDelegate.swift */; };
+		C967DCEB26A04AFD009E58A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCEA26A04AFD009E58A1 /* ViewController.swift */; };
+		C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C967DCEF26A04B06009E58A1 /* Assets.xcassets */; };
+		C967DCF326A04B06009E58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */; };
+		C967DCFE26A04B06009E58A1 /* Karrot_CloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCFD26A04B06009E58A1 /* Karrot_CloneTests.swift */; };
+		C967DD0926A04B06009E58A1 /* Karrot_CloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD0826A04B06009E58A1 /* Karrot_CloneUITests.swift */; };
+		C967DD1826A04DAE009E58A1 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD1726A04DAD009E58A1 /* TabbarViewController.swift */; };
+		C967DD1A26A04DED009E58A1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD1926A04DED009E58A1 /* HomeViewController.swift */; };
+		C967DD1C26A04E02009E58A1 /* TownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD1B26A04E02009E58A1 /* TownViewController.swift */; };
+		C967DD1E26A04E19009E58A1 /* AroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD1D26A04E19009E58A1 /* AroundViewController.swift */; };
+		C967DD2026A04E25009E58A1 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD1F26A04E25009E58A1 /* ChatViewController.swift */; };
+		C967DD2226A04E2F009E58A1 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD2126A04E2F009E58A1 /* MyViewController.swift */; };
+		C967DD2B26A05182009E58A1 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD2A26A05182009E58A1 /* CustomColor.swift */; };
+		C967DD6926A10E39009E58A1 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD6826A10E39009E58A1 /* HomeCell.swift */; };
+		C967DD6C26A124EB009E58A1 /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD6B26A124EB009E58A1 /* CustomFont.swift */; };
+		C967DD6E26A16ACF009E58A1 /* ContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD6D26A16ACE009E58A1 /* ContentsViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C967DCFA26A04B06009E58A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C967DCDB26A04AFD009E58A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C967DCE226A04AFD009E58A1;
+			remoteInfo = Karrot_Clone;
+		};
+		C967DD0526A04B06009E58A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C967DCDB26A04AFD009E58A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C967DCE226A04AFD009E58A1;
+			remoteInfo = Karrot_Clone;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		71D02D84BD3F9F9213351061 /* Pods-Karrot_Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone.debug.xcconfig"; sourceTree = "<group>"; };
+		9931746E2B955A02B37A8F5A /* Pods_Karrot_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A8463D71370AAD3B8D84BA6 /* Pods-Karrot_CloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA0568A9C4F451839A9CED15 /* Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AF96E8397E5BCCF15DB79D71 /* Pods-Karrot_Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone.release.xcconfig"; sourceTree = "<group>"; };
+		C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karrot_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C967DCE626A04AFD009E58A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C967DCEA26A04AFD009E58A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C967DCEF26A04B06009E58A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C967DCF226A04B06009E58A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C967DCF426A04B06009E58A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C967DCF926A04B06009E58A1 /* Karrot_CloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Karrot_CloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C967DCFD26A04B06009E58A1 /* Karrot_CloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Karrot_CloneTests.swift; sourceTree = "<group>"; };
+		C967DCFF26A04B06009E58A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C967DD0426A04B06009E58A1 /* Karrot_CloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Karrot_CloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C967DD0826A04B06009E58A1 /* Karrot_CloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Karrot_CloneUITests.swift; sourceTree = "<group>"; };
+		C967DD0A26A04B06009E58A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C967DD1726A04DAD009E58A1 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		C967DD1926A04DED009E58A1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		C967DD1B26A04E02009E58A1 /* TownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownViewController.swift; sourceTree = "<group>"; };
+		C967DD1D26A04E19009E58A1 /* AroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AroundViewController.swift; sourceTree = "<group>"; };
+		C967DD1F26A04E25009E58A1 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		C967DD2126A04E2F009E58A1 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		C967DD2A26A05182009E58A1 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		C967DD6826A10E39009E58A1 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
+		C967DD6B26A124EB009E58A1 /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		C967DD6D26A16ACE009E58A1 /* ContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsViewController.swift; sourceTree = "<group>"; };
+		CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone_Karrot_CloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.release.xcconfig"; sourceTree = "<group>"; };
+		FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_CloneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C967DCE026A04AFD009E58A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D3747E46AF420CEEF9C1235 /* Pods_Karrot_Clone.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DCF626A04B06009E58A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A9221C0223619BC11545946 /* Pods_Karrot_CloneTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DD0126A04B06009E58A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43BD4F56AF8FD05186C76BE7 /* Pods_Karrot_Clone_Karrot_CloneUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		731E395C27460EBE7A2336EE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71D02D84BD3F9F9213351061 /* Pods-Karrot_Clone.debug.xcconfig */,
+				AF96E8397E5BCCF15DB79D71 /* Pods-Karrot_Clone.release.xcconfig */,
+				AA0568A9C4F451839A9CED15 /* Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig */,
+				D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */,
+				9A8463D71370AAD3B8D84BA6 /* Pods-Karrot_CloneTests.debug.xcconfig */,
+				ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B3005121F7DFB327101BAA9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9931746E2B955A02B37A8F5A /* Pods_Karrot_Clone.framework */,
+				CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */,
+				FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C967DCDA26A04AFD009E58A1 = {
+			isa = PBXGroup;
+			children = (
+				C967DCE526A04AFD009E58A1 /* Karrot_Clone */,
+				C967DCFC26A04B06009E58A1 /* Karrot_CloneTests */,
+				C967DD0726A04B06009E58A1 /* Karrot_CloneUITests */,
+				C967DCE426A04AFD009E58A1 /* Products */,
+				731E395C27460EBE7A2336EE /* Pods */,
+				B3005121F7DFB327101BAA9B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C967DCE426A04AFD009E58A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */,
+				C967DCF926A04B06009E58A1 /* Karrot_CloneTests.xctest */,
+				C967DD0426A04B06009E58A1 /* Karrot_CloneUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C967DCE526A04AFD009E58A1 /* Karrot_Clone */ = {
+			isa = PBXGroup;
+			children = (
+				C967DCE626A04AFD009E58A1 /* AppDelegate.swift */,
+				C967DD2926A05167009E58A1 /* Design */,
+				C967DD1626A04D79009E58A1 /* ViewControllers */,
+				C967DCEA26A04AFD009E58A1 /* ViewController.swift */,
+				C967DD6A26A10E45009E58A1 /* Cell */,
+				C967DCEF26A04B06009E58A1 /* Assets.xcassets */,
+				C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */,
+				C967DCF426A04B06009E58A1 /* Info.plist */,
+			);
+			path = Karrot_Clone;
+			sourceTree = "<group>";
+		};
+		C967DCFC26A04B06009E58A1 /* Karrot_CloneTests */ = {
+			isa = PBXGroup;
+			children = (
+				C967DCFD26A04B06009E58A1 /* Karrot_CloneTests.swift */,
+				C967DCFF26A04B06009E58A1 /* Info.plist */,
+			);
+			path = Karrot_CloneTests;
+			sourceTree = "<group>";
+		};
+		C967DD0726A04B06009E58A1 /* Karrot_CloneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C967DD0826A04B06009E58A1 /* Karrot_CloneUITests.swift */,
+				C967DD0A26A04B06009E58A1 /* Info.plist */,
+			);
+			path = Karrot_CloneUITests;
+			sourceTree = "<group>";
+		};
+		C967DD1626A04D79009E58A1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C967DD1726A04DAD009E58A1 /* TabbarViewController.swift */,
+				C967DD1926A04DED009E58A1 /* HomeViewController.swift */,
+				C967DD6D26A16ACE009E58A1 /* ContentsViewController.swift */,
+				C967DD1B26A04E02009E58A1 /* TownViewController.swift */,
+				C967DD1D26A04E19009E58A1 /* AroundViewController.swift */,
+				C967DD1F26A04E25009E58A1 /* ChatViewController.swift */,
+				C967DD2126A04E2F009E58A1 /* MyViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C967DD2926A05167009E58A1 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				C967DD2A26A05182009E58A1 /* CustomColor.swift */,
+				C967DD6B26A124EB009E58A1 /* CustomFont.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		C967DD6A26A10E45009E58A1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C967DD6826A10E39009E58A1 /* HomeCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C967DCE226A04AFD009E58A1 /* Karrot_Clone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C967DD0D26A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_Clone" */;
+			buildPhases = (
+				63F1C6AED6B57650C50C8AFB /* [CP] Check Pods Manifest.lock */,
+				C967DCDF26A04AFD009E58A1 /* Sources */,
+				C967DCE026A04AFD009E58A1 /* Frameworks */,
+				C967DCE126A04AFD009E58A1 /* Resources */,
+				2FADDFDCCE0D3A620D5B1908 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Karrot_Clone;
+			productName = Karrot_Clone;
+			productReference = C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C967DCF826A04B06009E58A1 /* Karrot_CloneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C967DD1026A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_CloneTests" */;
+			buildPhases = (
+				D12AEAF8D9CF03B5D205D0F2 /* [CP] Check Pods Manifest.lock */,
+				C967DCF526A04B06009E58A1 /* Sources */,
+				C967DCF626A04B06009E58A1 /* Frameworks */,
+				C967DCF726A04B06009E58A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C967DCFB26A04B06009E58A1 /* PBXTargetDependency */,
+			);
+			name = Karrot_CloneTests;
+			productName = Karrot_CloneTests;
+			productReference = C967DCF926A04B06009E58A1 /* Karrot_CloneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C967DD0326A04B06009E58A1 /* Karrot_CloneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C967DD1326A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_CloneUITests" */;
+			buildPhases = (
+				79C54A060035D1F1E9802F27 /* [CP] Check Pods Manifest.lock */,
+				C967DD0026A04B06009E58A1 /* Sources */,
+				C967DD0126A04B06009E58A1 /* Frameworks */,
+				C967DD0226A04B06009E58A1 /* Resources */,
+				362B4D7D40FFFF99BB179C72 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C967DD0626A04B06009E58A1 /* PBXTargetDependency */,
+			);
+			name = Karrot_CloneUITests;
+			productName = Karrot_CloneUITests;
+			productReference = C967DD0426A04B06009E58A1 /* Karrot_CloneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C967DCDB26A04AFD009E58A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					C967DCE226A04AFD009E58A1 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					C967DCF826A04B06009E58A1 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = C967DCE226A04AFD009E58A1;
+					};
+					C967DD0326A04B06009E58A1 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = C967DCE226A04AFD009E58A1;
+					};
+				};
+			};
+			buildConfigurationList = C967DCDE26A04AFD009E58A1 /* Build configuration list for PBXProject "Karrot_Clone" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C967DCDA26A04AFD009E58A1;
+			productRefGroup = C967DCE426A04AFD009E58A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C967DCE226A04AFD009E58A1 /* Karrot_Clone */,
+				C967DCF826A04B06009E58A1 /* Karrot_CloneTests */,
+				C967DD0326A04B06009E58A1 /* Karrot_CloneUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C967DCE126A04AFD009E58A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C967DCF326A04B06009E58A1 /* LaunchScreen.storyboard in Resources */,
+				C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DCF726A04B06009E58A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DD0226A04B06009E58A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2FADDFDCCE0D3A620D5B1908 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		362B4D7D40FFFF99BB179C72 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63F1C6AED6B57650C50C8AFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Karrot_Clone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79C54A060035D1F1E9802F27 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Karrot_Clone-Karrot_CloneUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D12AEAF8D9CF03B5D205D0F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Karrot_CloneTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C967DCDF26A04AFD009E58A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C967DD1A26A04DED009E58A1 /* HomeViewController.swift in Sources */,
+				C967DD1E26A04E19009E58A1 /* AroundViewController.swift in Sources */,
+				C967DD2026A04E25009E58A1 /* ChatViewController.swift in Sources */,
+				C967DD1826A04DAE009E58A1 /* TabbarViewController.swift in Sources */,
+				C967DD6926A10E39009E58A1 /* HomeCell.swift in Sources */,
+				C967DD2226A04E2F009E58A1 /* MyViewController.swift in Sources */,
+				C967DD6C26A124EB009E58A1 /* CustomFont.swift in Sources */,
+				C967DCEB26A04AFD009E58A1 /* ViewController.swift in Sources */,
+				C967DD6E26A16ACF009E58A1 /* ContentsViewController.swift in Sources */,
+				C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */,
+				C967DD1C26A04E02009E58A1 /* TownViewController.swift in Sources */,
+				C967DD2B26A05182009E58A1 /* CustomColor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DCF526A04B06009E58A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C967DCFE26A04B06009E58A1 /* Karrot_CloneTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C967DD0026A04B06009E58A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C967DD0926A04B06009E58A1 /* Karrot_CloneUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C967DCFB26A04B06009E58A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C967DCE226A04AFD009E58A1 /* Karrot_Clone */;
+			targetProxy = C967DCFA26A04B06009E58A1 /* PBXContainerItemProxy */;
+		};
+		C967DD0626A04B06009E58A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C967DCE226A04AFD009E58A1 /* Karrot_Clone */;
+			targetProxy = C967DD0526A04B06009E58A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C967DCF226A04B06009E58A1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C967DD0B26A04B06009E58A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C967DD0C26A04B06009E58A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C967DD0E26A04B06009E58A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71D02D84BD3F9F9213351061 /* Pods-Karrot_Clone.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_Clone/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-Clone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C967DD0F26A04B06009E58A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF96E8397E5BCCF15DB79D71 /* Pods-Karrot_Clone.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_Clone/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-Clone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C967DD1126A04B06009E58A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A8463D71370AAD3B8D84BA6 /* Pods-Karrot_CloneTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_CloneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-CloneTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Karrot_Clone.app/Karrot_Clone";
+			};
+			name = Debug;
+		};
+		C967DD1226A04B06009E58A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_CloneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-CloneTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Karrot_Clone.app/Karrot_Clone";
+			};
+			name = Release;
+		};
+		C967DD1426A04B06009E58A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0568A9C4F451839A9CED15 /* Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_CloneUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-CloneUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Karrot_Clone;
+			};
+			name = Debug;
+		};
+		C967DD1526A04B06009E58A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8D58C3D89B;
+				INFOPLIST_FILE = Karrot_CloneUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "chamin.Karrot-CloneUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Karrot_Clone;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C967DCDE26A04AFD009E58A1 /* Build configuration list for PBXProject "Karrot_Clone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C967DD0B26A04B06009E58A1 /* Debug */,
+				C967DD0C26A04B06009E58A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C967DD0D26A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_Clone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C967DD0E26A04B06009E58A1 /* Debug */,
+				C967DD0F26A04B06009E58A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C967DD1026A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_CloneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C967DD1126A04B06009E58A1 /* Debug */,
+				C967DD1226A04B06009E58A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C967DD1326A04B06009E58A1 /* Build configuration list for PBXNativeTarget "Karrot_CloneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C967DD1426A04B06009E58A1 /* Debug */,
+				C967DD1526A04B06009E58A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C967DCDB26A04AFD009E58A1 /* Project object */;
+}
