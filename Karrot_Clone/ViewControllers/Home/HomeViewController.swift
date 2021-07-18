@@ -166,6 +166,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = ContentsViewController()
+        
         self.navigationController?.pushViewController(vc, animated: true)
 //        DispatchQueue.main.async {
 //

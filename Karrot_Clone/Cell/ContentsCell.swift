@@ -16,14 +16,7 @@ class ContentsCell: UITableViewCell {
         config()
     }
     
-    let headerImage: UIImageView = {
-        let img = UIImageView()
-        
-        return img
-    }()
-    
     func config() {
-        contentView.addSubview(headerImage)
     }
     
     required init?(coder: NSCoder) {
