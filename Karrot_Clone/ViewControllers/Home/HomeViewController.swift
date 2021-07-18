@@ -22,6 +22,13 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setHomeTable()
         setNavMenu()
+        print("뷰디드롣드")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavMenu()
+        print("뷰윌어피어")
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,8 +60,11 @@ class HomeViewController: UIViewController {
     }
     
     func setNavMenu() {
-        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
-        UINavigationBar.appearance().isTranslucent = false
+//        let homeNavigationController = UINavigationController(rootViewController: HomeViewController())
+//        homeNavigationController.navigationBar.isTranslucent = false
+        
+//        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
+        
         
         // left
         let locationButton : UIButton = {
@@ -176,5 +186,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(150.0)
+    }
+}
+
+extension UIStackView {
+    func stackViewConfig(_ stackview: UIStackView) {
+        stackview.distribution = .equalSpacing
+        stackview.axis = .horizontal
+        stackview.alignment = .center
     }
 }
