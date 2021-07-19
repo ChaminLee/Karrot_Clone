@@ -26,7 +26,7 @@ class Contents_SellerCell: UITableViewCell {
         lb.text = "정자동불주먹님의 판매 상품" // \(seller.name)
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 13)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 14)
         return lb
     }()
     
@@ -34,7 +34,7 @@ class Contents_SellerCell: UITableViewCell {
         let bt = UIButton()
         bt.setTitle("더보기", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
-        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 13)
+        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
         return bt
     }()
     
@@ -76,7 +76,7 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().inset(20)
-//            $0.height.equalTo(200)
+            $0.height.equalTo(200)
         }
         
     }

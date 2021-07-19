@@ -25,7 +25,7 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
+        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
         img.layer.masksToBounds = false
         img.layer.cornerRadius = img.frame.width / 2
         img.clipsToBounds = true
@@ -38,7 +38,7 @@ class Contents_UserInfoCell: UITableViewCell {
         lb.text = "판매자이름은차밍"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 13)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 15)
         return lb
     }()
     
@@ -47,16 +47,16 @@ class Contents_UserInfoCell: UITableViewCell {
         lb.text = "정자동"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 12)
+        lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
     let degreeLabel: UILabel = {
         let lb = UILabel()
         lb.text = "36.5℃"
-        lb.textColor = UIColor(named: CustomColor.text.rawValue)
+        lb.textColor = UIColor(named: CustomColor.text.rawValue) // by Lv
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 14)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 16)
         return lb
     }()
     
@@ -64,13 +64,21 @@ class Contents_UserInfoCell: UITableViewCell {
         let pv = UIProgressView(progressViewStyle: .bar)
         pv.setProgress(0.365, animated: true)
         pv.trackTintColor = UIColor.lightGray
-        pv.progressTintColor = UIColor.blue
+        pv.progressTintColor = UIColor.blue // by Lv
+        
+        // rounded border
+        for view in pv.subviews {
+            if view is UIImageView {
+                view.clipsToBounds = true
+                view.layer.cornerRadius = view.frame.height / 2 + 1
+            }
+        }
         return pv
     }()
     
     let degreeIcon: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "smile")?.scalePreservingAspectRatio(targetSize: CGSize(width: 22, height: 22))
+        img.image = UIImage(named: "smile")?.scalePreservingAspectRatio(targetSize: CGSize(width: 23, height: 23))
         return img
     }()
     
@@ -115,8 +123,9 @@ class Contents_UserInfoCell: UITableViewCell {
         
         degreeBar.snp.makeConstraints {
             $0.top.equalTo(degreeLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(degreeLabel.snp.leading).offset(5)
+            $0.leading.equalTo(degreeLabel.snp.leading)
             $0.trailing.equalTo(degreeLabel.snp.trailing)
+            $0.height.equalTo(3)
         }
         
         mannerInfo.snp.makeConstraints {

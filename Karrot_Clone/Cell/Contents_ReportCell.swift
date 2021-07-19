@@ -22,7 +22,7 @@ class Contents_ReportCell: UITableViewCell {
         lb.text = "이 게시글 신고하기"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 13)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 14)
         return lb
     }()
     

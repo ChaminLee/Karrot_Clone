@@ -26,12 +26,12 @@ class HomeViewController: UIViewController {
         print("뷰디드롣드")
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
-//        UINavigationBar.appearance().isTranslucent = false
-//        print("뷰윌어피어")
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
+        self.navigationController?.navigationBar.isTranslucent = false
+        print("뷰윌어피어")
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
