@@ -12,13 +12,10 @@ import SnapKit
 class Contents_SellerCell: UITableViewCell {
     
     static let identifier = "Contents_SellerCell"
-
-    var collectionViewObserver: NSKeyValueObservation?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
-        addCustomObserver()
     }
     
     let titleLabel: UILabel = {
@@ -40,15 +37,11 @@ class Contents_SellerCell: UITableViewCell {
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
-        layout.estimatedItemSize = CGSize(width: 1, height: 1)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(Contents_Seller_ProdCell.self, forCellWithReuseIdentifier: Contents_Seller_ProdCell.identifier)
         cv.backgroundColor = .clear
+        cv.isScrollEnabled = false
         return cv
     }()
         
@@ -75,22 +68,12 @@ class Contents_SellerCell: UITableViewCell {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalToSuperview().inset(20)
-            $0.height.equalTo(200)
+            $0.bottom.equalToSuperview().offset(-20)
+            $0.height.equalTo(400)
         }
         
     }
-    
-    func addCustomObserver() {
-        collectionViewObserver = collectionView.observe(\.contentSize, changeHandler: { [weak self] (collectionView, change) in
-            self?.collectionView.invalidateIntrinsicContentSize()
-            self?.layoutIfNeeded()
-        })
-    }
-    
-    deinit {
-        collectionViewObserver = nil
-    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -100,19 +83,23 @@ class Contents_SellerCell: UITableViewCell {
 extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = frame.width / 2 - 10
-        let height = width * (2 / 3)
+        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumLineSpacing = 3.0
+        layout.minimumInteritemSpacing = 3.0
+        
+        let numberOfItemsPerRow: CGFloat = 2.0
+        let width = (collectionView.bounds.width - layout.minimumLineSpacing) / numberOfItemsPerRow
         
         return CGSize(width: width, height: width)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell

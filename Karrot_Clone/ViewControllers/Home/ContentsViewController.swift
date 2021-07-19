@@ -74,6 +74,9 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func config() {
         
+        contentTable.estimatedRowHeight = 100
+        contentTable.rowHeight = UITableView.automaticDimension
+        
         contentTable.delegate = self
         contentTable.dataSource = self
         

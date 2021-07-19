@@ -31,6 +31,7 @@
 		C967DD7926A45F16009E58A1 /* Contents_MainTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD7826A45F16009E58A1 /* Contents_MainTextCell.swift */; };
 		C967DD7B26A46C1E009E58A1 /* Contents_SellerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD7A26A46C1E009E58A1 /* Contents_SellerCell.swift */; };
 		C967DD7D26A47269009E58A1 /* Contents_Seller_ProdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DD7C26A47269009E58A1 /* Contents_Seller_ProdCell.swift */; };
+		C967DD8926A5E0CE009E58A1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C967DD8826A5E0CD009E58A1 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		C967DD7826A45F16009E58A1 /* Contents_MainTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents_MainTextCell.swift; sourceTree = "<group>"; };
 		C967DD7A26A46C1E009E58A1 /* Contents_SellerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents_SellerCell.swift; sourceTree = "<group>"; };
 		C967DD7C26A47269009E58A1 /* Contents_Seller_ProdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents_Seller_ProdCell.swift; sourceTree = "<group>"; };
+		C967DD8826A5E0CD009E58A1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone_Karrot_CloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D3747E46AF420CEEF9C1235 /* Pods_Karrot_Clone.framework in Frameworks */,
+				C967DD8926A5E0CE009E58A1 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +136,7 @@
 		B3005121F7DFB327101BAA9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C967DD8826A5E0CD009E58A1 /* AudioToolbox.framework */,
 				9931746E2B955A02B37A8F5A /* Pods_Karrot_Clone.framework */,
 				CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */,
 				FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */,
