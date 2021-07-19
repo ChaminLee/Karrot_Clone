@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
         let tv = UITableView(frame:CGRect.zero, style: .plain)
         tv.register(HomeCell.self, forCellReuseIdentifier: "HomeCell")
         tv.separatorColor = UIColor(named: CustomColor.separator.rawValue)
+        tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         return tv
     }()
     
@@ -25,11 +26,12 @@ class HomeViewController: UIViewController {
         print("뷰디드롣드")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setNavMenu()
-        print("뷰윌어피어")
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
+//        UINavigationBar.appearance().isTranslucent = false
+//        print("뷰윌어피어")
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -60,10 +62,10 @@ class HomeViewController: UIViewController {
     }
     
     func setNavMenu() {
-//        let homeNavigationController = UINavigationController(rootViewController: HomeViewController())
-//        homeNavigationController.navigationBar.isTranslucent = false
-        
-//        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
+//        let viewNavBar = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+//        viewNavBar.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+//        view.addSubview(viewNavBar)
+        UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
         
         
         // left

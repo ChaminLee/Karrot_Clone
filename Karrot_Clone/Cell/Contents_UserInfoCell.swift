@@ -121,7 +121,7 @@ class Contents_UserInfoCell: UITableViewCell {
         
         mannerInfo.snp.makeConstraints {
             $0.top.equalTo(degreeIcon.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
     }

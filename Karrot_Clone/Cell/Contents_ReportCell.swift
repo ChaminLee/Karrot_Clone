@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class Contents_Report: UITableViewCell {
+class Contents_ReportCell: UITableViewCell {
 
-    static let identifier = "Contents_Report"
+    static let identifier = "Contents_ReportCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

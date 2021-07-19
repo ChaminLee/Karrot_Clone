@@ -7,9 +7,9 @@
 
 import UIKit
 
-class Contents_MainText: UITableViewCell {
+class Contents_MainTextCell: UITableViewCell {
     
-    static let identifier = "Contents_MainText"
+    static let identifier = "Contents_MainTextCell"
     
     var interestCount = 10
 

@@ -30,15 +30,13 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         let homeview = UINavigationController(rootViewController: HomeViewController())
         let homeitem = UITabBarItem(title: "홈" ,image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         homeview.navigationController?.navigationBar.isTranslucent = false
-        homeview.navigationController?.navigationController?.navigationBar.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+        homeview.navigationController?.navigationController?.navigationBar.backgroundColor = UIColor.green //UIColor(named: CustomColor.background.rawValue)
         homeview.tabBarItem = homeitem
         
         // Town
         let townview = UINavigationController(rootViewController: TownViewController())
         let townitem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill",withConfiguration: UIImage.SymbolConfiguration(weight: .bold)))
-//        townview.navigationController?.navigationBar.isTranslucent = true
-//        townview.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        townview.navigationController?.navigationBar.shadowImage = UIImage()
+
         
         townview.tabBarItem = townitem
         

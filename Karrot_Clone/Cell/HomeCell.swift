@@ -137,7 +137,7 @@ class HomeCell: UITableViewCell {
         
         
         heartLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().inset(15)
         }
 

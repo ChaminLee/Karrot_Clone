@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class Contents_Seller_Prod: UICollectionViewCell {
+class Contents_Seller_ProdCell: UICollectionViewCell {
     
-    static let identifier = "Contents_Seller_Prod"
+    static let identifier = "Contents_Seller_ProdCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,7 +55,18 @@ class Contents_Seller_Prod: UICollectionViewCell {
         }
         
         prodImage.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(10)
+            $0.top.leading.trailing.equalToSuperview()
+        }
+        prodLabel.snp.makeConstraints {
+            $0.top.equalTo(prodImage.snp.bottom).offset(10)
+            $0.leading.equalTo(prodImage.snp.leading)
+            $0.trailing.equalTo(prodImage.snp.trailing)
+        }
+        priceLabel.snp.makeConstraints {
+            $0.top.equalTo(prodLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(prodLabel.snp.leading)
+            $0.trailing.equalTo(prodImage.snp.trailing)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     
