@@ -33,10 +33,10 @@ class Contents_MainTextCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "라미 라인 프렌즈 한정판 에디션 만년필 세트 (브라운)"
+        lb.text = "라미 라인 프렌즈 한정판 에디션 만년필 세트22 팔아요옹 (브라운)"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 16)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 18)
         return lb
     }()
     
@@ -44,7 +44,7 @@ class Contents_MainTextCell: UITableViewCell {
         let bt = UIButton()
         bt.setTitle("기타 중고물품", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
-        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 13)
         bt.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
         return bt
     }()
@@ -59,7 +59,7 @@ class Contents_MainTextCell: UITableViewCell {
         lb.text = "∙ 17분 전"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 12)
+        lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
@@ -86,7 +86,7 @@ class Contents_MainTextCell: UITableViewCell {
         lb.text = "관심 10" //\(interestCount)
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 12)
+        lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
@@ -95,7 +95,7 @@ class Contents_MainTextCell: UITableViewCell {
         lb.text = "∙ 조회 17"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica", size: 12)
+        lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     

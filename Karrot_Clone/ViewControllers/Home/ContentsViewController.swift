@@ -152,10 +152,13 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.manners = mannerItems
         optionItemListVC.view.backgroundColor = UIColor(named: CustomColor.karrot.rawValue)
-
+        optionItemListVC.preferredContentSize = CGSize(width: 230, height: 90)
+        
+        
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
-        popOverPresentationController.sourceRect = CGRect(x: 10, y: -100, width: 60, height: 100)
+        popOverPresentationController.permittedArrowDirections = .up
+        popoverPresentationController?.popoverLayoutMargins = UIEdgeInsets(top: 0, left: 0.5, bottom: 0, right: 0)
         popOverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
@@ -180,9 +183,15 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.buttonAction = { [unowned self] in
                 print("소환")
+//                let mannerView: UIView = {
+//                    let view = UIView()
+//                    
+//                    return view
+//                }()
+//                
                 let label : UILabel = {
                     let lb = UILabel()
-                    lb.text = "매너온도는 당근마켓 사용자로부터 받은 칭찬, 후기, 비매너 평가, 운영자 징계 등을 통해 종합해서 만든 매너 지표애요"
+                    lb.text = " "
                     lb.textColor = .white
                     lb.numberOfLines = 0
                     return lb

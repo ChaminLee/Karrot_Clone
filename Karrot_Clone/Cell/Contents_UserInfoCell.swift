@@ -65,7 +65,7 @@ class Contents_UserInfoCell: UITableViewCell {
     let degreeBar: UIProgressView = {
         let pv = UIProgressView(progressViewStyle: .bar)
         pv.setProgress(0.365, animated: true)
-        pv.trackTintColor = UIColor.lightGray
+        pv.trackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         pv.progressTintColor = UIColor.blue // by Lv
         
         // rounded border

@@ -26,9 +26,8 @@ class Contents_ReportCell: UITableViewCell {
     let reportButton: UIButton = {
         let bt = UIButton()
         bt.setTitle("이 게시글 신고하기", for: .normal)
-        bt.titleLabel?.textColor = UIColor(named: CustomColor.text.rawValue)
+        bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
-        
         return bt
     }()
     

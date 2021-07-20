@@ -10,6 +10,7 @@
 		1D3747E46AF420CEEF9C1235 /* Pods_Karrot_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9931746E2B955A02B37A8F5A /* Pods_Karrot_Clone.framework */; };
 		43BD4F56AF8FD05186C76BE7 /* Pods_Karrot_Clone_Karrot_CloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */; };
 		6A9221C0223619BC11545946 /* Pods_Karrot_CloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */; };
+		C92159E826A6FDF7009C03CE /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */; };
 		C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCE626A04AFD009E58A1 /* AppDelegate.swift */; };
 		C967DCEB26A04AFD009E58A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCEA26A04AFD009E58A1 /* ViewController.swift */; };
 		C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C967DCEF26A04B06009E58A1 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		9A8463D71370AAD3B8D84BA6 /* Pods-Karrot_CloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA0568A9C4F451839A9CED15 /* Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF96E8397E5BCCF15DB79D71 /* Pods-Karrot_Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone.release.xcconfig"; sourceTree = "<group>"; };
+		C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karrot_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C967DCE626A04AFD009E58A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C967DCEA26A04AFD009E58A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				C967DD1726A04DAD009E58A1 /* TabbarViewController.swift */,
 				C967DD6F26A16CE2009E58A1 /* Home */,
 				C967DD1B26A04E02009E58A1 /* LifeViewController.swift */,
+				C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */,
 				C967DD1D26A04E19009E58A1 /* AroundViewController.swift */,
 				C967DD1F26A04E25009E58A1 /* ChatViewController.swift */,
 				C967DD2126A04E2F009E58A1 /* MyViewController.swift */,
@@ -503,6 +506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92159E826A6FDF7009C03CE /* NewLocationViewController.swift in Sources */,
 				C967DD1A26A04DED009E58A1 /* HomeViewController.swift in Sources */,
 				C967DD7326A1BCA1009E58A1 /* Contents_ReportCell.swift in Sources */,
 				C967DD7D26A47269009E58A1 /* Contents_Seller_ProdCell.swift in Sources */,

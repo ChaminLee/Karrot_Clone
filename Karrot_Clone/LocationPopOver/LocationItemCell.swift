@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension UITableViewCell {
     func configure(with optionItem: LocationOptionItem) {
@@ -17,6 +18,8 @@ extension UITableViewCell {
     
     func configManner(with optionItem: MannerDetailnfo) {
         textLabel?.text = optionItem.label.text
+//        contentView = optionItem.
         textLabel?.font = optionItem.font
+        
     }
 }

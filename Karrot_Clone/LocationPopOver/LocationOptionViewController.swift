@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import SnapKit
+
+protocol PopOverLocationSelectedDelegate: AnyObject {
+    func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String)
+}
 
 protocol LocationOptionViewControllerDelegate: class {
     func OptionViewController(_ controller: LocationOptionViewController, didSelectOptionItem item: LocationOptionItem)
@@ -26,9 +31,10 @@ class LocationOptionViewController: UIViewController {
         }
     }
     
+    
     private weak var tableView: UITableView?
     weak var delegate: LocationOptionViewControllerDelegate?
-    
+    var selectedDelegate: PopOverLocationSelectedDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,7 +50,7 @@ class LocationOptionViewController: UIViewController {
         view = UITableView(frame: .zero, style: .plain)
         tableView = view as? UITableView
 //        tableView?.isScrollEnabled = false
-//        tableView?.alwaysBounceVertical = false
+        tableView?.alwaysBounceVertical = false
 
         tableView?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         if items.count != 0 {
@@ -62,6 +68,33 @@ class LocationOptionViewController: UIViewController {
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.preferredContentSize = self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if manners.count == 0 {
+            self.presentingViewController?.view.alpha = 0.3
+        }
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("팝업 사라진다아")
+//        self.presentingViewController?.view.col
+        self.presentingViewController?.view.alpha = 1
+//        let vc = HomeViewController()
+//        vc.locationButtonRoated = { [unowned self] in
+//            print("실행은 됨 1")
+//            UIView.animate(withDuration: 0.25) {
+//                DispatchQueue.main.async {
+//                    print("실행은 됨 ")
+//                    vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+//                }
+//            }
+//        }
+    }
+    
+
     
     func calculateAndSetPreferredContentSize() {
         let approxAccessoryViewWidth: CGFloat = 56
@@ -71,8 +104,8 @@ class LocationOptionViewController: UIViewController {
 //            width = manners.flatMap{ $0 }.reduce(0) { $1.sizeForManneerText().width + approxAccessoryViewWidth > $0 ? $1.sizeForManneerText().width + 56 : $0 }
 //            let totalItems = CGFloat(manners.flatMap{ $0 }.count )
 //            height = totalItems * 44
-            width = self.view.frame.width / 2
-            height = 80
+            width = 250
+            height = 130
         } else {
             width = items.flatMap{ $0 }.reduce(0) { $1.sizeForDisplayText().width + approxAccessoryViewWidth > $0 ? $1.sizeForDisplayText().width + 56 : $0 }
             let totalItems = CGFloat(items.flatMap{ $0 }.count)
@@ -101,6 +134,34 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
             cell.configManner(with: mannerItem)
             cell.backgroundColor = UIColor(named: CustomColor.karrot.rawValue)
             cell.textLabel?.textColor = .white
+            
+            let testView: UIView = {
+                let view = UIView()
+                return view
+            }()
+            
+            let label: UILabel = {
+                let lb = UILabel()
+                lb.text = "매너온도는 당근마켓 사용자로부터 받은 칭찬, 후기, 비매너 평가, 운영자 징계 등을 통해 종합해서 만든 매너 지표에요"
+                lb.numberOfLines = 0
+                lb.font = UIFont(name: "Helvetica", size: 14)
+                lb.textColor = .white
+                return lb
+            }()
+            
+            testView.addSubview(label)
+            cell.addSubview(testView)
+            
+            label.snp.makeConstraints {
+                $0.edges.equalToSuperview().inset(10)
+            }
+            
+            testView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+            
+            
+            
         } else {
             let item = items[indexPath.section][indexPath.row]
             cell.configure(with: item)
@@ -117,15 +178,36 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
         } else {
             var item = items[indexPath.section][indexPath.row]
             delegate?.OptionViewController(self, didSelectOptionItem: item)
+            
+            if indexPath.row == items[indexPath.section].count - 1 {
+                // 지역 설정 뷰
+                DispatchQueue.main.async {
+                    guard let pvc = self.presentingViewController else { return }
+                    let vc = NewLocationViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.dismiss(animated: true) {
+                        pvc.present(vc, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                print("내가 고른 장소 : \(item.text)")                
+                self.selectedDelegate?.selectedLocation(controller: self, didSelectItem: item.text)
+                item.font = UIFont(name: "Helvetica-Bold", size: 14)!
+                item.isSelected = true
+                self.dismiss(animated: true) {
+                    print("reloading")
+                }
+                
+            }
         }
         
-//        item.isSelected = !item.isSelected
-//        item.font = UIFont(name: "Helvetica-Bold", size: 13)!
-        self.dismiss(animated: true, completion: nil)
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return preferredContentSize.height / CGFloat(items.count)
-//
-//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }

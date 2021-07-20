@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = UIColor(named: CustomColor.background.rawValue) 
+        window?.backgroundColor = .black //UIColor(named: CustomColor.background.rawValue)
         let root = TabbarViewController()
         window?.rootViewController = root
         window?.makeKeyAndVisible()

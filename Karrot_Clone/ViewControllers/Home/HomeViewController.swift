@@ -26,12 +26,13 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setHomeTable()
         setNavMenu()
         setFloatingButton()
         hideViewWhenTappedAround()
         setUpGenerator()
-        print("뷰디드롣드")
+        print("뷰 디드로드 ")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +78,26 @@ class HomeViewController: UIViewController {
         self.hometable.reloadData()
         hometable.refreshControl?.endRefreshing()
     }
+    
+    // left
+    let locationButton : UIButton = {
+        let bt = UIButton()
+        bt.setTitle("지역 선택하기", for: .normal)
+        bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
+        bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)        
+        return bt
+    }()
+    
+    let locationArrowButton : UIButton = {
+        let bt = UIButton()
+        bt.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        bt.tintColor = UIColor(named: CustomColor.text.rawValue)
+        bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let size: CGFloat = 15
+        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.imageView?.contentMode = .scaleAspectFit
+        return bt
+    }()
     
     func setNavMenu() {
         UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
@@ -126,27 +147,8 @@ class HomeViewController: UIViewController {
         let rightSection = UIBarButtonItem(customView: rightStackView)
         navitem.rightBarButtonItem = rightSection
         
-        // left
-        let locationButton : UIButton = {
-            let bt = UIButton()
-            bt.setTitle("정자1동", for: .normal)
-            bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
-            bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)
-            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
-            return bt
-        }()
-        
-        let locationArrowButton : UIButton = {
-            let bt = UIButton()
-            bt.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            bt.tintColor = UIColor(named: CustomColor.text.rawValue)
-            bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-            let size: CGFloat = 15
-            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
-            bt.imageView?.contentMode = .scaleAspectFit
-            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
-            return bt
-        }()
+        locationButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
+        locationArrowButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
         
         let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
         stackViewConfig(leftStackView)
@@ -187,23 +189,47 @@ class HomeViewController: UIViewController {
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.items = items
-
+        // 지역 선택 위임
+        optionItemListVC.selectedDelegate = self
+        
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
         popOverPresentationController.sourceRect = CGRect(x: 10, y: 10, width: 100, height: 10)
         popOverPresentationController.delegate = self
+
         self.present(optionItemListVC, animated: true, completion: nil)
     }
 
+    var rotated = false
+    var locationButtonRoated : (() -> ())?
     
     @objc func locationItemClicked(_ sender: UIButton) {
         print("정자 1동!")
         /// Pop Over
-        let firstLocation = SetLocationOptionItem(text: "중앙동", isSelected: true, setType: .myLocation)
-        let secondLocation = SetLocationOptionItem(text: "정자1동", isSelected: false, setType: .myLocation)
-        let setLocation = SetLocationOptionItem(text: "내 동네 설정하기", isSelected: false, setType: .setLocation)
+        var firstLocation = SetLocationOptionItem(text: "중앙동", isSelected: true, setType: .myLocation)
+        var secondLocation = SetLocationOptionItem(text: "정자1동", isSelected: false, setType: .myLocation)
+        var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", isSelected: false, setType: .setLocation)
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
+        
+        
+        DispatchQueue.main.async {
+//            if !self.rotated {
+                UIView.animate(withDuration: 0.25) {
+                    self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+//                    self.floatingDimView.isHidden = false
+//                    self.floatingDimView.alpha = 1
+                    
+                }
+                self.view.layoutIfNeeded()
+                self.rotated = !self.rotated
+//            }
+        }
+        
+        self.hometable.reloadData()
+        
     }
+    
+    
     
     @objc func searchClicked() {
         print("검색!")
@@ -415,6 +441,7 @@ extension HomeViewController {
             self.addPostButton.transform = rotation
         }
         isShowFloating = !isShowFloating
+        self.rotated = !self.rotated
         print("배경 \(isShowFloating)")
     }
 }
@@ -424,4 +451,11 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
+}
+
+extension HomeViewController: PopOverLocationSelectedDelegate {
+    func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
+        locationButton.setTitle(name, for: .normal)
+    }
+    
 }
