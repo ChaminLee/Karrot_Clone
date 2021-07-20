@@ -10,7 +10,7 @@ import UIKit
 class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
 
     var home: HomeViewController!
-    var town: TownViewController!
+    var town: LifeViewController!
     var around: AroundViewController!
     var chat: ChatViewController!
     var my: MyViewController!
@@ -34,11 +34,11 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         homeview.tabBarItem = homeitem
         
         // Town
-        let townview = UINavigationController(rootViewController: TownViewController())
-        let townitem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill",withConfiguration: UIImage.SymbolConfiguration(weight: .bold)))
+        let lifeview = UINavigationController(rootViewController: LifeViewController())
+        let lifeitem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill",withConfiguration: UIImage.SymbolConfiguration(weight: .bold)))
 
         
-        townview.tabBarItem = townitem
+        lifeview.tabBarItem = lifeitem
         
         // Around
         let aroundview =  UINavigationController(rootViewController: AroundViewController())
@@ -62,7 +62,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         UITabBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
         UITabBar.appearance().tintColor = UIColor(named: CustomColor.text.rawValue)
         
-        self.viewControllers = [homeview, townview, aroundview, chatview, myview]
+        self.viewControllers = [homeview, lifeview, aroundview, chatview, myview]
         
     }
    

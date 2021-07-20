@@ -36,9 +36,16 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navStyle()
+        print("뷰윌어피어")
+    }
+    
+    private func navStyle() {
         self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
         self.navigationController?.navigationBar.isTranslucent = false
-        print("뷰윌어피어")
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        self.navigationController?.navigationBar.layoutIfNeeded()
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +85,7 @@ class HomeViewController: UIViewController {
         let locationButton : UIButton = {
             let bt = UIButton()
             bt.setTitle("정자1동", for: .normal)
-            bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 20)
+            bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
             bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)
             bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
             return bt
@@ -101,7 +108,7 @@ class HomeViewController: UIViewController {
         let navitem = self.navigationItem
             
         let leftSection = UIBarButtonItem(customView: leftStackView)
-       
+
         navitem.leftBarButtonItem = leftSection
         
         // right
@@ -109,6 +116,10 @@ class HomeViewController: UIViewController {
             let bt = UIButton()
             bt.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             bt.tintColor = UIColor(named: CustomColor.text.rawValue)
+            bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            let size: CGFloat = 21
+            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+            bt.imageView?.contentMode = .scaleAspectFit
             bt.addTarget(self, action: #selector(searchClicked), for: .touchUpInside)
             return bt
         }()
@@ -117,6 +128,10 @@ class HomeViewController: UIViewController {
             let bt = UIButton()
             bt.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
             bt.tintColor = UIColor(named: CustomColor.text.rawValue)
+            bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            let size: CGFloat = 21
+            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+            bt.imageView?.contentMode = .scaleAspectFit
             bt.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
             return bt
         }()
@@ -125,6 +140,10 @@ class HomeViewController: UIViewController {
             let bt = UIButton()
             bt.setImage(UIImage(systemName: "bell"), for: .normal)
             bt.tintColor = UIColor(named: CustomColor.text.rawValue)
+            bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            let size: CGFloat = 21
+            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+            bt.imageView?.contentMode = .scaleAspectFit
             bt.addTarget(self, action: #selector(bellClicked), for: .touchUpInside)
             return bt
         }()
@@ -142,10 +161,37 @@ class HomeViewController: UIViewController {
         stackview.axis = .horizontal
         stackview.alignment = .center
     }
-
-    @objc func locationItemClicked() {
-        print("정자 1동!")
+    
+//    func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromBarButtonItem barButtonItem: UIBarButtonItem) {
+//        let optionItemListVC = LocationOptionViewController()
+//        optionItemListVC.items = items
+//
+//        guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
+//        popOverPresentationController.barButtonItem = barButtonItem
+//        popOverPresentationController.delegate = self
+//        self.present(optionItemListVC, animated: true, completion: nil)
+//    }
+    
+    func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
+        let optionItemListVC = LocationOptionViewController()
+        optionItemListVC.items = items
+        
+        guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
+        popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
+        popOverPresentationController.delegate = self
+        self.present(optionItemListVC, animated: true, completion: nil)
     }
+    
+    @objc func locationItemClicked(_ sender: UIButton) {
+        print("정자 1동!")
+        /// Pop Over
+        let firstLocation = SetLocationOptionItem(text: "중앙동", isSelected: true, setType: .myLocation)
+        let secondLocation = SetLocationOptionItem(text: "정자1동", isSelected: false, setType: .myLocation)
+        let setLocation = SetLocationOptionItem(text: "내 동네 설정하기", isSelected: false, setType: .setLocation)
+        presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
+    }
+    
+
     
     @objc func searchClicked() {
         print("검색!")
@@ -231,7 +277,7 @@ class HomeViewController: UIViewController {
     }
     
     lazy var floatingDimView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        let view = UIView(frame: CGRect(x:0, y: -50, width: self.view.frame.width, height: self.view.frame.height+50))
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         view.alpha = 0
         view.isHidden = true
@@ -260,13 +306,14 @@ class HomeViewController: UIViewController {
                 self.floatingDimView.alpha = 0
             }) { (_) in
                 self.floatingDimView.isHidden = true
+                
             }
         } else {
 //            AudioServicesPlaySystemSound(4095)
             self.feedBackGenerator?.notificationOccurred(.success)
             
             self.floatingDimView.isHidden = false
-            
+
             UIView.animate(withDuration: 0.5) {
                 self.floatingDimView.alpha = 1
             }
@@ -317,9 +364,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = ContentsViewController()
         
         self.navigationController?.pushViewController(vc, animated: true)
-//        DispatchQueue.main.async {
-//
-//        }
         
     }
     
@@ -360,5 +404,12 @@ extension HomeViewController {
         }
         isShowFloating = !isShowFloating
         print("배경 \(isShowFloating)")
+    }
+}
+
+
+extension HomeViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

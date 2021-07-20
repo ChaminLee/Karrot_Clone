@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TownViewController: UIViewController {
+class LifeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
