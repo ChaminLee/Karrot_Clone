@@ -5,9 +5,17 @@
 //  Created by 이차민 on 2021/07/18.
 //
 
+import Foundation
 import UIKit
 
+protocol ContentsMainTextDelegate: AnyObject {
+    func categoryButtonTapped()
+}
+
 class Contents_MainTextCell: UITableViewCell {
+    
+    // 사이클을 방지하기 위해
+    var cellDelegate: ContentsMainTextDelegate?
     
     static let identifier = "Contents_MainTextCell"
     
@@ -16,6 +24,7 @@ class Contents_MainTextCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
+        self.categoryButton.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -36,8 +45,14 @@ class Contents_MainTextCell: UITableViewCell {
         bt.setTitle("기타 중고물품", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        bt.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
         return bt
     }()
+    
+    @objc func categoryClicked() {
+        print("카테고리다아")
+        cellDelegate?.categoryButtonTapped()
+    }
     
     let timeLabel: UILabel = {
         let lb = UILabel()
@@ -84,7 +99,7 @@ class Contents_MainTextCell: UITableViewCell {
         return lb
     }()
     
-    func config() {
+    func config() {        
         [titleLabel, categoryButton, timeLabel, mainLabel, interestLabel, visitedLabel].forEach { item in
             contentView.addSubview(item)
         }
@@ -92,7 +107,6 @@ class Contents_MainTextCell: UITableViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
-            
         }
         
         categoryButton.snp.makeConstraints {

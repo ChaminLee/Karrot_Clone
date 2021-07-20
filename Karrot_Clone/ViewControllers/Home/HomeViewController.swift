@@ -80,36 +80,7 @@ class HomeViewController: UIViewController {
     
     func setNavMenu() {
         UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
-                
-        // left
-        let locationButton : UIButton = {
-            let bt = UIButton()
-            bt.setTitle("정자1동", for: .normal)
-            bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
-            bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)
-            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
-            return bt
-        }()
-        
-        let locationArrowButton : UIButton = {
-            let bt = UIButton()
-            bt.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-//            let size: CGFloat = 10
-//            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
-            bt.tintColor = UIColor(named: CustomColor.text.rawValue)
-            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
-            return bt
-        }()
-        
-        let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
-        stackViewConfig(leftStackView)
-        leftStackView.spacing = 10
-        
         let navitem = self.navigationItem
-            
-        let leftSection = UIBarButtonItem(customView: leftStackView)
-
-        navitem.leftBarButtonItem = leftSection
         
         // right
         let searchButton : UIButton = {
@@ -154,6 +125,45 @@ class HomeViewController: UIViewController {
         
         let rightSection = UIBarButtonItem(customView: rightStackView)
         navitem.rightBarButtonItem = rightSection
+        
+        // left
+        let locationButton : UIButton = {
+            let bt = UIButton()
+            bt.setTitle("정자1동", for: .normal)
+            bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
+            bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)
+            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
+            return bt
+        }()
+        
+        let locationArrowButton : UIButton = {
+            let bt = UIButton()
+            bt.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            bt.tintColor = UIColor(named: CustomColor.text.rawValue)
+            bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            let size: CGFloat = 15
+            bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+            bt.imageView?.contentMode = .scaleAspectFit
+            bt.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
+            return bt
+        }()
+        
+        let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
+        stackViewConfig(leftStackView)
+        leftStackView.isLayoutMarginsRelativeArrangement = true
+        leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
+        leftStackView.spacing = 5
+//        leftStackView.isUserInteractionEnabled = true
+//        let tap = UIGestureRecognizer(target: self, action: #selector(locationItemClicked))
+//        leftStackView.addGestureRecognizer(tap)
+        
+        let leftSection: UIBarButtonItem = {
+            let barButton = UIBarButtonItem()
+            barButton.customView = leftStackView
+            return barButton
+        }()
+        
+        navitem.leftBarButtonItem = leftSection
     }
     
     func stackViewConfig(_ stackview: UIStackView) {
@@ -162,6 +172,7 @@ class HomeViewController: UIViewController {
         stackview.alignment = .center
     }
     
+    /// For UIBarButton
 //    func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromBarButtonItem barButtonItem: UIBarButtonItem) {
 //        let optionItemListVC = LocationOptionViewController()
 //        optionItemListVC.items = items
@@ -171,16 +182,19 @@ class HomeViewController: UIViewController {
 //        popOverPresentationController.delegate = self
 //        self.present(optionItemListVC, animated: true, completion: nil)
 //    }
-    
+
+    /// For UIButton
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.items = items
-        
+
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
+        popOverPresentationController.sourceRect = CGRect(x: 10, y: 10, width: 100, height: 10)
         popOverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
+
     
     @objc func locationItemClicked(_ sender: UIButton) {
         print("정자 1동!")
@@ -190,8 +204,6 @@ class HomeViewController: UIViewController {
         let setLocation = SetLocationOptionItem(text: "내 동네 설정하기", isSelected: false, setType: .setLocation)
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
     }
-    
-
     
     @objc func searchClicked() {
         print("검색!")

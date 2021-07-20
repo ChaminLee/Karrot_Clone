@@ -5,6 +5,7 @@
 //  Created by 이차민 on 2021/07/16.
 //
 
+import Foundation
 import UIKit
 import SnapKit
 
@@ -12,24 +13,34 @@ class Contents_ReportCell: UITableViewCell {
 
     static let identifier = "Contents_ReportCell"
     
+    // Input과 return이 없다는 의미
+    // Closure optional로 만들기 위해 ()로 덮었씌움
+    var reportButtonAction : (() -> ())?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
+        self.reportButton.addTarget(self, action: #selector(reportClicked), for: .touchUpInside)
     }
     
-    let idLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "이 게시글 신고하기"
-        lb.textColor = UIColor(named: CustomColor.text.rawValue)
-        lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 14)
-        return lb
+    let reportButton: UIButton = {
+        let bt = UIButton()
+        bt.setTitle("이 게시글 신고하기", for: .normal)
+        bt.titleLabel?.textColor = UIColor(named: CustomColor.text.rawValue)
+        bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
+        
+        return bt
     }()
     
+    @objc func reportClicked() {
+        print("신고해!!")
+        reportButtonAction?()
+    }
+    
     func config() {
-        contentView.addSubview(idLabel)
+        contentView.addSubview(reportButton)
         
-        idLabel.snp.makeConstraints {
+        reportButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(15)
             $0.top.bottom.equalToSuperview().inset(20)
         }

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SnapKit
 
-
 class Contents_UserInfoCell: UITableViewCell {
 
     static let identifier = "Contents_UserInfoCell"
@@ -17,11 +16,14 @@ class Contents_UserInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
+        self.mannerInfo.addTarget(self, action: #selector(mannerClicked(_:)), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var buttonAction: (() -> ())?
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -35,7 +37,7 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let idLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "판매자이름은차밍"
+        lb.text = "정자동불주먹"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 15)
@@ -82,7 +84,7 @@ class Contents_UserInfoCell: UITableViewCell {
         return img
     }()
     
-    let mannerInfo: UIButton = {
+    var mannerInfo: UIButton = {
         let bt = UIButton()
         bt.setTitle("매너온도", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
@@ -90,8 +92,15 @@ class Contents_UserInfoCell: UITableViewCell {
         return bt
     }()
     
+    @objc func mannerClicked(_ sender: UIButton) {
+        buttonAction?()
+    }
+    
+    
     
     func config() {
+        contentView.isUserInteractionEnabled = true
+        
         [profileImage, idLabel, townLabel, degreeLabel, degreeBar, degreeIcon, mannerInfo].forEach { item in
             contentView.addSubview(item)
         }
@@ -165,5 +174,11 @@ extension UIImage {
         }
         
         return scaledImage
+    }
+}
+
+extension Contents_UserInfoCell: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

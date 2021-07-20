@@ -73,7 +73,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     func config() {
-        
         contentTable.estimatedRowHeight = 100
         contentTable.rowHeight = UITableView.automaticDimension
         
@@ -103,8 +102,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             return bt
         }()
         
-        
-            
         let leftSection = UIBarButtonItem(customView: backButton)
        
         navitem.leftBarButtonItem = leftSection
@@ -151,6 +148,17 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
+    func presentOptionsPopOver(withOptionItems mannerItems : [[MannerDetailnfo]], fromButtonItem ButtonItem: UIButton) {
+        let optionItemListVC = LocationOptionViewController()
+        optionItemListVC.manners = mannerItems
+        optionItemListVC.view.backgroundColor = UIColor(named: CustomColor.karrot.rawValue)
+
+        guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
+        popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
+        popOverPresentationController.sourceRect = CGRect(x: 10, y: -100, width: 60, height: 100)
+        popOverPresentationController.delegate = self
+        self.present(optionItemListVC, animated: true, completion: nil)
+    }
     
 }
 
@@ -165,24 +173,39 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_UserInfoCell",for: indexPath) as! Contents_UserInfoCell
             cell.selectionStyle = .none
             
-            cell.idLabel.text = "정자동불주먹"
+            cell.buttonAction = { [unowned self] in
+                print("소환")
+                let label : UILabel = {
+                    let lb = UILabel()
+                    lb.text = "매너온도는 당근마켓 사용자로부터 받은 칭찬, 후기, 비매너 평가, 운영자 징계 등을 통해 종합해서 만든 매너 지표애요"
+                    lb.textColor = .white
+                    lb.numberOfLines = 0
+                    return lb
+                }()
+                let manner = SetMannerDetailInfo(label: label, font: UIFont(name: "Helvetica", size: 13)!)
+                presentOptionsPopOver(withOptionItems: [[manner]], fromButtonItem: cell.mannerInfo)
+            }
             
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_MainTextCell",for: indexPath) as! Contents_MainTextCell
             cell.selectionStyle = .none
-
+            
+            cell.cellDelegate = self
+            
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_ReportCell",for: indexPath) as! Contents_ReportCell
             cell.selectionStyle = .none
+                        
+            cell.reportButtonAction = { [unowned self] in
+                print("신고")
+            }
             return cell
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell            
@@ -195,6 +218,12 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+//    @objc func mannerClicked(_ sender: UIButton) {
+//        print("매너")
+//        let manner = SetMannerDetailInfo(text: "매너온도는 당근마켓 사용자로부터 받은 칭찬, 후기, 비매너 평가, 운영자 징계 등을 통해 종합해서 만든 매너 지표애요",font: UIFont(name: "Helvetica", size: 13)!)
+//        presentOptionsPopOver(withOptionItems: [[manner]], fromButtonItem: sender)
+//    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -202,6 +231,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     
     // HeaderView
 
@@ -251,10 +281,6 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 400
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
 }
 
 extension ContentsViewController: UIScrollViewDelegate {
@@ -289,5 +315,19 @@ extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let value = scrollView.contentOffset.x/scrollView.frame.size.width
         self.setPageControlSelectedPage(currentPage: Int(round(value)))
+    }
+}
+
+extension ContentsViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+extension ContentsViewController: ContentsMainTextDelegate {
+    func categoryButtonTapped() {
+        // ToDo
+        print("DD")
+        print("된당 이제")
     }
 }

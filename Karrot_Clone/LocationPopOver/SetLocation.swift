@@ -11,6 +11,7 @@ import UIKit
 enum SetLocation {
     case myLocation
     case setLocation
+    case mannerInfo
 }
 
 struct SetLocationOptionItem: LocationOptionItem {
@@ -20,9 +21,7 @@ struct SetLocationOptionItem: LocationOptionItem {
     var setType: SetLocation
 }
 
-//struct mannerInfo: LocationOptionItem {
-//    var isSelected: Bool
-//    var font: UIFont
-//    var text: String
-//    var font = UIFont.systemFont(ofSize: 13)
-//}
+struct SetMannerDetailInfo: MannerDetailnfo {
+    var label: UILabel
+    var font = UIFont.systemFont(ofSize: 13)
+}
