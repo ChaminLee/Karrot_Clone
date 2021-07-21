@@ -85,7 +85,6 @@ class Contents_MainTextCell: UITableViewCell {
     
     let chatLabel: UILabel = {
         let lb = UILabel()
-//        lb.text = "관심 10"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -94,7 +93,6 @@ class Contents_MainTextCell: UITableViewCell {
     
     let heartLabel: UILabel = {
         let lb = UILabel()
-//        lb.text = "관심 10"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -103,16 +101,34 @@ class Contents_MainTextCell: UITableViewCell {
     
     let visitedLabel: UILabel = {
         let lb = UILabel()
-//        lb.text = "∙ 조회 17"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
+    var chatView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    var heartView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    var visitView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.stackView.isHidden = true
+        
+        self.chatView.isHidden = true
+        self.heartView.isHidden = true
+        self.visitView.isHidden = true
         
         self.chatLabel.isHidden = true
         self.heartLabel.isHidden = true
@@ -121,8 +137,26 @@ class Contents_MainTextCell: UITableViewCell {
     }
     
     func config() {
+        heartView.addSubview(heartLabel)
         
-        self.stackView = UIStackView.init(arrangedSubviews: [chatLabel,heartLabel,visitedLabel])
+        heartLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        chatView.addSubview(chatLabel)
+        
+        chatLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        visitView.addSubview(visitedLabel)
+        
+        visitedLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        
+        self.stackView = UIStackView.init(arrangedSubviews: [chatView,heartView,visitView])
         stackView.spacing = 3
         stackView.distribution = .fill
         

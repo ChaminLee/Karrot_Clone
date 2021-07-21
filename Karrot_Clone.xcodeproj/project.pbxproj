@@ -13,6 +13,7 @@
 		C92159E826A6FDF7009C03CE /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */; };
 		C92159EE26A83E89009C03CE /* ProdData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159ED26A83E89009C03CE /* ProdData.swift */; };
 		C92159F226A84EF5009C03CE /* OtherProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159F126A84EF4009C03CE /* OtherProduct.swift */; };
+		C92159F426A88511009C03CE /* Contents_RecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159F326A88510009C03CE /* Contents_RecommendCell.swift */; };
 		C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCE626A04AFD009E58A1 /* AppDelegate.swift */; };
 		C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C967DCEF26A04B06009E58A1 /* Assets.xcassets */; };
 		C967DCF326A04B06009E58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */; };
@@ -67,6 +68,7 @@
 		C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		C92159ED26A83E89009C03CE /* ProdData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdData.swift; sourceTree = "<group>"; };
 		C92159F126A84EF4009C03CE /* OtherProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProduct.swift; sourceTree = "<group>"; };
+		C92159F326A88510009C03CE /* Contents_RecommendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contents_RecommendCell.swift; sourceTree = "<group>"; };
 		C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karrot_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C967DCE626A04AFD009E58A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C967DCEF26A04B06009E58A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				C967DD7826A45F16009E58A1 /* Contents_MainTextCell.swift */,
 				C967DD7226A1BCA1009E58A1 /* Contents_ReportCell.swift */,
 				C967DD7A26A46C1E009E58A1 /* Contents_SellerCell.swift */,
+				C92159F326A88510009C03CE /* Contents_RecommendCell.swift */,
 				C967DD7C26A47269009E58A1 /* Contents_Seller_ProdCell.swift */,
 			);
 			path = Cell;
@@ -531,6 +534,7 @@
 				C967DD9226A665AC009E58A1 /* SetLocation.swift in Sources */,
 				C967DD7726A43118009E58A1 /* Contents_UserInfoCell.swift in Sources */,
 				C967DD8C26A661A0009E58A1 /* LocationOptionItem.swift in Sources */,
+				C92159F426A88511009C03CE /* Contents_RecommendCell.swift in Sources */,
 				C967DD2B26A05182009E58A1 /* CustomColor.swift in Sources */,
 				C967DD8E26A66264009E58A1 /* LocationItemCell.swift in Sources */,
 			);

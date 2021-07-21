@@ -29,6 +29,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         tv.register(Contents_MainTextCell.self, forCellReuseIdentifier: Contents_MainTextCell.identifier)
         tv.register(Contents_ReportCell.self, forCellReuseIdentifier: Contents_ReportCell.identifier)
         tv.register(Contents_SellerCell.self, forCellReuseIdentifier: Contents_SellerCell.identifier)
+        tv.register(Contents_RecommendCell.self, forCellReuseIdentifier: Contents_RecommendCell.identifier)
         tv.separatorColor = UIColor(named: CustomColor.separator.rawValue)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
@@ -92,6 +93,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func config() {
+        view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         contentTable.estimatedRowHeight = 100
         contentTable.rowHeight = UITableView.automaticDimension
         
@@ -103,8 +105,8 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(contentTable)
         
         contentTable.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaInsets.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.top.bottom.equalTo(view.safeAreaInsets.top)
         }
         
     }
@@ -182,7 +184,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         popOverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
-    
 }
 
 
@@ -192,7 +193,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -216,6 +217,30 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.profileImage.image = img.image
             cell.idLabel.text = data.userID
             cell.locationLabel.text = data.location
+            
+            
+            var color = UIColor()
+            
+            switch data.mannerDegree {
+            case 0..<32:
+                color = UIColor(named: CustomColor.manner1.rawValue)!
+            case 32..<36.5:
+                color = UIColor(named: CustomColor.manner2.rawValue)!
+            case 36.5..<40:
+                color = UIColor(named: CustomColor.manner3.rawValue)!
+            case 40..<50:
+                color = UIColor(named: CustomColor.manner4.rawValue)!
+            case 50..<60:
+                color = UIColor(named: CustomColor.manner5.rawValue)!
+            case 60...100:
+                color = UIColor(named: CustomColor.manner6.rawValue)!
+            default:
+                break
+            }
+            
+            cell.degreeLabel.textColor = color
+            cell.degreeBar.progressTintColor = color
+            
             cell.degreeLabel.text = "\(data.mannerDegree)℃"
             cell.degreeBar.setProgress(data.mannerDegree * 0.01, animated: true)
             
@@ -248,18 +273,21 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.chatLabel.text = "채팅 \(data.chatNum)"
                 cell.stackView.isHidden = false
                 cell.chatLabel.isHidden = false
+                cell.chatView.isHidden = false
             }
             
             if data.heartNum > 0 {
                 cell.heartLabel.text = "관심 \(data.heartNum)"
                 cell.stackView.isHidden = false
                 cell.heartLabel.isHidden = false
+                cell.heartView.isHidden = false
             }
             
             if data.visitNum > 0 {
                 cell.visitedLabel.text = "조회 \(data.visitNum)"
                 cell.stackView.isHidden = false
                 cell.visitedLabel.isHidden = false
+                cell.visitView.isHidden = false
                 
             }
             
@@ -270,6 +298,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
                         
             cell.reportButtonAction = { [unowned self] in
+                // 신고 뷰
                 print("신고")
             }
             return cell
@@ -277,9 +306,16 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell            
             cell.selectionStyle = .none
             
-            cell.frame = contentTable.bounds
-            cell.layoutIfNeeded()
+            cell.titleLabel.text = "\(data.userID)님의 판매 상품"
+            
             return cell
+        case 4:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_RecommendCell",for: indexPath) as! Contents_RecommendCell
+            
+            cell.titleLabel.text = "차밍님, 이건 어때요?"
+            
+            return cell
+            
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell
             cell.selectionStyle = .none

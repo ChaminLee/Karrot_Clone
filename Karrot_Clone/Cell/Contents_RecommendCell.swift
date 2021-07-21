@@ -1,29 +1,25 @@
 //
-//  Contents_Seller.swift
+//  Contents_RecommendCell.swift
 //  Karrot_Clone
 //
-//  Created by 이차민 on 2021/07/18.
+//  Created by 이차민 on 2021/07/22.
 //
 
-import Foundation
 import UIKit
-import SnapKit
 
-class Contents_SellerCell: UITableViewCell {
+class Contents_RecommendCell: UITableViewCell {
     
-    var sellersOtherItems = [OtherProduct]()
-    static let identifier = "Contents_SellerCell"
+    var recommendItems = [OtherProduct]()
+    static let identifier = "Contents_RecommendCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setOtherSampleData()
+        setRecommendSampleData()
         config()
-        print(sellersOtherItems.count)
     }
     
     let titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "정자동불주먹님의 판매 상품" // \(seller.name)
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 15)
@@ -38,7 +34,7 @@ class Contents_SellerCell: UITableViewCell {
         return bt
     }()
     
-    lazy var collectionView: UICollectionView = {
+    var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -74,11 +70,8 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-            if sellersOtherItems.count > 2 {
-                $0.height.equalTo(360)
-            } else {
-                $0.height.equalTo(160)
-            }
+            $0.height.equalTo(1900)
+            
             
         }
     }
@@ -88,10 +81,10 @@ class Contents_SellerCell: UITableViewCell {
     }
 }
 
-extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension Contents_RecommendCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sellersOtherItems.count
+        return recommendItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -112,7 +105,7 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
         
-        let data = sellersOtherItems[indexPath.row]
+        let data = recommendItems[indexPath.row]
         
         cell.prodImage.image = UIImage(named: data.imgName)
         cell.prodLabel.text = data.title
@@ -123,13 +116,29 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     
 }
 
-extension Contents_SellerCell {
-    func setOtherSampleData() {
-        sellersOtherItems.append(contentsOf: [
+extension Contents_RecommendCell {
+    func setRecommendSampleData() {
+        recommendItems.append(contentsOf: [
             OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
             OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
             OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
-            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원")
+            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원"),
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
+            OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
+            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원"),
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
+            OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
+            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원"),
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
+            OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
+            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원"),
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원")
         ])
     }
 }

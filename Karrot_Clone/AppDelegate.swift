@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Thread.sleep(forTimeInterval: 1.0)
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .black //UIColor(named: CustomColor.background.rawValue) //
+        window?.backgroundColor = .black //UIColor(named: CustomColor.background.rawValue) // 
         let root = TabbarViewController()
         window?.rootViewController = root
         window?.makeKeyAndVisible()
