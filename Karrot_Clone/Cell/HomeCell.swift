@@ -26,7 +26,6 @@ class HomeCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "당근 타이틀"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 2
         lb.font = UIFont(name: "Helvetica", size: 17)
@@ -35,7 +34,6 @@ class HomeCell: UITableViewCell {
     
     let locationLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "위치"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 1
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -44,7 +42,6 @@ class HomeCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let lb = UILabel()
-        lb.text = " ・ 4분 전"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 2
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -53,7 +50,6 @@ class HomeCell: UITableViewCell {
     
     let priceLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "10,000원"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 17)
@@ -62,15 +58,16 @@ class HomeCell: UITableViewCell {
     
     let heartIcon: UIButton = {
         let bt = UIButton()
-        bt.setImage(UIImage(systemName: "heart"), for: .normal)
+        bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let size: CGFloat = 18
+        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
         bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
-        bt.contentMode = .scaleAspectFill
+        bt.imageView?.contentMode = .scaleAspectFit
         return bt
     }()
     
     let heartLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "45"
         lb.textColor = UIColor(named: CustomColor.badge.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 15)
@@ -79,33 +76,87 @@ class HomeCell: UITableViewCell {
     
     let chatIcon: UIButton = {
         let bt = UIButton()
-        bt.setImage(UIImage(systemName: "bubble.left.and.bubble.right"), for: .normal)
+        bt.frame = CGRect(x: 0, y: 0, width: 38, height: 30)
+        let size: CGFloat = 23
+        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.imageView?.contentMode = .scaleAspectFit
         bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
-//        let size: CGFloat = 5
-//        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
-        
         return bt
     }()
     
     let chatLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.badge.rawValue)
-        lb.text = "50"
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 15)
         return lb
     }()
 
+    var heartView: UIView = {
+        let view = UIView()
+        return view
+    }()
     
+    var chatView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    var stackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
     }
     
-    func config() {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.stackView.isHidden = true
         
-        [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,heartLabel,heartIcon,chatIcon,chatLabel].forEach { item in
+        self.chatView.isHidden = true
+        self.heartView.isHidden = true
+        
+        self.heartLabel.isHidden = true
+        self.heartIcon.isHidden = true
+        self.chatIcon.isHidden = true
+        self.chatLabel.isHidden = true
+    }
+    
+    func config() {
+        heartView.addSubview(heartIcon)
+        heartView.addSubview(heartLabel)
+        
+        heartIcon.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+            $0.height.equalTo(15)
+        }
+        
+        heartLabel.snp.makeConstraints {
+            $0.centerY.equalTo(heartIcon.snp.centerY)
+            $0.leading.equalTo(heartIcon.snp.trailing).offset(3)
+            $0.trailing.equalToSuperview()
+        }
+        
+        chatView.addSubview(chatIcon)
+        chatView.addSubview(chatLabel)
+        
+        chatIcon.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+            $0.height.equalTo(15)
+        }
+        
+        chatLabel.snp.makeConstraints {
+            $0.centerY.equalTo(chatIcon.snp.centerY)
+            $0.leading.equalTo(chatIcon.snp.trailing).offset(3)
+            $0.trailing.equalToSuperview()
+        }
+        
+        self.stackView = UIStackView.init(arrangedSubviews: [chatView,heartView])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.distribution = .fill
+        
+        [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,stackView].forEach { item in
             contentView.addSubview(item)
         }
         
@@ -135,30 +186,8 @@ class HomeCell: UITableViewCell {
             $0.top.equalTo(locationLabel.snp.bottom).offset(10)
         }
         
-        
-        heartLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalToSuperview().inset(15)
-        }
-
-        heartIcon.snp.makeConstraints {
-            $0.trailing.equalTo(heartLabel.snp.leading).offset(-5)
-            $0.centerY.equalTo(heartLabel.snp.centerY)
-            $0.width.equalTo(20)
-            $0.height.equalTo(15)
-        }
-
-        chatLabel.snp.makeConstraints {
-            $0.trailing.equalTo(heartIcon.snp.leading).offset(-5)
-            $0.centerY.equalTo(heartLabel.snp.centerY)
-            
-        }
-
-        chatIcon.snp.makeConstraints {
-            $0.trailing.equalTo(chatLabel.snp.leading).offset(-5)
-            $0.centerY.equalTo(chatLabel.snp.centerY)
-            $0.width.equalTo(20)
-            $0.height.equalTo(15)
+        stackView.snp.makeConstraints {
+            $0.bottom.trailing.equalToSuperview().inset(10)
         }
         
     }

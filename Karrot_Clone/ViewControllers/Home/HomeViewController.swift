@@ -9,8 +9,11 @@ import UIKit
 import SnapKit
 import AudioToolbox
 import Foundation
+import Floaty
 
 class HomeViewController: UIViewController {
+    
+    var prodData = [ProdData]()
     
     var feedBackGenerator: UINotificationFeedbackGenerator?
     
@@ -27,7 +30,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setSampleData()
         setHomeTable()
         setNavMenu()
         setFloatingButton()
@@ -43,17 +46,21 @@ class HomeViewController: UIViewController {
     }
     
     private func navStyle() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
         self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.layoutIfNeeded()
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.alpha = 1
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         hometable.frame = view.bounds
     }
+    
     
     private func setUpGenerator() {
         self.feedBackGenerator = UINotificationFeedbackGenerator()
@@ -83,7 +90,7 @@ class HomeViewController: UIViewController {
     // left
     let locationButton : UIButton = {
         let bt = UIButton()
-        bt.setTitle("지역 선택하기", for: .normal)
+        bt.setTitle("중앙동", for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 19)
         bt.setTitleColor(UIColor(named: CustomColor.text.rawValue), for: .normal)        
         return bt
@@ -156,9 +163,6 @@ class HomeViewController: UIViewController {
         leftStackView.isLayoutMarginsRelativeArrangement = true
         leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
         leftStackView.spacing = 5
-//        leftStackView.isUserInteractionEnabled = true
-//        let tap = UIGestureRecognizer(target: self, action: #selector(locationItemClicked))
-//        leftStackView.addGestureRecognizer(tap)
         
         let leftSection: UIBarButtonItem = {
             let barButton = UIBarButtonItem()
@@ -174,17 +178,6 @@ class HomeViewController: UIViewController {
         stackview.axis = .horizontal
         stackview.alignment = .center
     }
-    
-    /// For UIBarButton
-//    func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromBarButtonItem barButtonItem: UIBarButtonItem) {
-//        let optionItemListVC = LocationOptionViewController()
-//        optionItemListVC.items = items
-//
-//        guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
-//        popOverPresentationController.barButtonItem = barButtonItem
-//        popOverPresentationController.delegate = self
-//        self.present(optionItemListVC, animated: true, completion: nil)
-//    }
 
     /// For UIButton
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
@@ -200,18 +193,18 @@ class HomeViewController: UIViewController {
 
         self.present(optionItemListVC, animated: true, completion: nil)
     }
+    
+    /// Pop OverList
+    var firstLocation = SetLocationOptionItem(text: "중앙동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: true, setType: .myLocation)
+    var secondLocation = SetLocationOptionItem(text: "정자1동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
+    var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
     var rotated = false
     var locationButtonRoated : (() -> ())?
     
     @objc func locationItemClicked(_ sender: UIButton) {
         print("정자 1동!")
-        /// Pop Over
-        var firstLocation = SetLocationOptionItem(text: "중앙동", isSelected: true, setType: .myLocation)
-        var secondLocation = SetLocationOptionItem(text: "정자1동", isSelected: false, setType: .myLocation)
-        var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", isSelected: false, setType: .setLocation)
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
-        
         
         DispatchQueue.main.async {
 //            if !self.rotated {
@@ -231,7 +224,6 @@ class HomeViewController: UIViewController {
     }
     
     
-    
     @objc func searchClicked() {
         print("검색!")
     }
@@ -248,6 +240,10 @@ class HomeViewController: UIViewController {
         let bt = UIButton()
         let size: CGFloat = 60
         bt.setImage(UIImage(named: "Add")?.scalePreservingAspectRatio(targetSize: CGSize(width: size, height: size)), for: .normal)
+        bt.layer.shadowColor = UIColor.black.cgColor
+        bt.layer.shadowRadius = 3
+        bt.layer.shadowOpacity = 0.5
+        bt.layer.shadowOffset = CGSize.zero
         bt.addTarget(self, action: #selector(floatingButtonClicked(_:)), for: .touchUpInside)
         return bt
     }()
@@ -304,23 +300,26 @@ class HomeViewController: UIViewController {
         floatingStackView.axis = .vertical
         floatingStackView.alignment = .trailing
         
+        
+//        UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.addSubview(floatingStackView)
+
         view.insertSubview(floatingStackView, at: 1)
         view.bringSubviewToFront(floatingStackView)
         
         floatingStackView.snp.makeConstraints {
-//            $0.bottom.equalToSuperview().inset(15)
-//            $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(additionalSafeAreaInsets.bottom).inset(15)
-            $0.right.equalTo(additionalSafeAreaInsets.right).inset(20)
+            $0.bottom.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
         }
+        
     }
     
     lazy var floatingDimView: UIView = {
-        let view = UIView(frame: CGRect(x:0, y: -50, width: self.view.frame.width, height: self.view.frame.height+50))
+        let view = UIView(frame: CGRect(x:0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         view.alpha = 0
         view.isHidden = true
 
+        
         self.view.insertSubview(view, belowSubview: self.floatingStackView)
         
         return view
@@ -332,6 +331,8 @@ class HomeViewController: UIViewController {
     
     @objc func floatingButtonClicked(_ sender: UIButton) {
         let imgSize: CGFloat = 60
+        
+        print("너비 :\(UIScreen.main.bounds.width), 높이 : \(UIScreen.main.bounds.height)")
                 
         if isShowFloating {
             buttons.reversed().forEach { button in
@@ -341,20 +342,24 @@ class HomeViewController: UIViewController {
                 }
             }
             
+            self.tabBarController?.tabBar.alpha = 1
             UIView.animate(withDuration: 0.5, animations: {
-                self.floatingDimView.alpha = 0
+                
             }) { (_) in
                 self.floatingDimView.isHidden = true
-                
+                self.floatingDimView.alpha = 0
+                self.navStyle()
             }
         } else {
-//            AudioServicesPlaySystemSound(4095)
             self.feedBackGenerator?.notificationOccurred(.success)
             
-            self.floatingDimView.isHidden = false
-
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.2) {
+                self.floatingDimView.isHidden = false
                 self.floatingDimView.alpha = 1
+                self.navigationController?.navigationBar.backgroundColor = .black
+                self.navigationController?.navigationBar.alpha = 0.5
+                self.tabBarController?.tabBar.backgroundColor = .black
+                self.tabBarController?.tabBar.alpha = 0.5
             }
             
             buttons.forEach { [weak self] stack in
@@ -365,7 +370,10 @@ class HomeViewController: UIViewController {
                 
             }
         }
+        
         self.isShowFloating = !isShowFloating
+        
+        
         
         print("clicked \(isShowFloating)")
         
@@ -386,7 +394,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return prodData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -394,8 +402,31 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         
-        cell.titleLabel.text = "캐논 g7x mark3 풀박스 2020년 10월 구입 제품 팔아요 캐논 g7x mark3 풀박스"
-        cell.thumbnail.image = UIImage(named: "당근이")
+        let data = prodData[indexPath.row]
+        
+        cell.titleLabel.text = data.prodTitle
+        cell.thumbnail.image = UIImage(named: data.prodImage)
+        cell.locationLabel.text = data.location
+        cell.priceLabel.text = data.price
+        cell.timeLabel.text = " ・ " + data.uploadTime
+        
+        if data.heartNum > 0 {
+            cell.heartLabel.text = "\(data.heartNum)"
+            cell.heartIcon.setImage(UIImage(systemName: "heart"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.heartView.isHidden = false
+            cell.heartLabel.isHidden = false
+            cell.heartIcon.isHidden = false
+        }
+        
+        if data.chatNum > 0 {
+            cell.chatLabel.text = "\(data.chatNum)"
+            cell.chatIcon.setImage(UIImage(systemName: "bubble.left.and.bubble.right"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.chatView.isHidden = false
+            cell.chatIcon.isHidden = false
+            cell.chatLabel.isHidden = false
+        }
         return cell
     }
     
@@ -409,6 +440,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(150.0)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+       
+    }
+
 }
 
 extension UIStackView {
@@ -423,6 +459,7 @@ extension HomeViewController {
     func hideViewWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.dismissView))
         tap.cancelsTouchesInView = false
+        
         self.floatingDimView.addGestureRecognizer(tap)
     }
     
@@ -430,20 +467,21 @@ extension HomeViewController {
         let imgSize: CGFloat = 60
         
         buttons.map {$0.isHidden = true}
-        self.floatingDimView.alpha = 0
-    
+        self.navStyle()
+        self.tabBarController?.tabBar.alpha = 1
         self.floatingDimView.isHidden = true
         
         let image = UIImage(named: "Add")
         let rotation = CGAffineTransform.identity
         
         UIView.animate(withDuration: 0.3) {
+//            self.floatingDimView.alpha = 0
+            
             self.addPostButton.setImage(image?.scalePreservingAspectRatio(targetSize: CGSize(width: imgSize, height: imgSize)), for: .normal)
             self.addPostButton.transform = rotation
         }
         isShowFloating = !isShowFloating
         self.rotated = !self.rotated
-        print("배경 \(isShowFloating)")
     }
 }
 
@@ -478,4 +516,25 @@ extension HomeViewController: PopOverLocationSelectedDelegate {
         
     }
     
+}
+
+extension HomeViewController {
+    func setSampleData() {
+        prodData.append(contentsOf: [
+            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", heartNum: 20, chatNum: 30, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
+            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", heartNum: 200, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이4", prodTitle: "당근이2 팝니다", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", heartNum: 40, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "15분 전", price: "5000원", heartNum: 0, chatNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이5", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "20분 전", price: "5300원", heartNum: 20, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "봉천2동", uploadTime: "1분 전", price: "545,000원", heartNum: 0, chatNum: 30, mannerDegree: 30.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "4분 전", price: "50,300원", heartNum: 2, chatNum: 0, mannerDegree: 37.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "50분 전", price: "50,220원", heartNum: 20, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "43분 전", price: "22,000원", heartNum: 0, chatNum: 3, mannerDegree: 38.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "중앙2동", uploadTime: "41분 전", price: "15,000원", heartNum: 200, chatNum: 30, mannerDegree: 44.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이6", prodTitle: "스페셜 당근이 팝니다", location: "중앙동", uploadTime: "34분 전", price: "32,000원", heartNum: 20, chatNum: 3, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이2", prodTitle: "귀여운 당근이 팝니다", location: "행운동", uploadTime: "54분 전", price: "54,000원", heartNum: 2000, chatNum: 30, mannerDegree: 66.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "14분 전", price: "52,000원", heartNum: 1, chatNum: 5, mannerDegree: 50.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "2", uploadTime: "44분 전", price: "550,000원", heartNum: 3, chatNum: 3, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+        ])
+    }
 }

@@ -16,7 +16,7 @@ enum SetLocation {
 
 struct SetLocationOptionItem: LocationOptionItem {
     var text: String
-    var font = UIFont.systemFont(ofSize: 13)
+    var font: UIFont //= UIFont.systemFont(ofSize: 13)
     var isSelected: Bool
     var setType: SetLocation
 }

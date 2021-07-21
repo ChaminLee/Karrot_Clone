@@ -11,6 +11,8 @@
 		43BD4F56AF8FD05186C76BE7 /* Pods_Karrot_Clone_Karrot_CloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */; };
 		6A9221C0223619BC11545946 /* Pods_Karrot_CloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCFB86A26A5200D660535309 /* Pods_Karrot_CloneTests.framework */; };
 		C92159E826A6FDF7009C03CE /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */; };
+		C92159EE26A83E89009C03CE /* ProdData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159ED26A83E89009C03CE /* ProdData.swift */; };
+		C92159F226A84EF5009C03CE /* OtherProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92159F126A84EF4009C03CE /* OtherProduct.swift */; };
 		C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967DCE626A04AFD009E58A1 /* AppDelegate.swift */; };
 		C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C967DCEF26A04B06009E58A1 /* Assets.xcassets */; };
 		C967DCF326A04B06009E58A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */; };
@@ -63,6 +65,8 @@
 		AA0568A9C4F451839A9CED15 /* Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF96E8397E5BCCF15DB79D71 /* Pods-Karrot_Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone/Pods-Karrot_Clone.release.xcconfig"; sourceTree = "<group>"; };
 		C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
+		C92159ED26A83E89009C03CE /* ProdData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdData.swift; sourceTree = "<group>"; };
+		C92159F126A84EF4009C03CE /* OtherProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProduct.swift; sourceTree = "<group>"; };
 		C967DCE326A04AFD009E58A1 /* Karrot_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karrot_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C967DCE626A04AFD009E58A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C967DCEF26A04B06009E58A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 				C967DD8A26A66175009E58A1 /* LocationPopOver */,
 				C967DD1626A04D79009E58A1 /* ViewControllers */,
 				C967DD6A26A10E45009E58A1 /* Cell */,
+				C92159ED26A83E89009C03CE /* ProdData.swift */,
+				C92159F126A84EF4009C03CE /* OtherProduct.swift */,
 				C967DCEF26A04B06009E58A1 /* Assets.xcassets */,
 				C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */,
 				C967DCF426A04B06009E58A1 /* Info.plist */,
@@ -516,8 +522,10 @@
 				C967DD6C26A124EB009E58A1 /* CustomFont.swift in Sources */,
 				C967DD7926A45F16009E58A1 /* Contents_MainTextCell.swift in Sources */,
 				C967DD6E26A16ACF009E58A1 /* ContentsViewController.swift in Sources */,
+				C92159EE26A83E89009C03CE /* ProdData.swift in Sources */,
 				C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */,
 				C967DD7B26A46C1E009E58A1 /* Contents_SellerCell.swift in Sources */,
+				C92159F226A84EF5009C03CE /* OtherProduct.swift in Sources */,
 				C967DD9026A66364009E58A1 /* LocationOptionViewController.swift in Sources */,
 				C967DD1C26A04E02009E58A1 /* LifeViewController.swift in Sources */,
 				C967DD9226A665AC009E58A1 /* SetLocation.swift in Sources */,

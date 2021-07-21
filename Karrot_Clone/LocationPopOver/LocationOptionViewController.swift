@@ -159,11 +159,9 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
             testView.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
-            
-            
-            
         } else {
             let item = items[indexPath.section][indexPath.row]
+            cell.textLabel?.tag
             cell.configure(with: item)
         }
         
@@ -190,8 +188,10 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
                     }
                 }
             } else {
-                print("내가 고른 장소 : \(item.text)")                
+                print("내가 고른 장소 : \(item.text)")
+                
                 self.selectedDelegate?.selectedLocation(controller: self, didSelectItem: item.text)
+                
                 item.font = UIFont(name: "Helvetica-Bold", size: 14)!
                 item.isSelected = true
                 self.dismiss(animated: true) {

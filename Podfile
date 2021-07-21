@@ -7,6 +7,7 @@ target 'Karrot_Clone' do
   pod 'Firebase/Database'
   pod 'SnapKit', '~> 5.0.0'
 
+
   # Pods for Karrot_Clone
 
   target 'Karrot_CloneTests' do

@@ -29,6 +29,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         let pc = UIPageControl()
         pc.currentPageIndicatorTintColor = .white
         pc.pageIndicatorTintColor = .lightGray
+        
         return pc
     }()
     
@@ -41,27 +42,28 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         config()
         setNavItems()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.isTranslucent = true
+
         naviStyle()
         print("콘텐츠 뷰 디드로드")
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController?.navigationBar.barTintColor = UIColor.clear
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.isTranslucent = true
-//
-//        DispatchQueue.main.async {
-//            self.contentTable.reloadData()
-//        }
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.barTintColor = UIColor.clear
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.navigationBar.backgroundColor 
+        DispatchQueue.main.async {
+            self.contentTable.reloadData()
+        }
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -77,7 +79,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         contentTable.frame = view.bounds
         contentTable.reloadData()
     }
-    
     
     func config() {
         contentTable.estimatedRowHeight = 100
@@ -238,41 +239,48 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     
     // HeaderView 이미지 스크롤
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 400))
-                
+
         let headerWidth = headerView.frame.width
         let headerHeight = headerView.frame.height
-        
+
         // 페이지 컨트롤
         let pageControl = self.pageControl
         pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
         pageControl.numberOfPages = images.count
-        
+
         // 스크롤 뷰
         let scrollView = self.scrollView
         scrollView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
-        
+
         scrollView.delegate = self
-                
+
         headerView.addSubview(scrollView)
         headerView.addSubview(pageControl)
-        
-        print("헤더 등장!")
-        
+
+        print("헤더 등장! \(headerView.frame)")
+
         for index in 0..<images.count {
             let imageView = UIImageView()
+            imageView.layer.masksToBounds = false
+            imageView.layer.shadowColor = UIColor.black.cgColor
+            imageView.layer.shadowOffset = CGSize(width: 0, height: -10)
+            imageView.layer.shadowRadius = 2
+            imageView.layer.shadowOpacity = 0.25
+            imageView.clipsToBounds = true
+
             let xPos = headerWidth * CGFloat(index)
             imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
             imageView.image = UIImage(named: images[index])
@@ -280,9 +288,9 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
         }
-        
+
         scrollView.contentSize.width = scrollView.frame.width * CGFloat(images.count)
-        
+
         return headerView
     }
     
@@ -293,22 +301,27 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 200 {
+        DispatchQueue.main.async {
+            if scrollView.contentOffset.y > 300 {
 
-            self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
-
-            self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
-            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
-            self.navigationController?.navigationBar.isTranslucent = false
-            self.navigationController?.navigationBar.shadowImage = .none
+                self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
+    //            self.navigationController?.navigationBar.backgroundColor = .white
+                self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
+                self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
+                self.navigationController?.navigationBar.isTranslucent = false
+                self.navigationController?.navigationBar.shadowImage = .none
+            }
+            else {
+                
+                self.navigationController?.navigationBar.barStyle = UIBarStyle.black // Status Bar 글씨 색상 검정색
+                self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.reply.rawValue)
+    //            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.reply.rawValue)
+                self.navigationController?.navigationBar.isTranslucent = true
+                self.navigationController?.navigationBar.backgroundColor = .clear
+                self.naviStyle()
+            }
         }
-        else {
-            self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 검정색
-            self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.reply.rawValue)
-//            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.reply.rawValue)
-            self.navigationController?.navigationBar.isTranslucent = true
-            naviStyle()
-        }
+        
     }
     
     private func setPageControl() {

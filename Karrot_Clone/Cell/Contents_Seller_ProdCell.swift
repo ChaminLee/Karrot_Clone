@@ -27,7 +27,8 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
         img.layer.masksToBounds = false
         img.layer.cornerRadius = 8
         img.clipsToBounds = true
-            
+        img.contentMode = .scaleAspectFill
+        
         return img
     }()
     
@@ -36,7 +37,7 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
         lb.text = "나이키 덩크로우 범고래 270사이즈 판매합니다."
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 1
-        lb.font = UIFont(name: "Helvetica", size: 12)
+        lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
@@ -45,7 +46,7 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
         lb.text = "115,000원"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 1
-        lb.font = UIFont(name: "Helvetica-Bold", size: 12)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 13)
         return lb
     }()
     
@@ -64,12 +65,24 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
             $0.height.equalTo(15)
         }
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(prodLabel.snp.bottom).offset(10)
+            $0.top.equalTo(prodLabel.snp.bottom).offset(5)
             $0.leading.equalTo(prodLabel.snp.leading)
             $0.trailing.equalTo(prodImage.snp.trailing)
             $0.bottom.equalToSuperview().inset(10)
             $0.height.equalTo(15)
         }
+    }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        layoutIfNeeded()
+        
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+
+        var frame = layoutAttributes.frame
+        frame.size.height = ceil(size.height)
+
+        layoutAttributes.frame = frame
+        return layoutAttributes
     }
     
 }

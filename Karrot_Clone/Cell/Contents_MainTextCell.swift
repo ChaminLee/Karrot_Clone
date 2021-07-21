@@ -133,7 +133,7 @@ class Contents_MainTextCell: UITableViewCell {
         visitedLabel.snp.makeConstraints {
             $0.top.equalTo(interestLabel.snp.top)
             $0.leading.equalTo(interestLabel.snp.trailing).offset(5)
-            $0.bottom.equalToSuperview().inset(25)
+            $0.bottom.equalToSuperview().inset(40)
         }
     }
 }

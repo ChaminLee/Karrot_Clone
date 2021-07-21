@@ -11,11 +11,15 @@ import SnapKit
 
 class Contents_SellerCell: UITableViewCell {
     
+    var sellersOtherItems = [OtherProduct]()
+    
     static let identifier = "Contents_SellerCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setSampleData()
         config()
+        print(sellersOtherItems.count)
     }
     
     let titleLabel: UILabel = {
@@ -23,7 +27,7 @@ class Contents_SellerCell: UITableViewCell {
         lb.text = "정자동불주먹님의 판매 상품" // \(seller.name)
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
-        lb.font = UIFont(name: "Helvetica-Bold", size: 14)
+        lb.font = UIFont(name: "Helvetica-Bold", size: 15)
         return lb
     }()
     
@@ -31,13 +35,14 @@ class Contents_SellerCell: UITableViewCell {
         let bt = UIButton()
         bt.setTitle("더보기", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
-        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
+        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 15)
         return bt
     }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(Contents_Seller_ProdCell.self, forCellWithReuseIdentifier: Contents_Seller_ProdCell.identifier)
         cv.backgroundColor = .clear
@@ -70,12 +75,15 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-            $0.height.equalTo(400)
+            if sellersOtherItems.count > 2 {
+                $0.height.equalTo(360)
+            } else {
+                $0.height.equalTo(160)
+            }
+            
         }
-        
     }
 
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,7 +92,7 @@ class Contents_SellerCell: UITableViewCell {
 extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return sellersOtherItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -105,37 +113,24 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
         
-//        cell.prodImage.image = UIImage(named: "당근이")
-//        cell.prodLabel.text = "ASDFASDFASF"
+        let data = sellersOtherItems[indexPath.row]
+        
+        cell.prodImage.image = UIImage(named: data.imgName)
+        cell.prodLabel.text = data.title
+        cell.priceLabel.text = data.price
         
         return cell
     }
+    
+}
 
-//    
-//    override func systemLayoutSizeFitting(_ targetSize: CGSize) -> CGSize {
-//        
-//        
-//        collectionView.layoutIfNeeded()
-//        let contentSize = self.collectionView.collectionViewLayout.collectionViewContentSize
-//        if self.collectionView.numberOfItems(inSection: 0) < 4 {
-//            return CGSize(width: contentSize.width, height: 120)
-//        }
-//        
-//        return CGSize(width: contentSize.width, height: contentSize.height + 20)
-//    }
-//    
-    
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {
-//            self.invalidateIntrinsicContentSize()
-//        }
-//    }
-//    
-//    override var intrinsicContentSize: CGSize {
-//        return collectionView.contentSize
-//    }
-    
-    
+extension Contents_SellerCell {
+    func setSampleData() {
+        sellersOtherItems.append(contentsOf: [
+            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
+            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
+            OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
+            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원")
+        ])
+    }
 }

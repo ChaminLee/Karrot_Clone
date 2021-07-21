@@ -6,24 +6,29 @@
 //
 
 import UIKit
+import SnapKit
 
 class ChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        config()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    let image: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "준비중")
+        return img
+    }()
+    
+    func config() {
+        view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+        view.addSubview(image)
+        
+        image.snp.makeConstraints {
+            $0.height.equalTo(150)
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+        }
     }
-    */
-
 }
