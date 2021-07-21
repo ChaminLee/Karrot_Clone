@@ -29,6 +29,6 @@
 ## Dark Mode
 |런치스크린|홈|지역 버튼 클릭|
 |:----:|:----:|:----:|
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/launch.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Home.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Location.gif" width="300">|
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/launch.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Home.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Location.gif" width="300">|
 |글쓰기 버튼|||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Add.gif" width="300">|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Add.gif" width="300">|||
