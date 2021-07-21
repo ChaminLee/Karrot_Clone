@@ -43,18 +43,25 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         config()
         setNavItems()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isTranslucent = true
         naviStyle()
         print("콘텐츠 뷰 디드로드")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.barTintColor = UIColor.clear
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.barTintColor = UIColor.clear
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//
+//        DispatchQueue.main.async {
+//            self.contentTable.reloadData()
+//        }
+//    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -148,6 +155,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
+    
     func presentOptionsPopOver(withOptionItems mannerItems : [[MannerDetailnfo]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.manners = mannerItems
@@ -219,6 +227,9 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell            
             cell.selectionStyle = .none
+            
+            cell.frame = contentTable.bounds
+            cell.layoutIfNeeded()
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell
@@ -227,22 +238,16 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-//    @objc func mannerClicked(_ sender: UIButton) {
-//        print("매너")
-//        let manner = SetMannerDetailInfo(text: "매너온도는 당근마켓 사용자로부터 받은 칭찬, 후기, 비매너 평가, 운영자 징계 등을 통해 종합해서 만든 매너 지표애요",font: UIFont(name: "Helvetica", size: 13)!)
-//        presentOptionsPopOver(withOptionItems: [[manner]], fromButtonItem: sender)
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
 //    }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    
-    // HeaderView
+    // HeaderView 이미지 스크롤
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 400))
@@ -250,17 +255,12 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         let headerWidth = headerView.frame.width
         let headerHeight = headerView.frame.height
         
+        // 페이지 컨트롤
         let pageControl = self.pageControl
         pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
         pageControl.numberOfPages = images.count
         
-//        let scrollView : UIScrollView = {
-//            let sv = UIScrollView(frame: CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight))
-//            sv.showsHorizontalScrollIndicator = false
-//            sv.isPagingEnabled = true
-//            return sv
-//        }()
-        
+        // 스크롤 뷰
         let scrollView = self.scrollView
         scrollView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
         
@@ -269,20 +269,19 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.addSubview(scrollView)
         headerView.addSubview(pageControl)
         
+        print("헤더 등장!")
+        
         for index in 0..<images.count {
             let imageView = UIImageView()
             let xPos = headerWidth * CGFloat(index)
             imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-            // data load
             imageView.image = UIImage(named: images[index])
             scrollView.addSubview(imageView)
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
-
-            scrollView.contentSize.width = scrollView.frame.width * CGFloat(index + 1)
         }
         
-        
+        scrollView.contentSize.width = scrollView.frame.width * CGFloat(images.count)
         
         return headerView
     }
@@ -294,23 +293,22 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 350 {
+        if scrollView.contentOffset.y > 200 {
+
             self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
-            
+
             self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
             self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
             self.navigationController?.navigationBar.isTranslucent = false
-//            self.navigationController?.navigationBar.setBackgroundImage(.none, for: .default)
             self.navigationController?.navigationBar.shadowImage = .none
         }
         else {
             self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 검정색
             self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.reply.rawValue)
-            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.reply.rawValue)
+//            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.reply.rawValue)
             self.navigationController?.navigationBar.isTranslucent = true
             naviStyle()
         }
-        
     }
     
     private func setPageControl() {
@@ -318,11 +316,12 @@ extension ContentsViewController: UIScrollViewDelegate {
     }
     
     private func setPageControlSelectedPage(currentPage:Int) {
-        pageControl.currentPage = currentPage
+        self.pageControl.currentPage = currentPage
+        print("현재페이지 :\(currentPage)")
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let value = scrollView.contentOffset.x/scrollView.frame.size.width
+        let value = self.scrollView.contentOffset.x/self.scrollView.frame.size.width
         self.setPageControlSelectedPage(currentPage: Int(round(value)))
     }
 }

@@ -61,12 +61,14 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
             $0.top.equalTo(prodImage.snp.bottom).offset(10)
             $0.leading.equalTo(prodImage.snp.leading)
             $0.trailing.equalTo(prodImage.snp.trailing)
+            $0.height.equalTo(15)
         }
         priceLabel.snp.makeConstraints {
             $0.top.equalTo(prodLabel.snp.bottom).offset(10)
             $0.leading.equalTo(prodLabel.snp.leading)
             $0.trailing.equalTo(prodImage.snp.trailing)
             $0.bottom.equalToSuperview().inset(10)
+            $0.height.equalTo(15)
         }
     }
     

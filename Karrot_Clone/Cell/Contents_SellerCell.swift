@@ -35,7 +35,7 @@ class Contents_SellerCell: UITableViewCell {
         return bt
     }()
     
-    let collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -58,6 +58,7 @@ class Contents_SellerCell: UITableViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
             $0.leading.equalToSuperview().offset(15)
+            $0.height.equalTo(20)
         }
         
         moreButton.snp.makeConstraints {
@@ -88,13 +89,13 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        layout.minimumLineSpacing = 3.0
-        layout.minimumInteritemSpacing = 3.0
+        layout.minimumLineSpacing = 20.0
+        layout.minimumInteritemSpacing = 5.0
         
         let numberOfItemsPerRow: CGFloat = 2.0
         let width = (collectionView.bounds.width - layout.minimumLineSpacing) / numberOfItemsPerRow
         
-        return CGSize(width: width, height: width)
+        return CGSize(width: width, height: width)//collectionView.frame.size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -125,16 +126,16 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
 //    
     
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {
-            self.invalidateIntrinsicContentSize()
-        }
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return collectionView.contentSize
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {
+//            self.invalidateIntrinsicContentSize()
+//        }
+//    }
+//    
+//    override var intrinsicContentSize: CGSize {
+//        return collectionView.contentSize
+//    }
     
     
 }

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import AudioToolbox
+import Foundation
 
 class HomeViewController: UIViewController {
     
@@ -456,6 +457,25 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 extension HomeViewController: PopOverLocationSelectedDelegate {
     func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
         locationButton.setTitle(name, for: .normal)
+        
+        // snackbar "동네가 '\(name)'으로 변경되었어요."
+        showToast(controller: self, message: "동네가 '\(name)'으로 변경되었어요.", seconds: 3)
+    }
+    
+    func showToast(controller: UIViewController, message: String, seconds: Double) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = .black //UIColor(named: CustomColor.badge.rawValue)
+        alert.view.alpha = 0.6
+        alert.view.layer.cornerRadius = 15
+        
+        controller.present(alert, animated: true)
+        
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+            alert.dismiss(animated: true)
+        }
+        
     }
     
 }
