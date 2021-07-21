@@ -27,7 +27,6 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
         img.layer.masksToBounds = false
         img.layer.cornerRadius = img.frame.width / 2
         img.clipsToBounds = true
@@ -37,16 +36,14 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let idLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "정자동불주먹"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 15)
         return lb
     }()
     
-    let townLabel: UILabel = {
+    let locationLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "정자동"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -55,7 +52,6 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let degreeLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "36.5℃"
         lb.textColor = UIColor(named: CustomColor.text.rawValue) // by Lv
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 16)
@@ -64,7 +60,7 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let degreeBar: UIProgressView = {
         let pv = UIProgressView(progressViewStyle: .bar)
-        pv.setProgress(0.365, animated: true)
+//        pv.setProgress(0.365, animated: true)
         pv.trackTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         pv.progressTintColor = UIColor.blue // by Lv
         
@@ -101,7 +97,7 @@ class Contents_UserInfoCell: UITableViewCell {
     func config() {
         contentView.isUserInteractionEnabled = true
         
-        [profileImage, idLabel, townLabel, degreeLabel, degreeBar, degreeIcon, mannerInfo].forEach { item in
+        [profileImage, idLabel, locationLabel, degreeLabel, degreeBar, degreeIcon, mannerInfo].forEach { item in
             contentView.addSubview(item)
         }
         
@@ -115,7 +111,7 @@ class Contents_UserInfoCell: UITableViewCell {
             $0.leading.equalTo(profileImage.snp.trailing).offset(10)
         }
         
-        townLabel.snp.makeConstraints {
+        locationLabel.snp.makeConstraints {
             $0.bottom.equalTo(profileImage.snp.bottom).inset(3)
             $0.leading.equalTo(idLabel.snp.leading)
         }

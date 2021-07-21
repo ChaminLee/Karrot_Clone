@@ -10,6 +10,17 @@ import SnapKit
 
 class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {        
     
+    var ContentsData = [ProdData]() //ProdData(prodImage: "", prodTitle: "", location: "", uploadTime: "", price: "", heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 0.0, category: "", prodDescription: "", userID: "", userIcon: "")
+    
+    init(items: [ProdData]) {
+        self.ContentsData = items
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var images = ["당근이","당근이2","당근이3","당근이4","당근이5"]
     
     let contentTable : UITableView = {
@@ -185,19 +196,32 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let data = ContentsData[0]
+        
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_UserInfoCell",for: indexPath) as! Contents_UserInfoCell
             cell.selectionStyle = .none
             
+            let img: UIImageView = {
+                let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                img.image = UIImage(named: data.userIcon)?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
+                img.layer.masksToBounds = false
+                img.layer.cornerRadius = img.frame.width / 2
+                img.clipsToBounds = true
+                    
+                return img
+            }()
+            
+            cell.profileImage.image = img.image
+            cell.idLabel.text = data.userID
+            cell.locationLabel.text = data.location
+            cell.degreeLabel.text = "\(data.mannerDegree)℃"
+            cell.degreeBar.setProgress(data.mannerDegree * 0.01, animated: true)
+            
             cell.buttonAction = { [unowned self] in
-                print("소환")
-//                let mannerView: UIView = {
-//                    let view = UIView()
-//                    
-//                    return view
-//                }()
-//                
+                print("매너 설명 소환")
+           
                 let label : UILabel = {
                     let lb = UILabel()
                     lb.text = " "
@@ -213,8 +237,32 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_MainTextCell",for: indexPath) as! Contents_MainTextCell
             cell.selectionStyle = .none
-            
             cell.cellDelegate = self
+            
+            cell.titleLabel.text = data.prodTitle
+            cell.timeLabel.text = " ・ " + data.uploadTime
+            cell.categoryButton.setTitle(data.category, for: .normal)
+            cell.mainLabel.text = data.prodDescription
+            
+            if data.chatNum > 0 {
+                cell.chatLabel.text = "채팅 \(data.chatNum)"
+                cell.stackView.isHidden = false
+                cell.chatLabel.isHidden = false
+            }
+            
+            if data.heartNum > 0 {
+                cell.heartLabel.text = "관심 \(data.heartNum)"
+                cell.stackView.isHidden = false
+                cell.heartLabel.isHidden = false
+            }
+            
+            if data.visitNum > 0 {
+                cell.visitedLabel.text = "조회 \(data.visitNum)"
+                cell.stackView.isHidden = false
+                cell.visitedLabel.isHidden = false
+                
+            }
+            
             
             return cell
         case 2:

@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import AudioToolbox
 import Foundation
-import Floaty
 
 class HomeViewController: UIViewController {
     
@@ -427,13 +426,23 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.chatIcon.isHidden = false
             cell.chatLabel.isHidden = false
         }
+        
+        if data.replyNum > 0 {
+            cell.replyLabel.text = "\(data.replyNum)"
+            cell.replyIcon.setImage(UIImage(systemName: "message"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.replyView.isHidden = false
+            cell.replyIcon.isHidden = false
+            cell.replyLabel.isHidden = false
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ContentsViewController()
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        let data = prodData[indexPath.row]
+        let vc = ContentsViewController(items: [data])
+        self.navigationController?.pushViewController(vc, animated: true)                                
         
     }
     
@@ -521,20 +530,20 @@ extension HomeViewController: PopOverLocationSelectedDelegate {
 extension HomeViewController {
     func setSampleData() {
         prodData.append(contentsOf: [
-            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", heartNum: 20, chatNum: 30, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
-            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", heartNum: 200, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이4", prodTitle: "당근이2 팝니다", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", heartNum: 40, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "15분 전", price: "5000원", heartNum: 0, chatNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이5", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "20분 전", price: "5300원", heartNum: 20, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "봉천2동", uploadTime: "1분 전", price: "545,000원", heartNum: 0, chatNum: 30, mannerDegree: 30.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "4분 전", price: "50,300원", heartNum: 2, chatNum: 0, mannerDegree: 37.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "50분 전", price: "50,220원", heartNum: 20, chatNum: 30, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "43분 전", price: "22,000원", heartNum: 0, chatNum: 3, mannerDegree: 38.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "중앙2동", uploadTime: "41분 전", price: "15,000원", heartNum: 200, chatNum: 30, mannerDegree: 44.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이6", prodTitle: "스페셜 당근이 팝니다", location: "중앙동", uploadTime: "34분 전", price: "32,000원", heartNum: 20, chatNum: 3, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이2", prodTitle: "귀여운 당근이 팝니다", location: "행운동", uploadTime: "54분 전", price: "54,000원", heartNum: 2000, chatNum: 30, mannerDegree: 66.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "14분 전", price: "52,000원", heartNum: 1, chatNum: 5, mannerDegree: 50.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "2", uploadTime: "44분 전", price: "550,000원", heartNum: 3, chatNum: 3, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", visitNum: 0, heartNum: 20, chatNum: 30, replyNum: 5, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
+            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", visitNum: 15, heartNum: 200, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이4", prodTitle: "당근이 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", visitNum: 50, heartNum: 40, chatNum: 30, replyNum: 2, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 당근이 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...당근이를 아껴주시고 사랑해주세요! 바니바니 당근당근", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "15분 전", price: "5000원", visitNum: 25, heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "봉천동메시", userIcon: "당근이5"),
+            ProdData(prodImage: "당근이5", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "20분 전", price: "5300원", visitNum: 55, heartNum: 20, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동카카", userIcon: "당근이6"),
+            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "봉천2동", uploadTime: "1분 전", price: "545,000원", visitNum: 512, heartNum: 0, chatNum: 30, replyNum: 0, mannerDegree: 30.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동루카쿠", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이6", prodTitle: "당근이2 팝니다", location: "중앙동", uploadTime: "4분 전", price: "50,300원", visitNum: 90, heartNum: 2, chatNum: 0, replyNum: 0, mannerDegree: 37.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동벤테케", userIcon: "당근이7"),
+            ProdData(prodImage: "당근이2", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "50분 전", price: "50,220원", visitNum: 87, heartNum: 20, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동손흥민", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "행운동", uploadTime: "43분 전", price: "22,000원", visitNum: 25, heartNum: 0, chatNum: 3, replyNum: 1, mannerDegree: 38.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동날라차기", userIcon: "당근이4"),
+            ProdData(prodImage: "당근이7", prodTitle: "당근이2 팝니다", location: "중앙2동", uploadTime: "41분 전", price: "15,000원", visitNum: 35, heartNum: 200, chatNum: 30, replyNum: 0, mannerDegree: 44.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "아이디랜덤", userIcon: "당근이"),
+            ProdData(prodImage: "당근이6", prodTitle: "스페셜 당근이 팝니다", location: "중앙동", uploadTime: "34분 전", price: "32,000원", visitNum: 45, heartNum: 20, chatNum: 3, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동거래왕", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이2", prodTitle: "귀여운 당근이 팝니다", location: "행운동", uploadTime: "54분 전", price: "54,000원", visitNum: 115, heartNum: 2000, chatNum: 30, replyNum: 30, mannerDegree: 66.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동당근이", userIcon: "당근이5"),
+            ProdData(prodImage: "당근이", prodTitle: "당근이2 팝니다", location: "봉천동", uploadTime: "14분 전", price: "52,000원", visitNum: 25, heartNum: 1, chatNum: 5, replyNum: 0, mannerDegree: 50.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "당근짱짱최고", userIcon: "당근이7"),
+            ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "2", uploadTime: "44분 전", price: "550,000원", visitNum: 0, heartNum: 3, chatNum: 3, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "바니바니당근당근", userIcon: "당근이3"),
         ])
     }
 }

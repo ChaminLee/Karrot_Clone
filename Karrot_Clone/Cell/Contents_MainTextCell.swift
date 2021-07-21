@@ -81,9 +81,20 @@ class Contents_MainTextCell: UITableViewCell {
         return lb
     }()
     
-    let interestLabel: UILabel = {
+    var stackView = UIStackView()
+    
+    let chatLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "관심 10" //\(interestCount)
+//        lb.text = "관심 10"
+        lb.textColor = UIColor(named: CustomColor.reply.rawValue)
+        lb.numberOfLines = 0
+        lb.font = UIFont(name: "Helvetica", size: 13)
+        return lb
+    }()
+    
+    let heartLabel: UILabel = {
+        let lb = UILabel()
+//        lb.text = "관심 10"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -92,15 +103,30 @@ class Contents_MainTextCell: UITableViewCell {
     
     let visitedLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "∙ 조회 17"
+//        lb.text = "∙ 조회 17"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
         return lb
     }()
     
-    func config() {        
-        [titleLabel, categoryButton, timeLabel, mainLabel, interestLabel, visitedLabel].forEach { item in
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.stackView.isHidden = true
+        
+        self.chatLabel.isHidden = true
+        self.heartLabel.isHidden = true
+        self.visitedLabel.isHidden = true
+        
+    }
+    
+    func config() {
+        
+        self.stackView = UIStackView.init(arrangedSubviews: [chatLabel,heartLabel,visitedLabel])
+        stackView.spacing = 3
+        stackView.distribution = .fill
+        
+        [titleLabel, categoryButton, timeLabel, mainLabel, stackView].forEach { item in
             contentView.addSubview(item)
         }
         
@@ -125,15 +151,21 @@ class Contents_MainTextCell: UITableViewCell {
             $0.trailing.equalTo(titleLabel.snp.trailing)
         }
         
-        interestLabel.snp.makeConstraints {
+        stackView.snp.makeConstraints {
+            $0.leading.equalTo(titleLabel.snp.leading)
             $0.top.equalTo(mainLabel.snp.bottom).offset(15)
-            $0.leading.equalTo(mainLabel.snp.leading)
-        }
-        
-        visitedLabel.snp.makeConstraints {
-            $0.top.equalTo(interestLabel.snp.top)
-            $0.leading.equalTo(interestLabel.snp.trailing).offset(5)
             $0.bottom.equalToSuperview().inset(40)
         }
+        
+//        heartLabel.snp.makeConstraints {
+//            $0.top.equalTo(mainLabel.snp.bottom).offset(15)
+//            $0.leading.equalTo(mainLabel.snp.leading)
+//        }
+//
+//        visitedLabel.snp.makeConstraints {
+//            $0.top.equalTo(heartLabel.snp.top)
+//            $0.leading.equalTo(heartLabel.snp.trailing).offset(5)
+//            $0.bottom.equalToSuperview().inset(40)
+//        }
     }
 }

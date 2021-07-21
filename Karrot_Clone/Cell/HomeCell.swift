@@ -59,7 +59,7 @@ class HomeCell: UITableViewCell {
     let heartIcon: UIButton = {
         let bt = UIButton()
         bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        let size: CGFloat = 18
+        let size: CGFloat = 19
         bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
         bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
         bt.imageView?.contentMode = .scaleAspectFit
@@ -76,7 +76,7 @@ class HomeCell: UITableViewCell {
     
     let chatIcon: UIButton = {
         let bt = UIButton()
-        bt.frame = CGRect(x: 0, y: 0, width: 38, height: 30)
+        bt.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
         let size: CGFloat = 23
         bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
         bt.imageView?.contentMode = .scaleAspectFit
@@ -85,6 +85,24 @@ class HomeCell: UITableViewCell {
     }()
     
     let chatLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = UIColor(named: CustomColor.badge.rawValue)
+        lb.numberOfLines = 0
+        lb.font = UIFont(name: "Helvetica", size: 15)
+        return lb
+    }()
+    
+    let replyIcon: UIButton = {
+        let bt = UIButton()
+        bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let size: CGFloat = 19
+        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.imageView?.contentMode = .scaleAspectFit
+        bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
+        return bt
+    }()
+    
+    let replyLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.badge.rawValue)
         lb.numberOfLines = 0
@@ -102,6 +120,11 @@ class HomeCell: UITableViewCell {
         return view
     }()
     
+    var replyView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     var stackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -115,11 +138,14 @@ class HomeCell: UITableViewCell {
         
         self.chatView.isHidden = true
         self.heartView.isHidden = true
+        self.replyView.isHidden = true
         
         self.heartLabel.isHidden = true
         self.heartIcon.isHidden = true
         self.chatIcon.isHidden = true
         self.chatLabel.isHidden = true
+        self.replyIcon.isHidden = true
+        self.replyLabel.isHidden = true
     }
     
     func config() {
@@ -133,7 +159,7 @@ class HomeCell: UITableViewCell {
         
         heartLabel.snp.makeConstraints {
             $0.centerY.equalTo(heartIcon.snp.centerY)
-            $0.leading.equalTo(heartIcon.snp.trailing).offset(3)
+            $0.leading.equalTo(heartIcon.snp.trailing).offset(2)
             $0.trailing.equalToSuperview()
         }
         
@@ -147,13 +173,27 @@ class HomeCell: UITableViewCell {
         
         chatLabel.snp.makeConstraints {
             $0.centerY.equalTo(chatIcon.snp.centerY)
-            $0.leading.equalTo(chatIcon.snp.trailing).offset(3)
+            $0.leading.equalTo(chatIcon.snp.trailing).offset(2)
             $0.trailing.equalToSuperview()
         }
         
-        self.stackView = UIStackView.init(arrangedSubviews: [chatView,heartView])
+        replyView.addSubview(replyIcon)
+        replyView.addSubview(replyLabel)
+        
+        replyIcon.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+            $0.height.equalTo(15)
+        }
+        
+        replyLabel.snp.makeConstraints {
+            $0.centerY.equalTo(replyIcon.snp.centerY)
+            $0.leading.equalTo(replyIcon.snp.trailing).offset(2)
+            $0.trailing.equalToSuperview()
+        }
+        
+        self.stackView = UIStackView.init(arrangedSubviews: [replyView, chatView,heartView])
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = 3
         stackView.distribution = .fill
         
         [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,stackView].forEach { item in
@@ -161,13 +201,13 @@ class HomeCell: UITableViewCell {
         }
         
         thumbnail.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview().inset(15)
+            $0.leading.top.bottom.equalToSuperview().inset(18)
             $0.width.equalTo(thumbnail.snp.height)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.equalTo(thumbnail.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.leading.equalTo(thumbnail.snp.trailing).offset(15)
+            $0.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(thumbnail.snp.top)
         }
         

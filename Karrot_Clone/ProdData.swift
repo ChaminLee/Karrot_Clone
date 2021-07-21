@@ -13,8 +13,11 @@ struct ProdData {
     var location: String
     var uploadTime: String
     var price: String
+    
+    var visitNum: Int
     var heartNum: Int
     var chatNum: Int
+    var replyNum: Int
     
     var mannerDegree: Float
     var category: String
