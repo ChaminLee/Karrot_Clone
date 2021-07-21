@@ -1,4 +1,4 @@
-# 당근마켓_iOS 클론앱
+# 당근마켓 iOS 클론앱
 
 
 ## 요약
@@ -15,4 +15,12 @@
 
 -------------
 
-## 구현 결과 
+# 구현 결과
+
+## Light Mode
+|런치스크린|홈|지역 버튼 클릭|
+|:----:|:----:|:----:|
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/launch.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Home.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Location.gif" width="300">|
+|글쓰기 버튼|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Add.gif" width="300">|||
+
