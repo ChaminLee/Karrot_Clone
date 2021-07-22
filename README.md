@@ -23,12 +23,20 @@
 |런치스크린|홈|지역 버튼 클릭|
 |:----:|:----:|:----:|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/launch.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Home.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Location.gif" width="300">|
-|글쓰기 버튼|||
+|글쓰기 버튼|새로고침|상품 뷰|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Add.gif" width="300">|||
+|상품 뷰 이동|상품 이미지 슬라이더|네비게이션 컬러 변경|
+||||
+|매너 온도 | 하단 관심버튼 클릭||
+||||
 
 ## Dark Mode
 |런치스크린|홈|지역 버튼 클릭|
 |:----:|:----:|:----:|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/launch.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Home.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Location.gif" width="300">|
-|글쓰기 버튼|||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Add.gif" width="300">|||
+|글쓰기 버튼|새로고침|상품 뷰|
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Add.gif" width="300">|||
+|상품 뷰 이동|상품 이미지 슬라이더|네비게이션 컬러 변경|
+||||
+|매너 온도 | 하단 관심버튼 클릭||
+||||
