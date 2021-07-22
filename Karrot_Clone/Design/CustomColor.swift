@@ -14,7 +14,7 @@ enum CustomColor: String {
     case reply = "ReplyColor"
     case karrot = "KarrotColor"
     case badge = "BadgeColor"
-    case separator = "SeeparatorColor"
+    case separator = "SeparatorColor"
     case manner1 = "Manner1"
     case manner2 = "Manner2"
     case manner3 = "Manner3"

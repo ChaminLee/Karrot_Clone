@@ -70,7 +70,7 @@ class Contents_RecommendCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-            $0.height.equalTo(1900)
+            $0.height.equalTo(1950)
             
             
         }

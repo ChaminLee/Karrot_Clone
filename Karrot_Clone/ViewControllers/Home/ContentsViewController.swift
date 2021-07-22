@@ -23,6 +23,14 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var images = ["당근이","당근이2","당근이3","당근이4","당근이5"]
     
+    let bottomAnchor: UIView = {
+        let ba = UIView()
+        ba.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+        return ba
+    }()
+    
+    
+    
     let contentTable : UITableView = {
         let tv = UITableView(frame: CGRect.zero, style: .grouped)
         tv.register(Contents_UserInfoCell.self, forCellReuseIdentifier: Contents_UserInfoCell.identifier)
@@ -32,7 +40,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         tv.register(Contents_RecommendCell.self, forCellReuseIdentifier: Contents_RecommendCell.identifier)
         tv.separatorColor = UIColor(named: CustomColor.separator.rawValue)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        
+        tv.backgroundColor = .systemBackground //UIColor(named: systemba) //UIColor(named: CustomColor.background.rawValue)
         tv.contentInsetAdjustmentBehavior = .never
         return tv
     }()
@@ -54,7 +62,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bottttomAnchorConfig()
         config()
         setNavItems()
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
@@ -71,7 +79,9 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.barTintColor = UIColor.clear
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-//        self.navigationController?.navigationBar.backgroundColor 
+//        self.navigationController?.navigationBar.backgroundColor
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
         DispatchQueue.main.async {
             self.contentTable.reloadData()
         }
@@ -82,7 +92,8 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
         self.navigationController?.navigationBar.isTranslucent = false
-        
+        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isTranslucent = false
         print("사라져")
     }
     
@@ -91,6 +102,107 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         contentTable.frame = view.bounds
         contentTable.reloadData()
     }
+    
+    let heartButton: UIButton = {
+        let bt = UIButton()
+        bt.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+        let size: CGFloat = 23
+        bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.imageView?.contentMode = .scaleAspectFit
+        bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
+        bt.setImage(UIImage(systemName: "heart"), for: .normal)
+        bt.addTarget(self, action: #selector(heartClicked), for: .touchUpInside)
+        return bt
+    }()
+    
+    var heartStatus = false
+    
+    @objc func heartClicked() {
+        if !heartStatus {
+            heartButton.tintColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+            heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            heartButton.tintColor = UIColor(named: CustomColor.badge.rawValue)
+            heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        heartStatus = !heartStatus
+    }
+    
+    let separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: CustomColor.separator.rawValue)
+        return view
+    }()
+    
+    let priceLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "17,000원"
+        lb.font = UIFont(name: "Helvetica-Bold", size: 17)
+        lb.textColor = UIColor(named: CustomColor.text.rawValue)
+        return lb
+    }()
+    
+    let nonNego: UILabel = {
+        let lb = UILabel()
+        lb.text = "가격제안불가"
+        lb.textColor = UIColor(named: CustomColor.badge.rawValue)
+        lb.font = UIFont(name: "Helvetica", size: 14)
+        return lb
+    }()
+    
+    let chatTrade: UIButton = {
+        let bt = UIButton()
+        bt.setTitle("채팅으로 거래하기", for: .normal)
+        let size: CGFloat = 5
+        bt.titleEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 15)
+        bt.layer.masksToBounds = false
+        bt.layer.cornerRadius = 5 // bt.frame.height / 2
+        bt.clipsToBounds = true
+        bt.backgroundColor = UIColor(named: CustomColor.karrot.rawValue)
+        return bt
+    }()
+    
+    func bottttomAnchorConfig() {
+        
+        [heartButton, separatorLine, priceLabel,nonNego,chatTrade].forEach { item in
+            bottomAnchor.addSubview(item)
+        }
+        
+        heartButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(30)
+            $0.leading.equalToSuperview().offset(15)
+        }
+        
+        separatorLine.snp.makeConstraints {
+            $0.leading.equalTo(heartButton.snp.trailing).offset(20)
+            $0.width.equalTo(1)
+            $0.centerY.equalTo(heartButton.snp.centerY)
+            $0.height.equalTo(40)
+//            $0.top.equalTo(heartButton.snp.top)
+//            $0.bottom.equalToSuperview().inset(30)
+        }
+        
+        priceLabel.snp.makeConstraints {
+            $0.leading.equalTo(separatorLine.snp.trailing).offset(15)
+            $0.top.equalTo(separatorLine.snp.top)
+        }
+        
+        nonNego.snp.makeConstraints {
+            $0.leading.equalTo(priceLabel.snp.leading)
+            $0.bottom.equalTo(separatorLine.snp.bottom)
+        }
+        
+        
+        chatTrade.snp.makeConstraints {
+            $0.centerY.equalTo(heartButton.snp.centerY)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.width.equalTo(150)
+            $0.height.equalTo(separatorLine.snp.height)
+        }
+    }
+    
+    
     
     func config() {
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
@@ -103,12 +215,20 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         view.backgroundColor = .white
 
         view.addSubview(contentTable)
+        view.addSubview(bottomAnchor)
+        
+        bottomAnchor.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(117)
+            $0.leading.trailing.equalToSuperview()
+        }
         
         contentTable.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.bottom.equalTo(view.safeAreaInsets.top)
+            $0.top.equalTo(view.safeAreaInsets.top)
+            $0.bottom.equalTo(bottomAnchor.snp.top)
         }
-        
+    
     }
     
     func setNavItems() {
@@ -311,9 +431,10 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_RecommendCell",for: indexPath) as! Contents_RecommendCell
+            cell.selectionStyle = .none
             
             cell.titleLabel.text = "차밍님, 이건 어때요?"
-            
+//            cell.backgroundColor = UIColor(named: CustomColor.background.rawValue)
             return cell
             
         default:
@@ -335,7 +456,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     // HeaderView 이미지 스크롤
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 400))
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 390))
 
         let headerWidth = headerView.frame.width
         let headerHeight = headerView.frame.height
@@ -379,7 +500,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 400
+        return 390
     }
 }
 
