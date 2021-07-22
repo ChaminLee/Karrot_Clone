@@ -275,10 +275,33 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func shareButtonClicked() {
-        print("share")
+        if let name = URL(string: "https://github.com/ChaminLee") {
+            let objectsToShare = [name]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            self.present(activityVC,animated: true,completion: nil)
+        }
     }
     @objc func moreButtonClicked() {
-        print("more")
+        
+        let alert = UIAlertController()
+            
+        alert.addAction(UIAlertAction(title: "신고하기", style: .default , handler:{ (UIAlertAction)in
+            // 신고 뷰 이동
+        }))
+
+        alert.addAction(UIAlertAction(title: "이 사용자의 글 보지 않기", style: .default , handler:{ (UIAlertAction)in
+            // 차단 핸들러
+        }))
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler:{ (UIAlertAction)in
+            // 취소
+        }))
+
+        
+        //uncomment for iPad Support
+        //alert.popoverPresentationController?.sourceView = self.view
+
+        self.present(alert, animated: true, completion: nil)
     }
     
     func naviStyle(){

@@ -13,6 +13,7 @@ import Foundation
 class HomeViewController: UIViewController {
     
     var prodData = [ProdData]()
+    var locationData = "지역을 선택해주세요"
     
     var feedBackGenerator: UINotificationFeedbackGenerator?
     
@@ -35,7 +36,6 @@ class HomeViewController: UIViewController {
         setFloatingButton()
         hideViewWhenTappedAround()
         setUpGenerator()
-        print("뷰 디드로드 ")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +43,6 @@ class HomeViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         navStyle()
-        print("뷰윌어피어")
     }
     
     private func navStyle() {
@@ -208,20 +207,24 @@ class HomeViewController: UIViewController {
     var locationButtonRoated : (() -> ())?
     
     @objc func locationItemClicked(_ sender: UIButton) {
-        print("정자 1동!")
+        print("\(locationButton)")
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
         
         DispatchQueue.main.async {
-//            if !self.rotated {
+            if !self.rotated {
                 UIView.animate(withDuration: 0.25) {
                     self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-//                    self.floatingDimView.isHidden = false
-//                    self.floatingDimView.alpha = 1
-                    
                 }
                 self.view.layoutIfNeeded()
-                self.rotated = !self.rotated
-//            }
+                
+            } else {
+                UIView.animate(withDuration: 0.25) {
+                    self.locationButtonRoated?()
+                }
+                self.view.layoutIfNeeded()
+            }
+//            self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 3)
+            self.rotated = !self.rotated
         }
         
         self.hometable.reloadData()

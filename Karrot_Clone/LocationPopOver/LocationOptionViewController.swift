@@ -80,18 +80,19 @@ class LocationOptionViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("팝업 사라진다아")
-//        self.presentingViewController?.view.col
+        
         self.presentingViewController?.view.alpha = 1
-//        let vc = HomeViewController()
-//        vc.locationButtonRoated = { [unowned self] in
-//            print("실행은 됨 1")
-//            UIView.animate(withDuration: 0.25) {
-//                DispatchQueue.main.async {
-//                    print("실행은 됨 ")
-//                    vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-//                }
-//            }
-//        }
+        let vc = HomeViewController()
+        UIView.animate(withDuration: 0.25) {
+            vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+            print(print("실행은 됨"))
+        }
+        vc.locationButtonRoated = { [unowned self] in
+            UIView.animate(withDuration: 0.25) {
+                vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+            }
+            
+        }
     }
     
 
@@ -189,8 +190,10 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
                 }
             } else {
                 print("내가 고른 장소 : \(item.text)")
-                
                 self.selectedDelegate?.selectedLocation(controller: self, didSelectItem: item.text)
+                
+                let vc = HomeViewController()
+                vc.locationData = item.text 
                 
                 item.font = UIFont(name: "Helvetica-Bold", size: 14)!
                 item.isSelected = true
