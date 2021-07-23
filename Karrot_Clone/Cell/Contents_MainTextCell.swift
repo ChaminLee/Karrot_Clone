@@ -191,15 +191,5 @@ class Contents_MainTextCell: UITableViewCell {
             $0.bottom.equalToSuperview().inset(40)
         }
         
-//        heartLabel.snp.makeConstraints {
-//            $0.top.equalTo(mainLabel.snp.bottom).offset(15)
-//            $0.leading.equalTo(mainLabel.snp.leading)
-//        }
-//
-//        visitedLabel.snp.makeConstraints {
-//            $0.top.equalTo(heartLabel.snp.top)
-//            $0.leading.equalTo(heartLabel.snp.trailing).offset(5)
-//            $0.bottom.equalToSuperview().inset(40)
-//        }
     }
 }

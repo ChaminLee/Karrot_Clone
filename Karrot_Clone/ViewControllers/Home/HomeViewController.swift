@@ -308,9 +308,6 @@ class HomeViewController: UIViewController {
         floatingStackView.axis = .vertical
         floatingStackView.alignment = .trailing
         
-        
-//        UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.addSubview(floatingStackView)
-
         view.insertSubview(floatingStackView, at: 1)
         view.bringSubviewToFront(floatingStackView)
         

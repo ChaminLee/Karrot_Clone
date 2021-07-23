@@ -179,8 +179,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             $0.width.equalTo(1)
             $0.centerY.equalTo(heartButton.snp.centerY)
             $0.height.equalTo(40)
-//            $0.top.equalTo(heartButton.snp.top)
-//            $0.bottom.equalToSuperview().inset(30)
         }
         
         priceLabel.snp.makeConstraints {

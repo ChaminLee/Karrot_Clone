@@ -79,19 +79,11 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("팝업 사라진다아")
         
         self.presentingViewController?.view.alpha = 1
         let vc = HomeViewController()
         UIView.animate(withDuration: 0.25) {
             vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
-            print(print("실행은 됨"))
-        }
-        vc.locationButtonRoated = { [unowned self] in
-            UIView.animate(withDuration: 0.25) {
-                vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
-            }
-            
         }
     }
     
