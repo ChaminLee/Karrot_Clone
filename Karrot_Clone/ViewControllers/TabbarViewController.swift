@@ -33,6 +33,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         homeview.navigationController?.navigationController?.navigationBar.backgroundColor = UIColor.green //UIColor(named: CustomColor.background.rawValue)
         homeview.tabBarItem = homeitem
         
+        
         // Town
         let lifeview = UINavigationController(rootViewController: LifeViewController())
         let lifeitem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill",withConfiguration: UIImage.SymbolConfiguration(weight: .bold)))

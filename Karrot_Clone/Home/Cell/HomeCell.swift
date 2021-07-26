@@ -254,14 +254,6 @@ class HomeCell: UITableViewCell {
     }
 }
 
-/// StackView 세팅 메서드
-//extension HomeCell {
-//    public func stackViewConfig(_ stackview: UIStackView) {
-//        stackview.distribution = .fill
-//        stackview.axis = .horizontal
-//        stackview.alignment = .center
-//    }
-//}
 
 extension UIStackView {
     func stackViewConfig(_ stackview: UIStackView) {

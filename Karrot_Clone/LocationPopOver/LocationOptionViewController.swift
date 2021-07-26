@@ -70,6 +70,9 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.shared.windows.last!.alpha = 0.3
+        
+        UIApplication.shared.windows.last!.isUserInteractionEnabled = false
         self.preferredContentSize = self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         if manners.count == 0 {
             self.presentingViewController?.view.alpha = 0.3
@@ -79,12 +82,10 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        UIApplication.shared.windows.last!.alpha = 1
+        UIApplication.shared.windows.last!.isUserInteractionEnabled = true
         self.presentingViewController?.view.alpha = 1
-        let vc = HomeViewController()
-        UIView.animate(withDuration: 0.25) {
-            vc.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
-        }
+
     }
     
 
@@ -94,9 +95,6 @@ class LocationOptionViewController: UIViewController {
         var width: CGFloat = 0, height: CGFloat = 0
         
         if items.flatMap {$0}.count == 0 {
-//            width = manners.flatMap{ $0 }.reduce(0) { $1.sizeForManneerText().width + approxAccessoryViewWidth > $0 ? $1.sizeForManneerText().width + 56 : $0 }
-//            let totalItems = CGFloat(manners.flatMap{ $0 }.count )
-//            height = totalItems * 44
             width = 250
             height = 130
         } else {

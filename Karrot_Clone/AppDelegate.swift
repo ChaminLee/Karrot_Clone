@@ -11,6 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var floatingButtonController: FloatingButtonController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,7 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = root
         window?.makeKeyAndVisible()
         
+        floatingButtonController = FloatingButtonController()        
+//        floatingButtonController?.AddButton.addTarget(self, action: #selector(floatingButtonWasTapped), for: .touchUpInside)
+        
         return true
+    }
+    
+    @objc func floatingButtonWasTapped() {
+        let alert = UIAlertController(title: "Warning", message: "Don't do that!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Sorry…", style: .default, handler: nil)
+        alert.addAction(action)
+        window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
 }

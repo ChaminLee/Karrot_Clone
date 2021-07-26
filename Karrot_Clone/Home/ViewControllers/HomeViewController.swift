@@ -24,17 +24,13 @@ class HomeViewController: UIViewController {
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         return tv
     }()
-    var usedStackView = UIStackView()
-    var neighborStackView = UIStackView()
-    var floatingStackView = UIStackView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setSampleData()
         setHomeTable()
         setNavMenu()
-        setFloatingButton()
-        hideViewWhenTappedAround()
         setUpGenerator()
     }
     
@@ -43,6 +39,12 @@ class HomeViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         navStyle()
+        UIApplication.shared.windows.last!.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.windows.last!.isHidden = true
     }
     
     private func navStyle() {
@@ -153,7 +155,7 @@ class HomeViewController: UIViewController {
         }()
         
         let rightStackView = UIStackView.init(arrangedSubviews: [searchButton, categoryButton, bellButton])
-        customStackViewConfig(rightStackView)
+        rightStackView.stackViewConfig(rightStackView)
         rightStackView.spacing = 18
         
         let rightSection = UIBarButtonItem(customView: rightStackView)
@@ -163,7 +165,7 @@ class HomeViewController: UIViewController {
         locationArrowButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
         
         let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
-        customStackViewConfig(leftStackView)
+        leftStackView.stackViewConfig(leftStackView)
         
         leftStackView.isLayoutMarginsRelativeArrangement = true
         leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
@@ -177,23 +179,17 @@ class HomeViewController: UIViewController {
         
         navitem.leftBarButtonItem = leftSection
     }
-    
-    func customStackViewConfig(_ stackview: UIStackView) {
-        stackview.distribution = .fill //.equalSpacing
-        stackview.axis = .horizontal
-        stackview.alignment = .center
-    }
 
-    /// For UIButton
+    /// For UIButton PopOver Action
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.items = items
+        
         // 지역 선택 위임
         optionItemListVC.selectedDelegate = self
         
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
-        popOverPresentationController.sourceRect = CGRect(x: 10, y: 10, width: 100, height: 10)
         popOverPresentationController.delegate = self
 
         self.present(optionItemListVC, animated: true, completion: nil)
@@ -205,10 +201,8 @@ class HomeViewController: UIViewController {
     var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
     var rotated = false
-    var locationButtonRoated : (() -> ())?
     
     @objc func locationItemClicked(_ sender: UIButton) {
-        print("\(locationButton)")
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
         
         DispatchQueue.main.async {
@@ -218,13 +212,7 @@ class HomeViewController: UIViewController {
                 }
                 self.view.layoutIfNeeded()
                 
-            } else {
-                UIView.animate(withDuration: 0.25) {
-                    self.locationButtonRoated?()
-                }
-                self.view.layoutIfNeeded()
             }
-//            self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 3)
             self.rotated = !self.rotated
         }
         
@@ -243,153 +231,6 @@ class HomeViewController: UIViewController {
     
     @objc func bellClicked() {
         print("알림!")
-    }
-    
-    let addPostButton: UIButton = {
-        let bt = UIButton()
-        let size: CGFloat = 60
-        bt.setImage(UIImage(named: "Add")?.scalePreservingAspectRatio(targetSize: CGSize(width: size, height: size)), for: .normal)
-        bt.layer.shadowColor = UIColor.black.cgColor
-        bt.layer.shadowRadius = 3
-        bt.layer.shadowOpacity = 0.5
-        bt.layer.shadowOffset = CGSize.zero
-        bt.addTarget(self, action: #selector(floatingButtonClicked(_:)), for: .touchUpInside)
-        return bt
-    }()
-    
-    let usedLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "중고거래"
-        lb.textColor = .white
-        lb.font = UIFont(name: "Helvetica-Bold", size: 17)
-        return lb
-    }()
-    
-    let usedButton: UIButton = {
-        let bt = UIButton()
-        let size: CGFloat = 40
-        bt.setImage(UIImage(named: "write")?.scalePreservingAspectRatio(targetSize: CGSize(width: size, height: size)), for: .normal)
-        return bt
-    }()
-    
-    let neighborLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "동네홍보"
-        lb.textColor = .white
-        lb.font = UIFont(name: "Helvetica-Bold", size: 17)
-        return lb
-    }()
-    
-    let neighborButton: UIButton = {
-        let bt = UIButton()
-        let size: CGFloat = 40
-        bt.setImage(UIImage(named: "neighbor")?.scalePreservingAspectRatio(targetSize: CGSize(width: size, height: size)), for: .normal)
-        return bt
-    }()
-    
-    /// Floating Writte Button
-    func setFloatingButton() {
-        self.usedStackView = UIStackView.init(arrangedSubviews: [usedLabel, usedButton])
-        usedStackView.axis = .horizontal
-        usedStackView.spacing = 10
-        usedStackView.isLayoutMarginsRelativeArrangement = true
-        usedStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        self.usedStackView.isHidden = true
-        
-        self.neighborStackView = UIStackView.init(arrangedSubviews: [neighborLabel, neighborButton])
-        neighborStackView.axis = .horizontal
-        neighborStackView.spacing = 10
-        neighborStackView.isLayoutMarginsRelativeArrangement = true
-        neighborStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        self.neighborStackView.isHidden = true
-        
-        self.floatingStackView = UIStackView.init(arrangedSubviews: [neighborStackView, usedStackView, addPostButton])
-        floatingStackView.distribution = .equalSpacing
-        floatingStackView.spacing = 15
-        floatingStackView.axis = .vertical
-        floatingStackView.alignment = .trailing
-        
-        view.insertSubview(floatingStackView, at: 1)
-        view.bringSubviewToFront(floatingStackView)
-        
-        floatingStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
-            $0.right.equalToSuperview().inset(20)
-        }
-        
-    }
-    
-    lazy var floatingDimView: UIView = {
-        let view = UIView(frame: CGRect(x:0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        view.alpha = 0
-        view.isHidden = true
-
-        
-        self.view.insertSubview(view, belowSubview: self.floatingStackView)
-        
-        return view
-    }()
-    
-    var isShowFloating: Bool = false
-    
-    lazy var buttons = [usedStackView, neighborStackView]
-    
-    @objc func floatingButtonClicked(_ sender: UIButton) {
-        let imgSize: CGFloat = 60
-        
-        print("너비 :\(UIScreen.main.bounds.width), 높이 : \(UIScreen.main.bounds.height)")
-                
-        if isShowFloating {
-            buttons.reversed().forEach { button in
-                UIView.animate(withDuration: 0.3) {
-                    button.isHidden = true
-                    self.view.layoutIfNeeded()
-                }
-            }
-            
-            self.tabBarController?.tabBar.alpha = 1
-            UIView.animate(withDuration: 0.5, animations: {
-                
-            }) { (_) in
-                self.floatingDimView.isHidden = true
-                self.floatingDimView.alpha = 0
-                self.navStyle()
-            }
-        } else {
-            self.feedBackGenerator?.notificationOccurred(.success)
-            
-            UIView.animate(withDuration: 0.2) {
-                self.floatingDimView.isHidden = false
-                self.floatingDimView.alpha = 1
-                self.navigationController?.navigationBar.backgroundColor = .black
-                self.navigationController?.navigationBar.alpha = 0.5
-                self.tabBarController?.tabBar.backgroundColor = .black
-                self.tabBarController?.tabBar.alpha = 0.5
-            }
-            
-            buttons.forEach { [weak self] stack in
-                UIView.animate(withDuration: 0.3) {
-                    stack.isHidden = false
-                    self?.view.layoutIfNeeded()
-                }
-                
-            }
-        }
-        
-        self.isShowFloating = !isShowFloating
-        
-        
-        
-        print("clicked \(isShowFloating)")
-        
-        let image = isShowFloating ? UIImage(named: "cancel") : UIImage(named: "Add")
-        let rotation = isShowFloating ? CGAffineTransform(rotationAngle: .pi - (.pi / 2)) : CGAffineTransform.identity
-        
-        UIView.animate(withDuration: 0.3) {
-            sender.setImage(image?.scalePreservingAspectRatio(targetSize: CGSize(width: imgSize, height: imgSize)), for: .normal)
-            sender.transform = rotation
-        }
     }
     
 }
@@ -464,37 +305,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
-
-extension HomeViewController {
-    func hideViewWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.dismissView))
-        tap.cancelsTouchesInView = false
-        
-        self.floatingDimView.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissView() {
-        let imgSize: CGFloat = 60
-        
-        buttons.map {$0.isHidden = true}
-        self.navStyle()
-        self.tabBarController?.tabBar.alpha = 1
-        self.floatingDimView.isHidden = true
-        
-        let image = UIImage(named: "Add")
-        let rotation = CGAffineTransform.identity
-        
-        UIView.animate(withDuration: 0.3) {
-//            self.floatingDimView.alpha = 0
-            
-            self.addPostButton.setImage(image?.scalePreservingAspectRatio(targetSize: CGSize(width: imgSize, height: imgSize)), for: .normal)
-            self.addPostButton.transform = rotation
-        }
-        isShowFloating = !isShowFloating
-        self.rotated = !self.rotated
-    }
-}
-
 
 extension HomeViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
