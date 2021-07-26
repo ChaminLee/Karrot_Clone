@@ -11,19 +11,17 @@ import SnapKit
 
 class Contents_SellerCell: UITableViewCell {
     
-    var sellersOtherItems = [OtherProduct]()
+    var otherProd = [ProdData]()
     static let identifier = "Contents_SellerCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setOtherSampleData()
+        setSampleData()
         config()
-        print(sellersOtherItems.count)
     }
     
     let titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "정자동불주먹님의 판매 상품" // \(seller.name)
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 15)
@@ -74,7 +72,7 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-            if sellersOtherItems.count > 2 {
+            if otherProd.count > 2 {
                 $0.height.equalTo(360)
             } else {
                 $0.height.equalTo(160)
@@ -91,18 +89,20 @@ class Contents_SellerCell: UITableViewCell {
 extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sellersOtherItems.count
+        return otherProd.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20.0
-        layout.minimumInteritemSpacing = 5.0
-        
+        layout.minimumInteritemSpacing = 6.0
+
         let numberOfItemsPerRow: CGFloat = 2.0
-        let width = (collectionView.bounds.width - layout.minimumLineSpacing) / numberOfItemsPerRow
+
+        let width = (collectionView.bounds.width - layout.minimumInteritemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
+
+        return CGSize(width: width, height: width)
         
-        return CGSize(width: width, height: width)//collectionView.frame.size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -112,10 +112,9 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
         
-        let data = sellersOtherItems[indexPath.row]
-        
-        cell.prodImage.image = UIImage(named: data.imgName)
-        cell.prodLabel.text = data.title
+        let data = otherProd[indexPath.row]
+        cell.prodImage.image = UIImage(named: data.prodImage)
+        cell.prodLabel.text = data.prodTitle 
         cell.priceLabel.text = data.price
         
         return cell
@@ -123,13 +122,13 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     
 }
 
-extension Contents_SellerCell {
-    func setOtherSampleData() {
-        sellersOtherItems.append(contentsOf: [
-            OtherProduct(imgName: "당근이", title: "당근이 팝니다", price: "10,000원"),
-            OtherProduct(imgName: "당근이2", title: "당근이2 팝니다 빨리빨리 주워가세요", price: "125,000원"),
-            OtherProduct(imgName: "당근이4", title: "당근이4 팝니다 빨리빨리 주워가세요", price: "2백만원"),
-            OtherProduct(imgName: "당근이5", title: "당근이5 팝니다 빨리빨리 주워가세요", price: "3백만원")
+extension Contents_SellerCell {    
+    func setSampleData() {
+        otherProd.append(contentsOf: [
+            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", visitNum: 0, heartNum: 20, chatNum: 30, replyNum: 5, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
+            ProdData(prodImage: "당근이3", prodTitle: "다른 당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", visitNum: 15, heartNum: 200, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이7", prodTitle: "당근이 넘버투 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", visitNum: 50, heartNum: 40, chatNum: 30, replyNum: 2, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 당근이 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...당근이를 아껴주시고 사랑해주세요! 바니바니 당근당근", userID: "중앙동메시", userIcon: "당근이2"),
+            ProdData(prodImage: "당근이5", prodTitle: "당근이 시즌품 팝니다", location: "행운동", uploadTime: "15분 전", price: "5,000원", visitNum: 25, heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "봉천동메시", userIcon: "당근이5")
         ])
     }
 }

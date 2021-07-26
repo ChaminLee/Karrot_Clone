@@ -153,7 +153,7 @@ class HomeViewController: UIViewController {
         }()
         
         let rightStackView = UIStackView.init(arrangedSubviews: [searchButton, categoryButton, bellButton])
-        stackViewConfig(rightStackView)
+        customStackViewConfig(rightStackView)
         rightStackView.spacing = 18
         
         let rightSection = UIBarButtonItem(customView: rightStackView)
@@ -163,7 +163,8 @@ class HomeViewController: UIViewController {
         locationArrowButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
         
         let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
-        stackViewConfig(leftStackView)
+        customStackViewConfig(leftStackView)
+        
         leftStackView.isLayoutMarginsRelativeArrangement = true
         leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
         leftStackView.spacing = 5
@@ -177,8 +178,8 @@ class HomeViewController: UIViewController {
         navitem.leftBarButtonItem = leftSection
     }
     
-    func stackViewConfig(_ stackview: UIStackView) {
-        stackview.distribution = .equalSpacing
+    func customStackViewConfig(_ stackview: UIStackView) {
+        stackview.distribution = .fill //.equalSpacing
         stackview.axis = .horizontal
         stackview.alignment = .center
     }
@@ -462,14 +463,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
        
     }
 
-}
-
-extension UIStackView {
-    func stackViewConfig(_ stackview: UIStackView) {
-        stackview.distribution = .equalSpacing
-        stackview.axis = .horizontal
-        stackview.alignment = .center
-    }
 }
 
 extension HomeViewController {

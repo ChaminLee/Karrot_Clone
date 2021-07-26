@@ -406,8 +406,8 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.cellDelegate = self
             
             cell.titleLabel.text = data.prodTitle
-            cell.timeLabel.text = " ・ " + data.uploadTime
-            cell.categoryButton.setTitle(data.category, for: .normal)
+            cell.timeLabel.text = "・ " + data.uploadTime
+            cell.categoryButton.setTitle(data.category, for: .normal)            
             cell.mainLabel.text = data.prodDescription
             
             if data.chatNum > 0 {
@@ -438,8 +438,11 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_ReportCell",for: indexPath) as! Contents_ReportCell
             cell.selectionStyle = .none
                         
+            /// ViewController > TableView > TableViewCell > reportButtonAction 사이클(순환참조)을 막기 위해
+            /// unowned로 설정 ( 값이 있음을 가정, 옵셔널일 경우 weak으로 해야하지만
+            /// ViewController가 여전히 메모리에 있음을 가정하고 진행
             cell.reportButtonAction = { [unowned self] in
-                // 신고 뷰
+                /// 신고 페이지로 이동 필요
                 print("신고")
             }
             return cell
@@ -448,6 +451,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
+            
             
             return cell
         case 4:

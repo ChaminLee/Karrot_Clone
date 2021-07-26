@@ -23,6 +23,7 @@ class Contents_UserInfoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Contents - UserInfo - 매너온도 버튼 팝업을 위해서 클로저 타입으로 선언
     var buttonAction: (() -> ())?
     
     let profileImage: UIImageView = {
@@ -60,11 +61,10 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let degreeBar: UIProgressView = {
         let pv = UIProgressView(progressViewStyle: .bar)
-//        pv.setProgress(0.365, animated: true)
         pv.trackTintColor = #colorLiteral(red: 0.837947309, green: 0.8329667449, blue: 0.8417761326, alpha: 1)
         pv.progressTintColor = UIColor.blue // by Lv
         
-        // rounded border
+        /// Progressbar rounded border
         for view in pv.subviews {
             if view is UIImageView {
                 view.clipsToBounds = true
@@ -74,6 +74,7 @@ class Contents_UserInfoCell: UITableViewCell {
         return pv
     }()
     
+    /// 온도에 따른 이미지 변경 필요 (현재는 이미지 리소스 부족ㅠ)
     let degreeIcon: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "smile")?.scalePreservingAspectRatio(targetSize: CGSize(width: 23, height: 23))
@@ -88,15 +89,13 @@ class Contents_UserInfoCell: UITableViewCell {
         return bt
     }()
     
+    /// 매너온도 버튼 클릭 시, 클로저로 선언한 액션 실행
     @objc func mannerClicked(_ sender: UIButton) {
         buttonAction?()
     }
     
-    
-    
+    /// 초기 세팅
     func config() {
-        contentView.isUserInteractionEnabled = true
-        
         [profileImage, idLabel, locationLabel, degreeLabel, degreeBar, degreeIcon, mannerInfo].forEach { item in
             contentView.addSubview(item)
         }
@@ -142,22 +141,22 @@ class Contents_UserInfoCell: UITableViewCell {
 
 }
 
-
+/// UIImage 스케일을 쉽게 조정하기 위함
 extension UIImage {
     func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
-        // Determine the scale factor that preserves aspect ratio
+        /// aspect ratio를 보존하기 위해 스케일을 정해둠
         let widthRatio = targetSize.width / size.width
         let heightRatio = targetSize.height / size.height
         
         let scaleFactor = min(widthRatio, heightRatio)
         
-        // Compute the new image size that preserves aspect ratio
+        /// aspect ratio를 유지하며 사이즈 조정
         let scaledImageSize = CGSize(
             width: size.width * scaleFactor,
             height: size.height * scaleFactor
         )
 
-        // Draw and return the resized UIImage
+        /// 사이즈 조절된 이미지 그리고 반환
         let renderer = UIGraphicsImageRenderer(
             size: scaledImageSize
         )
@@ -173,6 +172,7 @@ extension UIImage {
     }
 }
 
+/// Popover modal style 선택
 extension Contents_UserInfoCell: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none

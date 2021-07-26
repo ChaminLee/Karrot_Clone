@@ -8,19 +8,19 @@
 import Foundation
 import UIKit
 
+/// 프로토콜 선언
+/// 카테고리 버튼 클릭시 페이지 이동을 위함
 protocol ContentsMainTextDelegate: AnyObject {
     func categoryButtonTapped()
 }
 
 class Contents_MainTextCell: UITableViewCell {
     
-    // 사이클을 방지하기 위해
+    /// delegate
     var cellDelegate: ContentsMainTextDelegate?
     
     static let identifier = "Contents_MainTextCell"
     
-    var interestCount = 10
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
@@ -33,7 +33,6 @@ class Contents_MainTextCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "라미 라인 프렌즈 한정판 에디션 만년필 세트22 팔아요옹 (브라운)"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica-Bold", size: 18)
@@ -42,7 +41,6 @@ class Contents_MainTextCell: UITableViewCell {
     
     let categoryButton: UIButton = {
         let bt = UIButton()
-        bt.setTitle("기타 중고물품", for: .normal)
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica", size: 13)
         bt.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
@@ -50,13 +48,11 @@ class Contents_MainTextCell: UITableViewCell {
     }()
     
     @objc func categoryClicked() {
-        print("카테고리다아")
         cellDelegate?.categoryButtonTapped()
     }
     
     let timeLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "∙ 17분 전"
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
         lb.numberOfLines = 0
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -65,12 +61,12 @@ class Contents_MainTextCell: UITableViewCell {
     
     let mainLabel: UILabel = {
         let lb = UILabel()
-        lb.text = """
-        전자제품(특히 게임/컴퓨터쪽) 온/오프매장에서는 중고를 개인에게서 매입해 되팔기도 하지만, 판매 때 싼 가격책정이나 직접 살 때보다 조금은 더 비싼 가격 때문에 매물부터가 잘 없는 마당이라 보통 '중고거래'라 하면 각종 사이트나 카페에 있는 중고장터에서 이루어지는 것을 말한다
-        """
+        /// 줄간
+        lb.text = "."
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         
+        /// 줄간격
         let attrStr = NSMutableAttributedString(string: lb.text!)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -78,6 +74,7 @@ class Contents_MainTextCell: UITableViewCell {
         lb.attributedText = attrStr
         
         lb.font = UIFont(name: "Helvetica", size: 14)
+        
         return lb
     }()
     

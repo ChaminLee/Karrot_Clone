@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 class HomeCell: UITableViewCell {
-
     static let identifier = "HomeCell"
     
+    /// Home - Thumbnail Image
     let thumbnail: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "당근이")
@@ -24,6 +24,7 @@ class HomeCell: UITableViewCell {
         return img
     }()
     
+    /// Home - Title
     let titleLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
@@ -32,6 +33,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Location
     let locationLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
@@ -40,6 +42,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Upload Time
     let timeLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.reply.rawValue)
@@ -48,6 +51,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Prod Price
     let priceLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
@@ -56,6 +60,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Heart
     let heartIcon: UIButton = {
         let bt = UIButton()
         bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -74,6 +79,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Chat
     let chatIcon: UIButton = {
         let bt = UIButton()
         bt.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
@@ -92,6 +98,7 @@ class HomeCell: UITableViewCell {
         return lb
     }()
     
+    /// Home - Reply
     let replyIcon: UIButton = {
         let bt = UIButton()
         bt.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -110,6 +117,9 @@ class HomeCell: UITableViewCell {
         return lb
     }()
 
+    /// Heart, Chat, Reply의 Button과 Label을 뷰로 묶어준다.
+    /// StackView로 활용하기 위해
+    /// View로 묶지 않고 horizontal stackview에 넣을 경우, 너비가 균등하게 되어버려 아이템들의 너비에 문제가 생긴다.
     var heartView: UIView = {
         let view = UIView()
         return view
@@ -125,13 +135,18 @@ class HomeCell: UITableViewCell {
         return view
     }()
     
+    /// Heart, Chat, Reply의 stackview
     var stackView = UIStackView()
     
+    /// Home Cell 초기화
+    /// 코드로만 구성시 인터페이스 빌더(자동 초기화)를 사용하지 않기 때문에 작성!
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         config()
     }
     
+    /// Home Table View의 셀 재사용을 위해 변화가 예상되는 값들을 초기화
+    /// = 셀의 속성을 초기화
     override func prepareForReuse() {
         super.prepareForReuse()
         self.stackView.isHidden = true
@@ -148,6 +163,7 @@ class HomeCell: UITableViewCell {
         self.replyLabel.isHidden = true
     }
     
+    /// 초기 세팅 + UI 그리기
     func config() {
         heartView.addSubview(heartIcon)
         heartView.addSubview(heartLabel)
@@ -191,10 +207,11 @@ class HomeCell: UITableViewCell {
             $0.trailing.equalToSuperview()
         }
         
+        /// StackView 초기화
         self.stackView = UIStackView.init(arrangedSubviews: [replyView, chatView,heartView])
-        stackView.axis = .horizontal
+        stackView.stackViewConfig(stackView)
+        
         stackView.spacing = 3
-        stackView.distribution = .fill
         
         [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,stackView].forEach { item in
             contentView.addSubview(item)
@@ -237,19 +254,19 @@ class HomeCell: UITableViewCell {
     }
 }
 
-extension UIImage {
-    func resized(to size: CGSize) -> UIImage {
-        return UIGraphicsImageRenderer(size: size).image { _ in
-            draw(in: CGRect(origin: .zero, size: size))
-        }
-    }
-}
+/// StackView 세팅 메서드
+//extension HomeCell {
+//    public func stackViewConfig(_ stackview: UIStackView) {
+//        stackview.distribution = .fill
+//        stackview.axis = .horizontal
+//        stackview.alignment = .center
+//    }
+//}
 
-extension HomeCell {
+extension UIStackView {
     func stackViewConfig(_ stackview: UIStackView) {
         stackview.distribution = .fill
         stackview.axis = .horizontal
         stackview.alignment = .center
     }
-    
 }
