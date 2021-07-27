@@ -70,10 +70,11 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("팝업 뜸")
-        UIApplication.shared.windows.last!.alpha = 0.3
         
+        /// window의 글쓰기 버튼 관리
+        UIApplication.shared.windows.last!.alpha = 0.3
         UIApplication.shared.windows.last!.isUserInteractionEnabled = false
+        
         self.preferredContentSize = self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         if manners.count == 0 {
             self.presentingViewController?.view.alpha = 0.3
@@ -83,9 +84,11 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("팝업 사라짐")
+        
+        /// window의 글쓰기 버튼 관리
         UIApplication.shared.windows.last!.alpha = 1
         UIApplication.shared.windows.last!.isUserInteractionEnabled = true
+        
         self.presentingViewController?.view.alpha = 1
         
         /// Home - LocationArrowButton을 다시 돌려놔라!
@@ -97,6 +100,7 @@ class LocationOptionViewController: UIViewController {
         var width: CGFloat = 0, height: CGFloat = 0
         
         if items.flatMap {$0}.count == 0 {
+            /// 매너온도 팝업 크기
             width = 250
             height = 130
         } else {
@@ -185,15 +189,20 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
                 self.selectedDelegate?.selectedLocation(controller: self, didSelectItem: item.text)
                 
                 let vc = HomeViewController()
-                vc.locationData = item.text 
+                print("인덱스 \(indexPath.row) \(vc.LocationList)")
                 
-                item.font = UIFont(name: "Helvetica-Bold", size: 14)!
+                
                 item.isSelected = true
+                item.font = UIFont(name: "Helvetica-Bold", size: 14)!
                 
                 self.dismiss(animated: true) {
                     print("reloading")
                 }
+                vc.toastText.setTitle("동네가 '\(item.text)'으로 변경되었어요.", for: .normal)
                 
+                NotificationCenter.default.post(name: .locationChangedToast, object: nil)
+                
+                            
             }
         }
         
@@ -207,4 +216,6 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
         return UITableView.automaticDimension
     }
 }
+
+
 

@@ -222,11 +222,9 @@
 			children = (
 				C967DD1726A04DAD009E58A1 /* TabbarViewController.swift */,
 				C967DD1B26A04E02009E58A1 /* LifeViewController.swift */,
-				C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */,
 				C967DD1D26A04E19009E58A1 /* AroundViewController.swift */,
 				C967DD1F26A04E25009E58A1 /* ChatViewController.swift */,
 				C967DD2126A04E2F009E58A1 /* MyViewController.swift */,
-				C97068FB26AEFE2000C4AF54 /* FloatingButtonController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -265,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				C967DD1926A04DED009E58A1 /* HomeViewController.swift */,
+				C97068FB26AEFE2000C4AF54 /* FloatingButtonController.swift */,
+				C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

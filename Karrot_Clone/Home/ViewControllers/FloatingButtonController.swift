@@ -60,6 +60,13 @@ class FloatingButtonController: UIViewController {
         return bt
     }()
     
+    let toastText: UIButton = {
+        let bt = UIButton()
+        let size: CGFloat = 5
+        bt.titleEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.frame.size = CGSize(width: UIScreen.main.bounds.width - 20, height: 30)
+        return bt
+    }()
     
     @objc func neighbor() {
         print("동네홍보 클릭")
@@ -86,6 +93,7 @@ class FloatingButtonController: UIViewController {
         super.loadView()
         setUpGenerator()
         setStackView()
+        NotificationCenter.default.addObserver(self, selector: #selector(setToast), name: .locationChangedToast, object: nil)
     }
     
     func setStackView() {
@@ -113,8 +121,9 @@ class FloatingButtonController: UIViewController {
         
         self.usedStackView.isHidden = true
         self.neighborStackView.isHidden = true
+        self.toastText.isHidden = true
         
-        self.floatingStackView = UIStackView.init(arrangedSubviews: [neighborStackView, usedStackView, button])
+        self.floatingStackView = UIStackView.init(arrangedSubviews: [neighborStackView, usedStackView, button, toastText])
         
         floatingStackView.distribution = .equalSpacing
         floatingStackView.spacing = 15
@@ -138,6 +147,18 @@ class FloatingButtonController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    @objc func setToast() {
+        UIView.animate(withDuration: 0) {
+            self.toastText.isHidden = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5) {
+            UIView.animate(withDuration: 0.5) {
+                self.toastText.isHidden = true
+            }
+        }
     }
     
     var isShowFloating: Bool = false

@@ -35,6 +35,7 @@ class Contents_MainTextCell: UITableViewCell {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
+        lb.lineBreakStrategy = .hangulWordPriority
         lb.font = UIFont(name: "Helvetica-Bold", size: 18)
         return lb
     }()
@@ -70,6 +71,7 @@ class Contents_MainTextCell: UITableViewCell {
         let attrStr = NSMutableAttributedString(string: lb.text!)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineBreakStrategy = .hangulWordPriority
         attrStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attrStr.length))
         lb.attributedText = attrStr
         

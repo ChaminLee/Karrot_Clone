@@ -292,10 +292,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             // 취소
         }))
 
-        
-        //uncomment for iPad Support
-        //alert.popoverPresentationController?.sourceView = self.view
-
         self.present(alert, animated: true, completion: nil)
     }
     

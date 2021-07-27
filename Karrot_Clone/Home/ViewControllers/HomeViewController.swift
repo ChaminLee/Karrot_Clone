@@ -12,6 +12,7 @@ import Foundation
 class HomeViewController: UIViewController {
     
     var prodData = [ProdData]()
+    
     var locationData = "지역을 선택해주세요"
         
     let hometable : UITableView = {
@@ -28,8 +29,11 @@ class HomeViewController: UIViewController {
         setSampleData()
         setHomeTable()
         setNavMenu()
+        addLocationList()
+        setToast()
         /// LocationArrowButton 돌려두라는 것 수신!
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(viewToast), name: .locationChangedToast, object: nil)
     }
     
     /// LocationArrowButton rotate back
@@ -195,13 +199,20 @@ class HomeViewController: UIViewController {
     }
     
     /// Pop OverList
-    var firstLocation = SetLocationOptionItem(text: "중앙동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: true, setType: .myLocation)
-    var secondLocation = SetLocationOptionItem(text: "정자1동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
-    var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
+    
+    var LocationList = [LocationOptionItem]()
+    
+    func addLocationList() {
+        var firstLocation = SetLocationOptionItem(text: "중앙동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
+        var secondLocation = SetLocationOptionItem(text: "정자1동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
+        var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
+        LocationList.append(contentsOf: [firstLocation, secondLocation, setLocation])
+        print("loc  \(LocationList)")
+    }
     
     @objc func locationItemClicked(_ sender: UIButton) {
-        presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
+        presentOptionsPopOver(withOptionItems: [LocationList], fromButtonItem: sender)
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {
@@ -213,9 +224,14 @@ class HomeViewController: UIViewController {
     }
     
     
-    
     @objc func searchClicked() {
         print("검색!")
+        
+        let vc = NewLocationViewController()
+        vc.popoverPresentationController?.delegate = self
+        vc.preferredContentSize = CGSize(width: 200, height: 200)
+        vc.modalPresentationStyle = .popover
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func categoryClicked() {
@@ -224,6 +240,48 @@ class HomeViewController: UIViewController {
     
     @objc func bellClicked() {
         print("알림!")
+    }
+    
+    let toastText: UIButton = {
+        let bt = UIButton()
+        bt.setTitle("토스트 텍스트 테스트", for: .normal)
+        bt.contentHorizontalAlignment = .left
+        let size: CGFloat = 15
+        bt.titleEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+        bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
+        bt.layer.masksToBounds = false
+        bt.layer.cornerRadius = 5 // bt.frame.height / 2
+        bt.clipsToBounds = true
+        bt.backgroundColor = .black
+        bt.setTitleColor(.white, for: .normal)
+        bt.frame.size = CGSize(width: UIScreen.main.bounds.width - 20, height: 30)
+        return bt
+    }()
+    
+    func setToast() {
+        self.toastText.isHidden = true
+        self.toastText.alpha = 1
+        self.view.addSubview(toastText)
+        
+        toastText.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(50)
+            $0.bottom.equalToSuperview().inset(10)
+        }
+    }
+    
+    @objc func viewToast() {
+        UIView.animate(withDuration: 4) {
+            self.toastText.alpha = 0
+            self.toastText.isHidden = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            self.toastText.alpha = 1
+            self.toastText.isHidden = true
+        }
+    
+
     }
     
 }
@@ -305,6 +363,7 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 extension HomeViewController: PopOverLocationSelectedDelegate {
     func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
         locationButton.setTitle(name, for: .normal)
+        toastText.setTitle("동네가 '\(name)'으로 변경되었어요.", for: .normal)
         
         // snackbar "동네가 '\(name)'으로 변경되었어요."
         showToast(controller: self, message: "동네가 '\(name)'으로 변경되었어요.", seconds: 3)
@@ -317,8 +376,6 @@ extension HomeViewController: PopOverLocationSelectedDelegate {
         alert.view.layer.cornerRadius = 15
         
         controller.present(alert, animated: true)
-        
-        
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
             alert.dismiss(animated: true)
@@ -351,4 +408,6 @@ extension HomeViewController {
 
 extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
+    static let locationChanged = Notification.Name("locationChanged")
+    static let locationChangedToast = Notification.Name("locationChangedToast")
 }

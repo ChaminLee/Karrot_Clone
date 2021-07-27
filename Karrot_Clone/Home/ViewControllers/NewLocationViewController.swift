@@ -10,8 +10,6 @@ import SnapKit
 
 class NewLocationViewController: UIViewController {
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
@@ -28,30 +26,15 @@ class NewLocationViewController: UIViewController {
     }()
 
     @objc func close() {
-//        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-//        if self.presentingViewController != nil {
-//            self.dismiss(animated: true) {
-//                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-//            }
-//        }
         self.dismiss(animated: true, completion: nil)
-
-        
-//        if self.presentingViewController != nil {
-////            self.dismiss(animated: true) {
-////                self.navigationController?.popToRootViewController(animated: true)
-////            }
-//            self.dismiss(animated: true, completion: nil)
-//        } else {
-//            self.navigationController!.popToRootViewController(animated: true)
-//        }
     }
     
     func config() {
         view.addSubview(xbutton)
         
         xbutton.snp.makeConstraints {
-            $0.leading.top.equalToSuperview().offset(50)
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalToSuperview().offset(50)
         }
     }
 }
