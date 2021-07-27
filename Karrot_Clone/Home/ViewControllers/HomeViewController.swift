@@ -252,8 +252,8 @@ class HomeViewController: UIViewController {
         bt.layer.masksToBounds = false
         bt.layer.cornerRadius = 5 // bt.frame.height / 2
         bt.clipsToBounds = true
-        bt.backgroundColor = .black
-        bt.setTitleColor(.white, for: .normal)
+        bt.backgroundColor = UIColor(named: CustomColor.text.rawValue)
+        bt.setTitleColor(UIColor(named: CustomColor.background.rawValue), for: .normal)
         bt.frame.size = CGSize(width: UIScreen.main.bounds.width - 20, height: 30)
         return bt
     }()
