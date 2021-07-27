@@ -18,22 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Thread.sleep(forTimeInterval: 1.0)
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .black //UIColor(named: CustomColor.background.rawValue)  //.systemBackground //
+        window?.backgroundColor = UIColor(named: CustomColor.background.rawValue)  //.systemBackground // .black //
         let root = TabbarViewController()
         window?.rootViewController = root
         window?.makeKeyAndVisible()
         
-        floatingButtonController = FloatingButtonController()        
-//        floatingButtonController?.AddButton.addTarget(self, action: #selector(floatingButtonWasTapped), for: .touchUpInside)
+        floatingButtonController = FloatingButtonController()
         
         return true
-    }
-    
-    @objc func floatingButtonWasTapped() {
-        let alert = UIAlertController(title: "Warning", message: "Don't do that!", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Sorry…", style: .default, handler: nil)
-        alert.addAction(action)
-        window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
 }

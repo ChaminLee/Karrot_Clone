@@ -280,17 +280,14 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     @objc func moreButtonClicked() {
-        
         let alert = UIAlertController()
             
         alert.addAction(UIAlertAction(title: "신고하기", style: .default , handler:{ (UIAlertAction)in
             // 신고 뷰 이동
         }))
-
         alert.addAction(UIAlertAction(title: "이 사용자의 글 보지 않기", style: .default , handler:{ (UIAlertAction)in
             // 차단 핸들러
         }))
-        
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler:{ (UIAlertAction)in
             // 취소
         }))

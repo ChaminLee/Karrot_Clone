@@ -7,16 +7,13 @@
 
 import UIKit
 import SnapKit
-import AudioToolbox
 import Foundation
 
 class HomeViewController: UIViewController {
     
     var prodData = [ProdData]()
     var locationData = "지역을 선택해주세요"
-    
-    var feedBackGenerator: UINotificationFeedbackGenerator?
-    
+        
     let hometable : UITableView = {
         let tv = UITableView(frame:CGRect.zero, style: .plain)
         tv.register(HomeCell.self, forCellReuseIdentifier: "HomeCell")
@@ -24,14 +21,22 @@ class HomeViewController: UIViewController {
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         return tv
     }()
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("디드")
         setSampleData()
         setHomeTable()
         setNavMenu()
-        setUpGenerator()
+        /// LocationArrowButton 돌려두라는 것 수신!
+        NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
+    }
+    
+    /// LocationArrowButton rotate back
+    @objc func rotate() {
+        UIView.animate(withDuration: 0.25) {
+            self.locationArrowButton.transform = CGAffineTransform.identity
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,12 +66,6 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         hometable.frame = view.bounds
-    }
-    
-    
-    private func setUpGenerator() {
-        self.feedBackGenerator = UINotificationFeedbackGenerator()
-        self.feedBackGenerator?.prepare()
     }
     
     func setHomeTable() {
@@ -200,25 +199,19 @@ class HomeViewController: UIViewController {
     var secondLocation = SetLocationOptionItem(text: "정자1동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
     var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
-    var rotated = false
     
     @objc func locationItemClicked(_ sender: UIButton) {
         presentOptionsPopOver(withOptionItems: [[firstLocation,secondLocation,setLocation]], fromButtonItem: sender)
         
         DispatchQueue.main.async {
-            if !self.rotated {
-                UIView.animate(withDuration: 0.25) {
-                    self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-                }
-                self.view.layoutIfNeeded()
-                
+            UIView.animate(withDuration: 0.25) {
+                self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             }
-            self.rotated = !self.rotated
+            self.view.layoutIfNeeded()
         }
-        
         self.hometable.reloadData()
-        
     }
+    
     
     
     @objc func searchClicked() {
@@ -300,9 +293,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return CGFloat(150.0)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-       
-    }
 
 }
 
@@ -357,4 +347,8 @@ extension HomeViewController {
             ProdData(prodImage: "당근이3", prodTitle: "당근이2 팝니다", location: "중앙2동", uploadTime: "44분 전", price: "550,000원", visitNum: 0, heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 당근마켓은 대한민국의 중고 거래, 소상공인 홍보 등 생활정보 소프트웨어이다. 중고거래, 지역업체, 질문답변, 부동산, 구인구직 등 지역 내에서 발생하는 생활정보를 검색하고 게시자와 실시간으로 채팅할 수 있다", userID: "바니바니당근당근", userIcon: "당근이3"),
         ])
     }
+}
+
+extension Notification.Name {
+    static let rotateBack = Notification.Name("rotateBack")
 }

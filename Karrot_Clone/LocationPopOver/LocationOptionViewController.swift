@@ -70,6 +70,7 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("팝업 뜸")
         UIApplication.shared.windows.last!.alpha = 0.3
         
         UIApplication.shared.windows.last!.isUserInteractionEnabled = false
@@ -82,13 +83,14 @@ class LocationOptionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("팝업 사라짐")
         UIApplication.shared.windows.last!.alpha = 1
         UIApplication.shared.windows.last!.isUserInteractionEnabled = true
         self.presentingViewController?.view.alpha = 1
-
+        
+        /// Home - LocationArrowButton을 다시 돌려놔라!
+        NotificationCenter.default.post(name: .rotateBack, object: nil)
     }
-    
-
     
     func calculateAndSetPreferredContentSize() {
         let approxAccessoryViewWidth: CGFloat = 56
@@ -187,6 +189,7 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
                 
                 item.font = UIFont(name: "Helvetica-Bold", size: 14)!
                 item.isSelected = true
+                
                 self.dismiss(animated: true) {
                     print("reloading")
                 }
@@ -204,3 +207,4 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
         return UITableView.automaticDimension
     }
 }
+

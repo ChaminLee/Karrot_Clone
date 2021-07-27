@@ -96,7 +96,7 @@ extension Contents_RecommendCell: UICollectionViewDataSource, UICollectionViewDe
         let numberOfItemsPerHeight: CGFloat = 10.0
         
         let width = (collectionView.bounds.width - layout.minimumInteritemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
-        let height = (collectionView.bounds.height - layout.minimumLineSpacing * (numberOfItemsPerHeight + 1)) / numberOfItemsPerHeight
+        let height = (collectionView.bounds.height - layout.minimumLineSpacing * (numberOfItemsPerHeight + 2)) / numberOfItemsPerHeight
         
         return CGSize(width: width, height: height)
     }
