@@ -118,6 +118,7 @@ class Contents_UserInfoCell: UITableViewCell {
         locationLabel.snp.makeConstraints {
             $0.bottom.equalTo(profileImage.snp.bottom).inset(3)
             $0.leading.equalTo(idLabel.snp.leading)
+            $0.top.equalTo(idLabel.snp.bottom).offset(5)
         }
         
         degreeIcon.snp.makeConstraints {

@@ -11,7 +11,7 @@ struct ProdData {
     var prodImage: String
     var prodTitle: String
     var location: String
-    var uploadTime: String
+    var uploadTime: Int
     var price: String
     
     var visitNum: Int
@@ -24,4 +24,21 @@ struct ProdData {
     var prodDescription: String
     var userID: String
     var userIcon: String
+    
+    init(dictionary: [String : Any]) {
+        self.prodImage = dictionary["prodImage"] as? String ?? ""
+        self.prodTitle = dictionary["prodTitle"] as? String ?? ""
+        self.location = dictionary["location"] as? String ?? ""
+        self.uploadTime = dictionary["uploadTime"] as? Int ?? 0
+        self.price = dictionary["price"] as? String ?? ""
+        self.visitNum = dictionary["visitNum"] as? Int ?? 0
+        self.heartNum = dictionary["heartNum"] as? Int ?? 0
+        self.chatNum = dictionary["chatNum"] as? Int ?? 0
+        self.replyNum = dictionary["replyNum"] as? Int ?? 0
+        self.mannerDegree = dictionary["mannerDegree"] as? Float ?? 0
+        self.category = dictionary["category"] as? String ?? ""
+        self.prodDescription = dictionary["prodDescription"] as? String ?? ""
+        self.userID = dictionary["userID"] as? String ?? ""
+        self.userIcon = dictionary["userIcon"] as? String ?? ""
+    }
 }

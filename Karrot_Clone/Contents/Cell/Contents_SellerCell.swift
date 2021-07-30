@@ -8,17 +8,24 @@
 import Foundation
 import UIKit
 import SnapKit
+import Firebase
 
 class Contents_SellerCell: UITableViewCell {
     
-    var otherProd = [ProdData]()
+    let ref = Database.database().reference()
+    var userID = "메시와사비"
+    
+    var usersProd = [ProdData]()
     static let identifier = "Contents_SellerCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setSampleData()
+        getUsersProds(userID: userID)
+//        setSampleData()
         config()
+        print("유저아이디 \(userID)")
     }
+    
     
     let titleLabel: UILabel = {
         let lb = UILabel()
@@ -72,13 +79,16 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-            if otherProd.count > 2 {
+            $0.height.equalTo(500)
+            if usersProd.count > 2 {
                 $0.height.equalTo(360)
             } else {
                 $0.height.equalTo(160)
             }
             
         }
+        self.setNeedsLayout()
+        print("콘피그중입니다")
     }
 
     required init?(coder: NSCoder) {
@@ -89,7 +99,7 @@ class Contents_SellerCell: UITableViewCell {
 extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return otherProd.count
+        return self.usersProd.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -112,7 +122,7 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
         
-        let data = otherProd[indexPath.row]
+        let data = usersProd[indexPath.row]
         cell.prodImage.image = UIImage(named: data.prodImage)
         cell.prodLabel.text = data.prodTitle 
         cell.priceLabel.text = data.price
@@ -124,11 +134,29 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
 
 extension Contents_SellerCell {    
     func setSampleData() {
-        otherProd.append(contentsOf: [
-            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", visitNum: 0, heartNum: 20, chatNum: 30, replyNum: 5, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
-            ProdData(prodImage: "당근이3", prodTitle: "다른 당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", visitNum: 15, heartNum: 200, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이7", prodTitle: "당근이 넘버투 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", visitNum: 50, heartNum: 40, chatNum: 30, replyNum: 2, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 당근이 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...당근이를 아껴주시고 사랑해주세요! 바니바니 당근당근", userID: "중앙동메시", userIcon: "당근이2"),
-            ProdData(prodImage: "당근이5", prodTitle: "당근이 시즌품 팝니다", location: "행운동", uploadTime: "15분 전", price: "5,000원", visitNum: 25, heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "봉천동메시", userIcon: "당근이5")
-        ])
+//        otherProd.append(contentsOf: [
+//            ProdData(prodImage: "당근이", prodTitle: "당근이 팝니다", location: "행운동", uploadTime: "1분 전", price: "50,000원", visitNum: 0, heartNum: 20, chatNum: 30, replyNum: 5, mannerDegree: 45.1, category: "인기매물", prodDescription: "당근이 한 번 밖에 안썼습니다. ", userID: "중앙동불주먹", userIcon: "당근이"),
+//            ProdData(prodImage: "당근이3", prodTitle: "다른 당근이2 팝니다", location: "중앙동", uploadTime: "5분 전", price: "150,000원", visitNum: 15, heartNum: 200, chatNum: 30, replyNum: 0, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "중앙동메시", userIcon: "당근이2"),
+//            ProdData(prodImage: "당근이7", prodTitle: "당근이 넘버투 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...", location: "봉천2동", uploadTime: "10분 전", price: "70,000원", visitNum: 50, heartNum: 40, chatNum: 30, replyNum: 2, mannerDegree: 36.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 당근이 팝니다. 이 당근이는 사연이 있어서 파는 물건이니 부디 잘 다뤄주세요...당근이를 아껴주시고 사랑해주세요! 바니바니 당근당근", userID: "중앙동메시", userIcon: "당근이2"),
+//            ProdData(prodImage: "당근이5", prodTitle: "당근이 시즌품 팝니다", location: "행운동", uploadTime: "15분 전", price: "5,000원", visitNum: 25, heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 70.5, category: "유아동", prodDescription: "당근이 한 번 밖에 안썼습니다. 유아용으로 판매합니다. 지금 사시면 무려 공짜! 오셔서 가져가세요 ", userID: "봉천동메시", userIcon: "당근이5")
+//        ])
+    }
+    
+    func getUsersProds(userID: String) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let query = self.ref.queryOrdered(byChild: "userID").queryEqual(toValue: userID).queryLimited(toFirst: 4)
+            query.observeSingleEvent(of: .value) { snapshot in
+                if let result = snapshot.value as? [String:Any] {
+                    result.values.forEach { item in
+                        let data = ProdData(dictionary: item as! [String:Any])
+                        print(data)
+                        self.usersProd.append(data)
+                    }
+                    self.collectionView.reloadData()
+                }
+                self.collectionView.reloadData()
+            }
+            
+        }
     }
 }

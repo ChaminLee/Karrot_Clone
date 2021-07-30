@@ -7,9 +7,12 @@
 
 import UIKit
 import SnapKit
+import Firebase
+
 
 class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {        
     
+    let ref = Database.database().reference()
     var ContentsData = [ProdData]()
     
     init(items: [ProdData]) {
@@ -398,7 +401,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.cellDelegate = self
             
             cell.titleLabel.text = data.prodTitle
-            cell.timeLabel.text = "・ " + data.uploadTime
+            cell.timeLabel.text = "・ " + "\(data.uploadTime)분 전"
             
             /// category
             let attr: [NSAttributedString.Key:Any] = [
@@ -453,7 +456,21 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
+            cell.userID = data.userID
             
+            DispatchQueue.main.async {
+                let query = self.ref.queryOrdered(byChild: "userID").queryEqual(toValue: data.userID).queryLimited(toFirst: 4)
+                query.observeSingleEvent(of: .value) { snapshot in
+                    if let result = snapshot.value as? [String:Any] {
+                        result.values.forEach { item in
+                            let data = ProdData(dictionary: item as! [String:Any])
+                            cell.usersProd.append(data)
+                        }
+                    }
+                    cell.collectionView.reloadData()
+
+                }
+            }
             
             return cell
         case 4:
@@ -529,6 +546,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 390
     }
+    
 }
 
 extension ContentsViewController: UIScrollViewDelegate {

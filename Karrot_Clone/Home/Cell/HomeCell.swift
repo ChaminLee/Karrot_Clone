@@ -155,12 +155,22 @@ class HomeCell: UITableViewCell {
         self.heartView.isHidden = true
         self.replyView.isHidden = true
         
-        self.heartLabel.isHidden = true
         self.heartIcon.isHidden = true
+        self.heartLabel.isHidden = true
         self.chatIcon.isHidden = true
         self.chatLabel.isHidden = true
         self.replyIcon.isHidden = true
         self.replyLabel.isHidden = true
+        
+        self.heartIcon.imageView?.image = nil
+        self.heartLabel.text = nil
+        self.chatIcon.imageView?.image = nil
+        self.chatLabel.text = nil
+        self.replyIcon.imageView?.image = nil
+        self.replyLabel.text = nil
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     /// 초기 세팅 + UI 그리기
@@ -208,7 +218,7 @@ class HomeCell: UITableViewCell {
         }
         
         /// StackView 초기화
-        self.stackView = UIStackView.init(arrangedSubviews: [replyView, chatView,heartView])
+        self.stackView = UIStackView.init(arrangedSubviews: [replyView, chatView, heartView])
         stackView.stackViewConfig(stackView)
         
         stackView.spacing = 3
