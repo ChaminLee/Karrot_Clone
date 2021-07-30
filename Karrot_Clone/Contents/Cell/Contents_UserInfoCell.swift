@@ -83,9 +83,14 @@ class Contents_UserInfoCell: UITableViewCell {
     
     var mannerInfo: UIButton = {
         let bt = UIButton()
-        bt.setTitle("매너온도", for: .normal)
-        bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
-        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        let attr: [NSAttributedString.Key:Any] = [
+            .font: UIFont(name: "Helvetica", size: 12),
+            .foregroundColor: UIColor(named: CustomColor.reply.rawValue),
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+
+        let attrStr = NSMutableAttributedString(string: "매너온도",attributes: attr)
+        bt.setAttributedTitle(attrStr, for: .normal)
         return bt
     }()
     

@@ -42,13 +42,13 @@ class Contents_MainTextCell: UITableViewCell {
     
     let categoryButton: UIButton = {
         let bt = UIButton()
+        
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica", size: 13)
-        bt.addTarget(self, action: #selector(categoryClicked), for: .touchUpInside)
         return bt
     }()
     
-    @objc func categoryClicked() {
+    @objc func categoryClicked(_ sender: UIButton) {
         cellDelegate?.categoryButtonTapped()
     }
     

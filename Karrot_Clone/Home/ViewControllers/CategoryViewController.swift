@@ -58,7 +58,7 @@ class CategoryViewController: UIViewController {
     
     func config() {
         self.title = "카테고리"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
@@ -93,6 +93,13 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         let height = self.view.frame.height / (col + 1)
         
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = CategoryProdViewController()
+        vc.categoryTitle = categoryTitleList[indexPath.row]
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

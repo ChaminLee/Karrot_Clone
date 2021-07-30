@@ -43,6 +43,9 @@
 		C97068FE26B12EFC00C4AF54 /* ImageSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97068FD26B12EFB00C4AF54 /* ImageSliderView.swift */; };
 		C970693E26B14E0500C4AF54 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C970693D26B14E0500C4AF54 /* CategoryViewController.swift */; };
 		C970694026B156B400C4AF54 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C970693F26B156B400C4AF54 /* CategoryCell.swift */; };
+		C970694226B422B000C4AF54 /* CategoryProdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C970694126B422B000C4AF54 /* CategoryProdViewController.swift */; };
+		C970694426B42CC500C4AF54 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = C970694326B42CC500C4AF54 /* GoogleService-Info (1).plist */; };
+		C970694626B4305300C4AF54 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = C970694526B4305200C4AF54 /* data.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,9 @@
 		C97068FD26B12EFB00C4AF54 /* ImageSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSliderView.swift; sourceTree = "<group>"; };
 		C970693D26B14E0500C4AF54 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		C970693F26B156B400C4AF54 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		C970694126B422B000C4AF54 /* CategoryProdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProdViewController.swift; sourceTree = "<group>"; };
+		C970694326B42CC500C4AF54 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (1).plist"; path = "../../../Downloads/GoogleService-Info (1).plist"; sourceTree = "<group>"; };
+		C970694526B4305200C4AF54 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = ../../../data.json; sourceTree = "<group>"; };
 		CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone_Karrot_CloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 				C97068FA26AEEA0A00C4AF54 /* Model */,
 				C967DCEF26A04B06009E58A1 /* Assets.xcassets */,
 				C967DCF126A04B06009E58A1 /* LaunchScreen.storyboard */,
+				C970694326B42CC500C4AF54 /* GoogleService-Info (1).plist */,
 				C967DCF426A04B06009E58A1 /* Info.plist */,
 			);
 			path = Karrot_Clone;
@@ -270,6 +277,7 @@
 			children = (
 				C967DD1926A04DED009E58A1 /* HomeViewController.swift */,
 				C970693D26B14E0500C4AF54 /* CategoryViewController.swift */,
+				C970694126B422B000C4AF54 /* CategoryProdViewController.swift */,
 				C97068FB26AEFE2000C4AF54 /* FloatingButtonController.swift */,
 				C92159E726A6FDF7009C03CE /* NewLocationViewController.swift */,
 			);
@@ -320,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				C92159ED26A83E89009C03CE /* ProdData.swift */,
+				C970694526B4305200C4AF54 /* data.json */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -433,7 +442,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C967DCF326A04B06009E58A1 /* LaunchScreen.storyboard in Resources */,
+				C970694426B42CC500C4AF54 /* GoogleService-Info (1).plist in Resources */,
 				C967DCF026A04B06009E58A1 /* Assets.xcassets in Resources */,
+				C970694626B4305300C4AF54 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +599,7 @@
 				C967DD8C26A661A0009E58A1 /* LocationOptionItem.swift in Sources */,
 				C92159F426A88511009C03CE /* Contents_RecommendCell.swift in Sources */,
 				C967DD2B26A05182009E58A1 /* CustomColor.swift in Sources */,
+				C970694226B422B000C4AF54 /* CategoryProdViewController.swift in Sources */,
 				C967DD8E26A66264009E58A1 /* LocationItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

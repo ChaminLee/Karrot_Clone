@@ -93,9 +93,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidDisappear(animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.isTranslucent = false
-        self.tabBarController?.tabBar.isHidden = false
-        self.tabBarController?.tabBar.isTranslucent = false
-        print("사라져")
     }
     
     func naviStyle(){
@@ -402,7 +399,17 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.titleLabel.text = data.prodTitle
             cell.timeLabel.text = "・ " + data.uploadTime
-            cell.categoryButton.setTitle(data.category, for: .normal)            
+            
+            /// category
+            let attr: [NSAttributedString.Key:Any] = [
+                .font: UIFont(name: "Helvetica", size: 12),
+                .foregroundColor: UIColor(named: CustomColor.reply.rawValue),
+                .underlineStyle: NSUnderlineStyle.single.rawValue
+            ]
+
+            let attrStr = NSMutableAttributedString(string: data.category,attributes: attr)
+            cell.categoryButton.setAttributedTitle(attrStr, for: .normal)
+            
             cell.mainLabel.text = data.prodDescription
             
             if data.chatNum > 0 {
@@ -496,8 +503,6 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.addSubview(pageControl)
 
 
-
-
         for index in 0..<images.count {
             let imageView = UIImageView()
             imageView.layer.masksToBounds = false
@@ -572,9 +577,13 @@ extension ContentsViewController: UIPopoverPresentationControllerDelegate {
 
 extension ContentsViewController: ContentsMainTextDelegate {
     func categoryButtonTapped() {
-        // ToDo
-        print("DD")
-        print("된당 이제")
+        // ToDo - 해당 카테고리 이동
+        let vc = CategoryProdViewController()
+        let data = ContentsData[0]
+        
+        vc.categoryTitle = data.category
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
