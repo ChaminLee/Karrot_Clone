@@ -10,7 +10,7 @@ import SnapKit
 
 class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {        
     
-    var ContentsData = [ProdData]() //ProdData(prodImage: "", prodTitle: "", location: "", uploadTime: "", price: "", heartNum: 0, chatNum: 0, replyNum: 0, mannerDegree: 0.0, category: "", prodDescription: "", userID: "", userIcon: "")
+    var ContentsData = [ProdData]()
     
     init(items: [ProdData]) {
         self.ContentsData = items
@@ -28,8 +28,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         ba.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         return ba
     }()
-    
-    
+        
     
     let contentTable : UITableView = {
         let tv = UITableView(frame: CGRect.zero, style: .grouped)
@@ -40,11 +39,11 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         tv.register(Contents_RecommendCell.self, forCellReuseIdentifier: Contents_RecommendCell.identifier)
         tv.separatorColor = UIColor(named: CustomColor.separator.rawValue)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        tv.backgroundColor = .systemBackground //UIColor(named: systemba) //UIColor(named: CustomColor.background.rawValue)
+        tv.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         tv.contentInsetAdjustmentBehavior = .never
         return tv
     }()
-
+    
     let pageControl : UIPageControl = {
         let pc = UIPageControl()
         pc.currentPageIndicatorTintColor = .white
@@ -60,26 +59,29 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return sv
     }()
     
+    let statusBarView = UIView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height)) // view.frame.size.width
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bottttomAnchorConfig()
         config()
         setNavItems()
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.isTranslucent = true
-
         naviStyle()
-        print("콘텐츠 뷰 디드로드")
+        setStatusbar()
+    }
+    
+    func setStatusbar() {
+        statusBarView.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+        statusBarView.alpha = 0
+        view.addSubview(statusBarView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.barTintColor = UIColor.clear
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-//        self.navigationController?.navigationBar.backgroundColor
+        self.navigationController?.navigationBar.tintColor = .white
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
         DispatchQueue.main.async {
@@ -90,11 +92,20 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         print("사라져")
+    }
+    
+    func naviStyle(){
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        // 네비 바 전체 Backgrond 이미지, 경계선 삭제
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewDidLayoutSubviews() {
@@ -295,15 +306,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func naviStyle(){
-        self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = .white
-        
-        // 네비 바 전체 Backgrond 이미지, 경계선 삭제
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-    }
-    
     func presentOptionsPopOver(withOptionItems mannerItems : [[MannerDetailnfo]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.manners = mannerItems
@@ -493,7 +495,8 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.addSubview(scrollView)
         headerView.addSubview(pageControl)
 
-        print("헤더 등장! \(headerView.frame)")
+
+
 
         for index in 0..<images.count {
             let imageView = UIImageView()
@@ -508,6 +511,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
             imageView.image = UIImage(named: images[index])
             scrollView.addSubview(imageView)
+
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
         }
@@ -516,7 +520,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 390
     }
@@ -524,25 +528,23 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        DispatchQueue.main.async {
-            if scrollView.contentOffset.y > 300 {
-
-                self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
-    //            self.navigationController?.navigationBar.backgroundColor = .white
-                self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
-                self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
-                self.navigationController?.navigationBar.isTranslucent = false
-                self.navigationController?.navigationBar.shadowImage = .none
-            }
-            else {
-                
-                self.navigationController?.navigationBar.barStyle = UIBarStyle.black // Status Bar 글씨 색상 검정색
-                self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.reply.rawValue)
-    //            self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.reply.rawValue)
-                self.navigationController?.navigationBar.isTranslucent = true
-                self.navigationController?.navigationBar.backgroundColor = .clear
-                self.naviStyle()
-            }
+        /// Stretch 확인
+            
+            
+        /// navigation bar color 변경
+        if scrollView.contentOffset.y > 300 {
+            self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
+            self.navigationController?.navigationBar.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+            self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
+            self.statusBarView.alpha = 1
+            self.navigationController?.navigationBar.shadowImage = .none
+        }
+        else {
+//            self.navigationController?.navigationBar.barStyle = UIBarStyle.black // Status Bar 글씨 색상 검정색
+            self.statusBarView.alpha = 0
+            self.navigationController?.navigationBar.backgroundColor = .clear
+            self.naviStyle()
+            
         }
         
     }
@@ -573,5 +575,14 @@ extension ContentsViewController: ContentsMainTextDelegate {
         // ToDo
         print("DD")
         print("된당 이제")
+    }
+}
+
+extension UIApplication {
+    var statusBarView: UIView? {
+        if responds(to: Selector("statusBar")) {
+            return value(forKey: "statusBar") as? UIView
+        }
+        return nil
     }
 }

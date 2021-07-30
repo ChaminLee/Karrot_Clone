@@ -64,7 +64,7 @@ class FloatingButtonController: UIViewController {
         let bt = UIButton()
         let size: CGFloat = 5
         bt.titleEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
-        bt.frame.size = CGSize(width: UIScreen.main.bounds.width - 20, height: 30)
+        bt.frame.size = CGSize(width: UIScreen.main.bounds.width - 20, height: 50)
         return bt
     }()
     
@@ -114,7 +114,7 @@ class FloatingButtonController: UIViewController {
         
         [usedStackView,neighborStackView].forEach { item in
             item.axis = .horizontal
-            item.spacing = 10
+            item.spacing = 15
             item.isLayoutMarginsRelativeArrangement = true
             item.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         }
@@ -132,6 +132,8 @@ class FloatingButtonController: UIViewController {
         
         view.addSubview(floatingStackView)
             
+        let vc = HomeViewController()
+        
         floatingStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().inset(95)

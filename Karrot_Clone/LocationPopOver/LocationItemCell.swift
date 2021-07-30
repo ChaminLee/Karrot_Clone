@@ -13,7 +13,6 @@ extension UITableViewCell {
         textLabel?.text = optionItem.text
         textLabel?.font = optionItem.font
         // 클릭 시 텍스트 bold 처리로 변경 필요
-        accessoryType = optionItem.isSelected ? .checkmark : .none
     }
     
     func configManner(with optionItem: MannerDetailnfo) {

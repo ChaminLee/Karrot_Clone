@@ -203,7 +203,7 @@ class HomeViewController: UIViewController {
     var LocationList = [LocationOptionItem]()
     
     func addLocationList() {
-        var firstLocation = SetLocationOptionItem(text: "중앙동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
+        var firstLocation = SetLocationOptionItem(text: "중앙동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: true, setType: .myLocation)
         var secondLocation = SetLocationOptionItem(text: "정자1동", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .myLocation)
         var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
@@ -226,16 +226,12 @@ class HomeViewController: UIViewController {
     
     @objc func searchClicked() {
         print("검색!")
-        
-        let vc = NewLocationViewController()
-        vc.popoverPresentationController?.delegate = self
-        vc.preferredContentSize = CGSize(width: 200, height: 200)
-        vc.modalPresentationStyle = .popover
-        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func categoryClicked() {
         print("카테고리!")
+        let vc = CategoryViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func bellClicked() {
