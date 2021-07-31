@@ -178,7 +178,7 @@ extension Contents_SellerCell {
             print("높이높이 :\(self.height) \(self.cnt)")
             self.collectionView.snp.makeConstraints {
 //                $0.height.equalTo(height)
-                $0.height.equalTo(500)
+                $0.height.equalTo(360)
             }
             self.collectionView.reloadData()
             self.collectionView.setNeedsLayout()

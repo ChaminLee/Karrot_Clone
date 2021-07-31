@@ -406,7 +406,7 @@ extension HomeViewController {
         self.prodData.removeAll()
         
         DispatchQueue.main.async {
-            let query = self.ref.queryOrdered(byChild: "uploadTime")
+            let query = self.ref.queryOrdered(byChild: "replyNum")
             
             query.observeSingleEvent(of: .value) { snapShot in
                 if let result = snapShot.value as? [[String:Any]] {
@@ -428,5 +428,4 @@ extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")
     static let locationChanged = Notification.Name("locationChanged")
     static let locationChangedToast = Notification.Name("locationChangedToast")
-    static let userDataFetch = Notification.Name("userDataFetch")
 }

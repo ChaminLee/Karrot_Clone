@@ -80,9 +80,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.post(name: .userDataFetch, object: nil)
-        
+        super.viewWillAppear(animated)        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
