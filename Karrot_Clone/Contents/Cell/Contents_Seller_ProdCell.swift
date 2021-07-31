@@ -23,7 +23,7 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
     
     let prodImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
+//        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 40, height: 40))
         img.layer.masksToBounds = false
         img.layer.cornerRadius = 8
         img.clipsToBounds = true
@@ -34,7 +34,7 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
     
     let prodLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "나이키 덩크로우 범고래 270사이즈 판매합니다."
+//        lb.text = "나이키 덩크로우 범고래 270사이즈 판매합니다."
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 1
         lb.font = UIFont(name: "Helvetica", size: 13)
@@ -43,7 +43,7 @@ class Contents_Seller_ProdCell: UICollectionViewCell {
     
     let priceLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "115,000원"
+//        lb.text = "115,000원"
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 1
         lb.font = UIFont(name: "Helvetica-Bold", size: 13)

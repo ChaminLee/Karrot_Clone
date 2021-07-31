@@ -169,8 +169,8 @@ class HomeCell: UITableViewCell {
         self.replyIcon.imageView?.image = nil
         self.replyLabel.text = nil
         
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+//        self.setNeedsLayout()
+//        self.layoutIfNeeded()
     }
     
     /// 초기 세팅 + UI 그리기

@@ -81,6 +81,8 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.post(name: .userDataFetch, object: nil)
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -458,20 +460,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
             cell.userID = data.userID
             
-            DispatchQueue.main.async {
-                let query = self.ref.queryOrdered(byChild: "userID").queryEqual(toValue: data.userID).queryLimited(toFirst: 4)
-                query.observeSingleEvent(of: .value) { snapshot in
-                    if let result = snapshot.value as? [String:Any] {
-                        result.values.forEach { item in
-                            let data = ProdData(dictionary: item as! [String:Any])
-                            cell.usersProd.append(data)
-                        }
-                    }
-                    cell.collectionView.reloadData()
-
-                }
-            }
-            
+        
             return cell
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_RecommendCell",for: indexPath) as! Contents_RecommendCell
