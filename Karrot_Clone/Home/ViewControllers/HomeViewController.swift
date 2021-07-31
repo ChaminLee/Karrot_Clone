@@ -9,12 +9,15 @@ import UIKit
 import SnapKit
 import Foundation
 import Firebase
+import FirebaseStorage
 
 class HomeViewController: UIViewController {
     
     let ref = Database.database().reference()
+    let storage = Storage.storage()
     
     var prodData = [ProdData]()
+
     
     var locationData = "지역을 선택해주세요"
         
@@ -28,7 +31,6 @@ class HomeViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setSampleData()
         setHomeTable()
         setNavMenu()
         addLocationList()
@@ -52,18 +54,15 @@ class HomeViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         navStyle()
+        /// 글쓰기 버튼은 홈에서만 보이도록 - 원복
         UIApplication.shared.windows.last!.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        /// 글쓰기 버튼은 홈에서만 보이도록 - 제거
         UIApplication.shared.windows.last!.isHidden = true
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
     
     
     private func navStyle() {
@@ -103,7 +102,7 @@ class HomeViewController: UIViewController {
         hometable.refreshControl?.endRefreshing()
     }
     
-    // left
+    /// Left Nav Button
     let locationButton : UIButton = {
         let bt = UIButton()
         bt.setTitle("중앙동", for: .normal)
@@ -130,7 +129,7 @@ class HomeViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         
-        // right
+        /// Right Nav Button
         let searchButton : UIButton = {
             let bt = UIButton()
             bt.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -198,7 +197,7 @@ class HomeViewController: UIViewController {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.items = items
         
-        // 지역 선택 위임
+        /// 지역 선택 위임
         optionItemListVC.selectedDelegate = self
         
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
@@ -306,9 +305,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         
-        let data = prodData[indexPath.row]
+        let data = prodData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         
         cell.titleLabel.text = data.prodTitle
+        /// Firebase Storage - image load가 너무 느림
+//        fetchImage(imgView: cell.thumbnail, name: "me")
         cell.thumbnail.image = UIImage(named: data.prodImage)
         cell.locationLabel.text = data.location
         cell.priceLabel.text = data.price
@@ -354,10 +355,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let data = prodData[indexPath.row]
         let vc = ContentsViewController(items: [data])
         vc.priceLabel.text = data.price
-        
-        let cell = Contents_SellerCell()
-        cell.userID = data.userID
-        
+                
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -378,26 +376,10 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 extension HomeViewController: PopOverLocationSelectedDelegate {
     func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
         locationButton.setTitle(name, for: .normal)
+        /// Toast Popup "동네가 '\(name)'으로 변경되었어요."
         toastText.setTitle("동네가 '\(name)'으로 변경되었어요.", for: .normal)
-        
-        // snackbar "동네가 '\(name)'으로 변경되었어요."
-        showToast(controller: self, message: "동네가 '\(name)'으로 변경되었어요.", seconds: 3)
+
     }
-    
-    func showToast(controller: UIViewController, message: String, seconds: Double) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.view.backgroundColor = .black //UIColor(named: CustomColor.badge.rawValue)
-        alert.view.alpha = 0.6
-        alert.view.layer.cornerRadius = 15
-        
-        controller.present(alert, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
-            alert.dismiss(animated: true)
-        }
-        
-    }
-    
 }
 
 extension HomeViewController {
@@ -406,9 +388,7 @@ extension HomeViewController {
         self.prodData.removeAll()
         
         DispatchQueue.main.async {
-            let query = self.ref.queryOrdered(byChild: "replyNum")
-            
-            query.observeSingleEvent(of: .value) { snapShot in
+            self.ref.observeSingleEvent(of: .value) { snapShot in
                 if let result = snapShot.value as? [[String:Any]] {
                     result.forEach { item in
                         let data = ProdData(dictionary: item as! [String:Any])
@@ -422,7 +402,24 @@ extension HomeViewController {
             self.hometable.layoutIfNeeded()
         }
     }
+    
+    func fetchImage(imgView: UIImageView, name: String) {
+        self.storage.reference(withPath: "\(name).jpeg").downloadURL { (url, error) in
+            print(name, url)
+            let data = NSData(contentsOf: url!)
+            let image = UIImage(data: data! as Data)
+            imgView.image = image
+        }
+//        self.storage.reference().child("/\(name).jpeg").getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+//            if let error = error {
+//                print(error)
+//            } else {
+//                imgView.image = UIImage(data: data!)
+//            }
+//        }.resume()
+    }
 }
+
 
 extension Notification.Name {
     static let rotateBack = Notification.Name("rotateBack")

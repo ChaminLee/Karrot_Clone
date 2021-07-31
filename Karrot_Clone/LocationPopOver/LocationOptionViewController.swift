@@ -30,7 +30,7 @@ class LocationOptionViewController: UIViewController {
             calculateAndSetPreferredContentSize()
         }
     }
-    
+        
     
     private weak var tableView: UITableView?
     weak var delegate: LocationOptionViewControllerDelegate?
@@ -49,7 +49,6 @@ class LocationOptionViewController: UIViewController {
     override func loadView() {
         view = UITableView(frame: .zero, style: .plain)
         tableView = view as? UITableView
-//        tableView?.isScrollEnabled = false
         tableView?.alwaysBounceVertical = false
 
         tableView?.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -185,24 +184,18 @@ extension LocationOptionViewController: UITableViewDelegate, UITableViewDataSour
                     }
                 }
             } else {
-                print("내가 고른 장소 : \(item.text)")
                 self.selectedDelegate?.selectedLocation(controller: self, didSelectItem: item.text)
                 
                 let vc = HomeViewController()
-                print("인덱스 \(indexPath.row) \(vc.LocationList)")
                 
-                
-                item.isSelected = true
-                item.font = UIFont(name: "Helvetica-Bold", size: 14)!
+                /// [ ] 선택된 지역으로 변경 필요
                 
                 self.dismiss(animated: true) {
                     print("reloading")
                 }
-                vc.toastText.setTitle("동네가 '\(item.text)'으로 변경되었어요.", for: .normal)
                 
                 NotificationCenter.default.post(name: .locationChangedToast, object: nil)
                 
-                            
             }
         }
         

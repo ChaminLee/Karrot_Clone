@@ -80,7 +80,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)        
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -153,12 +153,12 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return lb
     }()
     
-    let nonNego: UILabel = {
-        let lb = UILabel()
-        lb.text = "가격제안불가"
-        lb.textColor = UIColor(named: CustomColor.badge.rawValue)
-        lb.font = UIFont(name: "Helvetica", size: 14)
-        return lb
+    let negoButton: UIButton = {
+        let bt = UIButton()
+        bt.setTitle("가격제안불가", for: .normal)
+        bt.setTitleColor(UIColor(named: CustomColor.badge.rawValue), for: .normal)
+        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
+        return bt
     }()
     
     let chatTrade: UIButton = {
@@ -175,8 +175,13 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     func bottttomAnchorConfig() {
+        if ContentsData[0].nego {
+            let attr = negoButton.addBottomLine(font: UIFont(name: "Helvetica", size: 14)!, color: UIColor(named: CustomColor.karrot.rawValue)!, string: "가격제안하기")
+            negoButton.setAttributedTitle(attr, for: .normal)
+            negoButton.addTarget(self, action: #selector(negoAction), for: .touchUpInside)
+        }
         
-        [heartButton, separatorLine, priceLabel,nonNego,chatTrade].forEach { item in
+        [heartButton, separatorLine, priceLabel,negoButton,chatTrade].forEach { item in
             bottomAnchor.addSubview(item)
         }
         
@@ -197,9 +202,10 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             $0.top.equalTo(separatorLine.snp.top)
         }
         
-        nonNego.snp.makeConstraints {
+        negoButton.snp.makeConstraints {
             $0.leading.equalTo(priceLabel.snp.leading)
             $0.bottom.equalTo(separatorLine.snp.bottom)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(5)
         }
         
         
@@ -211,7 +217,9 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
+    @objc func negoAction() {
+        print("네고가능")
+    }
     
     func config() {
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
@@ -458,6 +466,13 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
             cell.userID = data.userID
             
+//            cell.collectionView.snp.makeConstraints {
+//                $0.height.equalTo(160)
+//            }
+            let vc = HomeViewController()
+            print("확인해봇소 \(vc.prodData.count)")
+            print("확인해봇소 \(vc.prodData.filter { $0.userID == data.userID }.count)")
+
         
             return cell
         case 4:

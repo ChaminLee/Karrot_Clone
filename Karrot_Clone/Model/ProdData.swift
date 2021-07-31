@@ -7,6 +7,17 @@
 
 import Foundation
 
+//struct UserData {
+//
+//    var prodData: [ProdData]
+//
+//    init(dictionary: [String:[String:Any]]) {
+//        self.userID = dictionary["userID"] as? String ?? ""
+//        self.userIcon = dictionary["userIcon"] as? String ?? ""
+//        self.prodData = dictionary["prodData"] as? [ProdData] ?? []
+//    }
+//}
+
 struct ProdData {
     var prodImage: String
     var prodTitle: String
@@ -19,6 +30,7 @@ struct ProdData {
     var chatNum: Int
     var replyNum: Int
     
+    var nego: Bool
     var mannerDegree: Float
     var category: String
     var prodDescription: String
@@ -35,6 +47,7 @@ struct ProdData {
         self.heartNum = dictionary["heartNum"] as? Int ?? 0
         self.chatNum = dictionary["chatNum"] as? Int ?? 0
         self.replyNum = dictionary["replyNum"] as? Int ?? 0
+        self.nego = dictionary["nego"] as? Bool ?? false
         self.mannerDegree = dictionary["mannerDegree"] as? Float ?? 0
         self.category = dictionary["category"] as? String ?? ""
         self.prodDescription = dictionary["prodDescription"] as? String ?? ""

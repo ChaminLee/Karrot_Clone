@@ -15,7 +15,7 @@ class HomeCell: UITableViewCell {
     /// Home - Thumbnail Image
     let thumbnail: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "당근이")
+//        img.image = UIImage(named: "당근이")
         img.contentMode = .scaleAspectFill
             
         img.layer.cornerRadius = 8

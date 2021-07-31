@@ -83,14 +83,8 @@ class Contents_UserInfoCell: UITableViewCell {
     
     var mannerInfo: UIButton = {
         let bt = UIButton()
-        let attr: [NSAttributedString.Key:Any] = [
-            .font: UIFont(name: "Helvetica", size: 12),
-            .foregroundColor: UIColor(named: CustomColor.reply.rawValue),
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-
-        let attrStr = NSMutableAttributedString(string: "매너온도",attributes: attr)
-        bt.setAttributedTitle(attrStr, for: .normal)
+        let attr = bt.addBottomLine(font: UIFont(name: "Helvetica", size: 12)!, color: UIColor(named: CustomColor.reply.rawValue)!, string: "매너온도")
+        bt.setAttributedTitle(attr, for: .normal)
         return bt
     }()
     
@@ -182,5 +176,19 @@ extension UIImage {
 extension Contents_UserInfoCell: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+}
+
+extension UIButton {
+    func addBottomLine(font: UIFont, color: UIColor, string: String) -> NSMutableAttributedString {
+        let attr: [NSAttributedString.Key:Any] = [
+            .font: font,
+            .foregroundColor: color,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+
+        let attrStr = NSMutableAttributedString(string: string ,attributes: attr)
+        
+        return attrStr
     }
 }

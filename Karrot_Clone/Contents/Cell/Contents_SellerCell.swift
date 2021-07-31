@@ -10,24 +10,22 @@ import UIKit
 import SnapKit
 import Firebase
 
-//protocol usersProdFetch {
-//    <#requirements#>
-//}
 
 class Contents_SellerCell: UITableViewCell {
     
     let ref = Database.database().reference()
     
     var userID = ""
-    var cnt = 0
-    var height = 0
-    
-    var usersProd = [ProdData]()
+
+    var usersProd = [ProdData]() {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     static let identifier = "Contents_SellerCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         getUsersProds()
         config()
     }
@@ -86,11 +84,12 @@ class Contents_SellerCell: UITableViewCell {
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
 //            $0.height.equalTo(360)
-//            if cnt > 2 {
-//                $0.height.equalTo(360)
-//            } else {
-//                $0.height.equalTo(160)
-//            }
+            if usersProd.count > 2 {
+                $0.height.equalTo(360)
+            } else {
+                $0.height.equalTo(160)
+            }
+            
             
         }
         self.setNeedsLayout()
@@ -147,38 +146,31 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
 
 extension Contents_SellerCell {
     func getUsersProds() {
-        
         DispatchQueue.main.async {
             self.usersProd.removeAll()
             
             let query = self.ref.queryOrdered(byChild: "userID")
-                .queryEqual(toValue: self.userID)
+                .queryEqual(toValue: self.userID).queryLimited(toLast: 4)
             
             query.observe(.value) { snapshot in
-//                print(snapshot.value as? [String:Any])
-                if let result = snapshot.value as? [String:Any] {
-                    result.values.forEach { item in
-                        let data = ProdData(dictionary: item as! [String : Any])
-                        self.usersProd.append(data)
+                print(snapshot.value as? [String:Any])
+                if snapshot.childrenCount > 1 {
+                    if let result = snapshot.value as? [String:Any] {
+                        result.values.forEach { item in
+                            let data = ProdData(dictionary: item as! [String : Any])
+                            self.usersProd.append(data)
+                        }
                     }
-                    self.collectionView.reloadData()
-                }
-                self.cnt = self.usersProd.count
-                print(self.cnt)
-                
-                if self.usersProd.count < 2 {
-                    self.height = 160
                 } else {
-                    self.height = 360
+                    if let result = snapshot.value as? [[String:Any]] {
+                        result.forEach { item in
+                            let data = ProdData(dictionary: item as! [String : Any])
+                            self.usersProd.append(data)
+                        }
+                    }
                 }
                 
-                print(" 넌 뭐니 \(self.height)")
                 
-            }
-            print("높이높이 :\(self.height) \(self.cnt)")
-            self.collectionView.snp.makeConstraints {
-//                $0.height.equalTo(height)
-                $0.height.equalTo(360)
             }
             self.collectionView.reloadData()
             self.collectionView.setNeedsLayout()

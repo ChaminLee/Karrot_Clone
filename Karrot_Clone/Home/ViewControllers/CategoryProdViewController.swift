@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class CategoryProdViewController: UIViewController {
 
     var categoryTitle = ""
+    let ref = Database.database().reference()
     
     let categoryProdTable: UITableView = {
         let tb = UITableView()
@@ -18,17 +20,20 @@ class CategoryProdViewController: UIViewController {
         return tb
     }()
     
+    var categoryProdData = [ProdData]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
         topConfig()
         config()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("얍")
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
+        fetchData()
     }
     
     
@@ -89,18 +94,82 @@ class CategoryProdViewController: UIViewController {
 
 extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return categoryProdData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath) as! HomeCell
+        cell.selectionStyle = .none
         
-        cell.titleLabel.text = "카테고리별 필터링 데이터"
+        let data = categoryProdData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         
+        cell.titleLabel.text = data.prodTitle
+        /// Firebase Storage - image load가 너무 느림
+//        fetchImage(imgView: cell.thumbnail, name: "me")
+        cell.thumbnail.image = UIImage(named: data.prodImage)
+        cell.locationLabel.text = data.location
+        cell.priceLabel.text = data.price
+        cell.timeLabel.text = " ・ " + "\(data.uploadTime)분 전"
+        
+        if data.heartNum > 0 {
+            cell.heartLabel.text = "\(data.heartNum)"
+            cell.heartIcon.setImage(UIImage(systemName: "heart"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.heartView.isHidden = false
+            cell.heartLabel.isHidden = false
+            cell.heartIcon.isHidden = false
+        } else {
+            cell.heartView.isHidden = true
+        }
+        
+        if data.chatNum > 0 {
+            cell.chatLabel.text = "\(data.chatNum)"
+            cell.chatIcon.setImage(UIImage(systemName: "bubble.left.and.bubble.right"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.chatView.isHidden = false
+            cell.chatIcon.isHidden = false
+            cell.chatLabel.isHidden = false
+        } else {
+            cell.chatView.isHidden = true
+        }
+        
+        if data.replyNum > 0 {
+            cell.replyLabel.text = "\(data.replyNum)"
+            cell.replyIcon.setImage(UIImage(systemName: "message"), for: .normal)
+            cell.stackView.isHidden = false
+            cell.replyView.isHidden = false
+            cell.replyIcon.isHidden = false
+            cell.replyLabel.isHidden = false
+        } else {
+            cell.replyView.isHidden = true
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(150.0)
+    }
+    
+    func fetchData() {
+        print("firebase 데이터 패치중")
+        self.categoryProdData.removeAll()
+        
+        let query = self.ref.queryOrdered(byChild: "category").queryEqual(toValue: self.categoryTitle)
+        
+        DispatchQueue.main.async {
+            self.ref.observeSingleEvent(of: .value) { snapShot in
+                if let result = snapShot.value as? [[String:Any]] {
+                    print("카테고리 \(result)")
+                    result.forEach { item in
+                        let data = ProdData(dictionary: item as! [String:Any])
+                        self.categoryProdData.append(data)
+                    }
+                    self.categoryProdTable.reloadData()
+                }
+                
+            }
+            self.categoryProdTable.setNeedsLayout()
+            self.categoryProdTable.layoutIfNeeded()
+        }
     }
 }
