@@ -11,14 +11,19 @@ import AudioToolbox
 
 class FloatingButtonController: UIViewController {
 
+    /// 초기에 노출될 + 버튼
     var AddButton: UIButton!
-    
+    /// 중고거래 ( 텍스트 + 버튼 )
     var usedStackView = UIStackView()
+    /// 동네홍보 ( 텍스트 + 버튼 )
     var neighborStackView = UIStackView()
+    /// 전체를 감싸는 StackView
     var floatingStackView = UIStackView()
     
+    /// floatingStackView가 펼쳐질 때 진동 추가하기 위함
     var feedBackGenerator: UINotificationFeedbackGenerator?
     
+    /// 진동 초기 세팅
     private func setUpGenerator() {
         self.feedBackGenerator = UINotificationFeedbackGenerator()
         self.feedBackGenerator?.prepare()
@@ -60,6 +65,7 @@ class FloatingButtonController: UIViewController {
         return bt
     }()
     
+    /// Dummy View생성  >  + 버튼을 띄우기 위해
     let toastText: UIButton = {
         let bt = UIButton()
         let size: CGFloat = 5
@@ -80,15 +86,20 @@ class FloatingButtonController: UIViewController {
         fatalError()
     }
     
+    /// window에 추가하여 background를 dimmed 시키기
     private let window = FloatingButtonWindow()
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        /// window 최상단에 위치
         window.windowLevel = UIWindow.Level(rawValue: CGFloat.greatestFiniteMagnitude)
         window.isHidden = false
         window.rootViewController = self
     }
 
+    /// 1. setUpGenerator() : 진동을 위한 세팅
+    /// 2. setStackView() : 버튼 StackView 세팅
+    /// 3. NotificationCenter : Toast Popup 수신 대기
     override func loadView() {
         super.loadView()
         setUpGenerator()
@@ -109,12 +120,11 @@ class FloatingButtonController: UIViewController {
         button.sizeToFit()
         button.addTarget(self, action: #selector(floatingButtonClicked(_:)), for: .touchUpInside)
         
-        self.usedStackView = UIStackView.init(arrangedSubviews: [usedTitle, usedButton])
-        self.neighborStackView = UIStackView.init(arrangedSubviews: [neighborTitle, neighborButton])
+        self.usedStackView = UIStackView(arrangedSubviews: [usedTitle, usedButton], axis: .horizontal, spacing: 15, alignment: .center, distribution: .fill)
+        self.neighborStackView = UIStackView(arrangedSubviews: [neighborTitle, neighborButton], axis: .horizontal, spacing: 15, alignment: .center, distribution: .fill)
         
+        /// 우측 마진 추가 - 이미지를  (+) 기준으로 가운데 정렬시키기 위해
         [usedStackView,neighborStackView].forEach { item in
-            item.axis = .horizontal
-            item.spacing = 15
             item.isLayoutMarginsRelativeArrangement = true
             item.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         }
@@ -123,22 +133,16 @@ class FloatingButtonController: UIViewController {
         self.neighborStackView.isHidden = true
         self.toastText.isHidden = true
         
-        self.floatingStackView = UIStackView.init(arrangedSubviews: [neighborStackView, usedStackView, button, toastText])
-        
-        floatingStackView.distribution = .equalSpacing
-        floatingStackView.spacing = 15
-        floatingStackView.axis = .vertical
-        floatingStackView.alignment = .trailing
+        self.floatingStackView = UIStackView(arrangedSubviews: [neighborStackView, usedStackView, button, toastText], axis: .vertical, spacing: 15, alignment: .trailing, distribution: .equalSpacing)
         
         view.addSubview(floatingStackView)
-            
-        let vc = HomeViewController()
-        
+                    
         floatingStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().inset(95)
         }
         
+        /// 할당
         self.view = view
         self.AddButton = button
         
@@ -147,10 +151,7 @@ class FloatingButtonController: UIViewController {
         window.customView = view
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
+    /// Dummy Toast View 등장해서 floatingStackView 높이 조절
     @objc func setToast() {
         UIView.animate(withDuration: 0) {
             self.toastText.isHidden = false
@@ -163,18 +164,18 @@ class FloatingButtonController: UIViewController {
         }
     }
     
+    /// Floating의 State
     var isShowFloating: Bool = false
     
     /// 객체 호출 시 생성할 수 있도록
     lazy var buttons = [usedStackView, neighborStackView]
     
     @objc func floatingButtonClicked(_ sender: UIButton) {
-        
-        
         let imgSize: CGFloat = 60
                         
         if isShowFloating {
             self.view.isUserInteractionEnabled = true
+            /// 뒷 배경 클릭시 닫히도록
             hideViewWhenTappedAround(self.view)
             
             buttons.reversed().forEach { button in
@@ -188,7 +189,6 @@ class FloatingButtonController: UIViewController {
                 
             }) { (_) in
                 self.view.backgroundColor = .none
-                
             }
         } else {
             self.feedBackGenerator?.notificationOccurred(.success)
@@ -202,7 +202,6 @@ class FloatingButtonController: UIViewController {
                     stack.isHidden = false
                     self?.view.layoutIfNeeded()
                 }
-                
             }
         }
         
@@ -220,7 +219,6 @@ class FloatingButtonController: UIViewController {
 }
 
 public class FloatingButtonWindow: UIWindow {
-
     var stackView: UIStackView?
     var button: UIButton?
     var customView: UIView?
@@ -234,35 +232,28 @@ public class FloatingButtonWindow: UIWindow {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// 터치가 가능하도록 > 나머지는 다 무시
+    /// [ ] 배경이 떴을 때 무시하지 않도록 해줘야 함
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         guard let stack = stackView else { return false }
         let stackPoint = convert(point, to: stack)
         return stack.point(inside: stackPoint, with: event)
-    }
-    
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var touch: UITouch? = touches.first
-        if touch?.view == customView {
-            customView?.alpha = 0
-        }
     }
 }
 
 extension FloatingButtonController {
     func hideViewWhenTappedAround(_ item: UIView) {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissView))
-//        tap.cancelsTouchesInView = false
-        
         item.addGestureRecognizer(tap)
     }
     
     @objc func dismissView() {
-        print("끄읕sdfasfsfsaef")
         let imgSize: CGFloat = 60
         
         buttons.map {$0.isHidden = true}
         
         let image = UIImage(named: "Add")
+        /// 다시 원래 상태로 돌리기 
         let rotation = CGAffineTransform.identity
         
         UIView.animate(withDuration: 0.3) {

@@ -15,9 +15,7 @@ class HomeCell: UITableViewCell {
     /// Home - Thumbnail Image
     let thumbnail: UIImageView = {
         let img = UIImageView()
-//        img.image = UIImage(named: "당근이")
         img.contentMode = .scaleAspectFill
-            
         img.layer.cornerRadius = 8
         img.layer.masksToBounds = true
         img.clipsToBounds = true
@@ -168,9 +166,6 @@ class HomeCell: UITableViewCell {
         self.chatLabel.text = nil
         self.replyIcon.imageView?.image = nil
         self.replyLabel.text = nil
-        
-//        self.setNeedsLayout()
-//        self.layoutIfNeeded()
     }
     
     /// 초기 세팅 + UI 그리기
@@ -218,11 +213,8 @@ class HomeCell: UITableViewCell {
         }
         
         /// StackView 초기화
-        self.stackView = UIStackView.init(arrangedSubviews: [replyView, chatView, heartView])
-        stackView.stackViewConfig(stackView)
-        
-        stackView.spacing = 3
-        
+        self.stackView = UIStackView(arrangedSubviews: [replyView, chatView, heartView], axis: .horizontal, spacing: 3, alignment: .center, distribution: .fill)
+
         [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,stackView].forEach { item in
             contentView.addSubview(item)
         }
@@ -261,14 +253,5 @@ class HomeCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-extension UIStackView {
-    func stackViewConfig(_ stackview: UIStackView) {
-        stackview.distribution = .fill
-        stackview.axis = .horizontal
-        stackview.alignment = .center
     }
 }

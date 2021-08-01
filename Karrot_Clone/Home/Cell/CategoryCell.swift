@@ -8,7 +8,9 @@
 import UIKit
 
 class CategoryCell: UICollectionViewCell {
+    
     static let identifier = "CategoryCell"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         config()

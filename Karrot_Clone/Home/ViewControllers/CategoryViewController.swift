@@ -26,7 +26,7 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavButton()
+        setNavigationButton()
         config()
     }
     
@@ -36,7 +36,7 @@ class CategoryViewController: UIViewController {
         self.tabBarController?.tabBar.isTranslucent = true
     }
     
-    func setNavButton() {
+    private func setNavigationButton() {
         let navitem = self.navigationItem
         
         let backButton : UIButton = {
@@ -56,7 +56,7 @@ class CategoryViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func config() {
+    private func config() {
         self.title = "카테고리"
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         
@@ -71,7 +71,7 @@ class CategoryViewController: UIViewController {
     }
     
 }
-
+/// ---------- CollectionView Setting ----------
 extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categoryTitleList.count

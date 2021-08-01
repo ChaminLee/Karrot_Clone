@@ -12,15 +12,17 @@ import Firebase
 import FirebaseStorage
 
 class HomeViewController: UIViewController {
-    
+    /// Firebase Realtime Database / Firebase Storage 연동을 위한 세팅
     let ref = Database.database().reference()
     let storage = Storage.storage()
     
+    /// 기본 ProdData
     var prodData = [ProdData]()
 
-    
+    /// 좌상단 현재 지역 표기
     var locationData = "지역을 선택해주세요"
         
+    /// 메인 홈 Tableview
     let hometable : UITableView = {
         let tv = UITableView(frame:CGRect.zero, style: .plain)
         tv.register(HomeCell.self, forCellReuseIdentifier: "HomeCell")
@@ -29,15 +31,23 @@ class HomeViewController: UIViewController {
         return tv
     }()
         
+    /// 1. setHomeTable() :  hometable 세팅
+    /// 2. setNavigationItem() : Navigationbar Item 버튼 세팅
+    /// 3. addLocationList() : 선택가능한 지역 추가
+    /// 4. setToast() : Toast Popup 세팅
+    /// 5. NotificationCenter
+    ///   - rotate : 지역 선택뷰 사라질 때 arrow 다시 원복하는 애니메이션 실행
+    ///   - viewToast : Toast Popup 실행
     override func viewDidLoad() {
         super.viewDidLoad()
         setHomeTable()
-        setNavMenu()
+        setNavigationItem()
         addLocationList()
         setToast()
         
         /// LocationArrowButton 돌려두라는 것 수신!
         NotificationCenter.default.addObserver(self, selector: #selector(rotate), name: .rotateBack, object: nil)
+        /// Toast Popup 실행하라는 것 수신!
         NotificationCenter.default.addObserver(self, selector: #selector(viewToast), name: .locationChangedToast, object: nil)
     }
     
@@ -48,6 +58,10 @@ class HomeViewController: UIViewController {
         }
     }
     
+    /// 1. fetchData() : prodData에 Firebase 데이터 패치
+    /// 2. tabbarController 사라지지 않도록 (다른 뷰컨트롤러 영향으로)
+    /// 3. navStyle() : Navigationcontroller 기본 세팅
+    /// 4. UIApplication.shared.windows.last!.isHidden : 글쓰기 추가 버튼 윈도우에서 보이도록
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
@@ -64,23 +78,7 @@ class HomeViewController: UIViewController {
         UIApplication.shared.windows.last!.isHidden = true
     }
     
-    
-    private func navStyle() {
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
-        self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController?.navigationBar.layoutIfNeeded()
-        self.navigationController?.navigationBar.backgroundColor = .clear
-        self.navigationController?.navigationBar.alpha = 1
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        hometable.frame = view.bounds
-    }
-    
+    /// ---------- ViewDidLoad Method ----------
     func setHomeTable() {
         hometable.delegate = self
         hometable.dataSource = self
@@ -91,11 +89,13 @@ class HomeViewController: UIViewController {
             $0.top.bottom.left.right.equalToSuperview()
         }
         
+        /// Tableview의 RefreshControl
         hometable.refreshControl = UIRefreshControl()
         hometable.refreshControl?.tintColor = UIColor(named: CustomColor.karrot.rawValue)
         hometable.refreshControl?.addTarget(self, action: #selector(pullRefresh(_:)), for: .valueChanged)
     }
     
+    /// Tableview의 RefreshControl Action
     @objc func pullRefresh(_ sender: Any) {
         print("업데이트중")
         self.hometable.reloadData()
@@ -103,6 +103,7 @@ class HomeViewController: UIViewController {
     }
     
     /// Left Nav Button
+    /// 함수 밖에서 선언한 이유는 다른 VC에서도 접근할 일이 있기 때문
     let locationButton : UIButton = {
         let bt = UIButton()
         bt.setTitle("중앙동", for: .normal)
@@ -122,12 +123,9 @@ class HomeViewController: UIViewController {
         return bt
     }()
     
-    func setNavMenu() {
+    func setNavigationItem() {
         UINavigationBar.appearance().barTintColor = UIColor(named: CustomColor.background.rawValue)
         let navitem = self.navigationItem
-        
-        self.tabBarController?.tabBar.isHidden = false
-        self.tabBarController?.tabBar.isTranslucent = false
         
         /// Right Nav Button
         let searchButton : UIButton = {
@@ -166,9 +164,8 @@ class HomeViewController: UIViewController {
             return bt
         }()
         
-        let rightStackView = UIStackView.init(arrangedSubviews: [searchButton, categoryButton, bellButton])
-        rightStackView.stackViewConfig(rightStackView)
-        rightStackView.spacing = 18
+        
+        let rightStackView = UIStackView(arrangedSubviews: [searchButton, categoryButton, bellButton], axis: .horizontal, spacing: 18, alignment: .center, distribution: .fill)
         
         let rightSection = UIBarButtonItem(customView: rightStackView)
         navitem.rightBarButtonItem = rightSection
@@ -176,19 +173,16 @@ class HomeViewController: UIViewController {
         locationButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
         locationArrowButton.addTarget(self, action: #selector(locationItemClicked), for: .touchUpInside)
         
-        let leftStackView = UIStackView.init(arrangedSubviews: [locationButton,locationArrowButton])
-        leftStackView.stackViewConfig(leftStackView)
+        let leftStackView = UIStackView(arrangedSubviews: [locationButton,locationArrowButton], axis: .horizontal, spacing: 5, alignment: .center, distribution: .fill)
         
-        leftStackView.isLayoutMarginsRelativeArrangement = true
-        leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
-        leftStackView.spacing = 5
+        /// [ ] LeftStackview 전체가 버튼이 되어야 함
+//        leftStackView.isLayoutMarginsRelativeArrangement = true
+//        leftStackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.view.frame.width / 3)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(locationItemClicked(_:)))
+//        leftStackView.addGestureRecognizer(tap)
+//        leftStackView.isUserInteractionEnabled = true
         
-        let leftSection: UIBarButtonItem = {
-            let barButton = UIBarButtonItem()
-            barButton.customView = leftStackView
-            return barButton
-        }()
-        
+        let leftSection = UIBarButtonItem(customView: leftStackView)
         navitem.leftBarButtonItem = leftSection
     }
 
@@ -196,19 +190,17 @@ class HomeViewController: UIViewController {
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
         let optionItemListVC = LocationOptionViewController()
         optionItemListVC.items = items
-        
+
         /// 지역 선택 위임
         optionItemListVC.selectedDelegate = self
-        
+
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
         popOverPresentationController.delegate = self
 
         self.present(optionItemListVC, animated: true, completion: nil)
     }
-    
-    /// Pop OverList
-    
+        
     var LocationList = [LocationOptionItem]()
     
     func addLocationList() {
@@ -217,7 +209,6 @@ class HomeViewController: UIViewController {
         var setLocation = SetLocationOptionItem(text: "내 동네 설정하기", font: UIFont(name: "Helvetica", size: 13)!, isSelected: false, setType: .setLocation)
 
         LocationList.append(contentsOf: [firstLocation, secondLocation, setLocation])
-        print("loc  \(LocationList)")
     }
     
     @objc func locationItemClicked(_ sender: UIButton) {
@@ -225,13 +216,15 @@ class HomeViewController: UIViewController {
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.25) {
+                /// 180도 회전
                 self.locationArrowButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             }
+            /// layoutsubviews 즉시 바로 실행 (동기)
+            /// 애니메이션이기에 즉각 반영이 필요함! (setNeedLayout은 비동기적으로 실행되서 update cycle이 되서야 실행됨)
             self.view.layoutIfNeeded()
         }
         self.hometable.reloadData()
     }
-    
     
     @objc func searchClicked() {
         print("검색!")
@@ -249,13 +242,12 @@ class HomeViewController: UIViewController {
     
     let toastText: UIButton = {
         let bt = UIButton()
-        bt.setTitle("토스트 텍스트 테스트", for: .normal)
         bt.contentHorizontalAlignment = .left
         let size: CGFloat = 15
         bt.titleEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
         bt.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
         bt.layer.masksToBounds = false
-        bt.layer.cornerRadius = 5 // bt.frame.height / 2
+        bt.layer.cornerRadius = 5
         bt.clipsToBounds = true
         bt.backgroundColor = UIColor(named: CustomColor.text.rawValue)
         bt.setTitleColor(UIColor(named: CustomColor.background.rawValue), for: .normal)
@@ -264,6 +256,7 @@ class HomeViewController: UIViewController {
     }()
     
     func setToast() {
+        // 처음엔 숨겨둠
         self.toastText.isHidden = true
         self.toastText.alpha = 1
         self.view.addSubview(toastText)
@@ -276,21 +269,21 @@ class HomeViewController: UIViewController {
     }
     
     @objc func viewToast() {
+        /// 천천히 보여지고
         UIView.animate(withDuration: 4) {
             self.toastText.alpha = 0
             self.toastText.isHidden = false
         }
         
+        /// 사라지도록
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.toastText.alpha = 1
             self.toastText.isHidden = true
         }
-    
-
     }
-    
 }
 
+/// ---------- TableView Setting ----------
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -305,6 +298,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.selectionStyle = .none
         
+        /// upload 시간 기준으로 오름차순 정렬
         let data = prodData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         
         cell.titleLabel.text = data.prodTitle
@@ -313,8 +307,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.thumbnail.image = UIImage(named: data.prodImage)
         cell.locationLabel.text = data.location
         cell.priceLabel.text = data.price
+        
+        /// [ ] 시간 케이스별 정리 필요  ( ~ 일 전, ~ 시간 전, ~ 분 전, + 끌올)
         cell.timeLabel.text = " ・ " + "\(data.uploadTime)분 전"
         
+        /// 개수에 따라 초기화 or 데이터 할당
         if data.heartNum > 0 {
             cell.heartLabel.text = "\(data.heartNum)"
             cell.heartIcon.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -351,39 +348,46 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /// 선택 이후 선택 취소
         tableView.deselectRow(at: indexPath, animated: true)
+        /// 선택된 데이터 1개 넘겨줌
         let data = prodData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         let vc = ContentsViewController(items: [data])
+        /// 하단 뷰에 들어갈 가격 데이터 전달
         vc.priceLabel.text = data.price
                 
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
+    /// 우선은 사이즈 지정
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(150.0)
     }
-    
-
 }
 
+/// ---------- PopOver ----------
 extension HomeViewController: UIPopoverPresentationControllerDelegate {
+    /// presentation style 지정
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        /// LocationViewController에서 지정한대로 present 될 수 있도록 .none으로 세팅
         return .none
     }
 }
 
+/// ---------- LocationViewController의 Protocol ----------
 extension HomeViewController: PopOverLocationSelectedDelegate {
     func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
+        /// location 선택시 텍스트 변경
         locationButton.setTitle(name, for: .normal)
-        /// Toast Popup "동네가 '\(name)'으로 변경되었어요."
+        /// Toast Popup 메시지 세팅
         toastText.setTitle("동네가 '\(name)'으로 변경되었어요.", for: .normal)
-
     }
 }
 
 extension HomeViewController {
-    func fetchData() {
+    /// ---------- ViewWillAppear Method ----------
+    private func fetchData() {
         print("firebase 데이터 패치중")
         self.prodData.removeAll()
         
@@ -398,12 +402,10 @@ extension HomeViewController {
                 }
                 
             }
-            self.hometable.setNeedsLayout()
-            self.hometable.layoutIfNeeded()
         }
     }
     
-    func fetchImage(imgView: UIImageView, name: String) {
+    private func fetchImage(imgView: UIImageView, name: String) {
         self.storage.reference(withPath: "\(name).jpeg").downloadURL { (url, error) in
             print(name, url)
             let data = NSData(contentsOf: url!)
@@ -418,11 +420,19 @@ extension HomeViewController {
 //            }
 //        }.resume()
     }
+    
+    private func navStyle() {
+        /// LightMode : black  \ DarkMode : white
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
+        /// navigationbar bar background color
+        self.navigationController?.navigationBar.barTintColor = UIColor(named: CustomColor.background.rawValue)
+        /// translucent on/off
+        self.navigationController?.navigationBar.isTranslucent = false
+        /// navigation separatorline 보여주기 : 모두 nil로
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    }
 }
 
 
-extension Notification.Name {
-    static let rotateBack = Notification.Name("rotateBack")
-    static let locationChanged = Notification.Name("locationChanged")
-    static let locationChangedToast = Notification.Name("locationChangedToast")
-}
+

@@ -35,6 +35,7 @@ class Contents_MainTextCell: UITableViewCell {
         let lb = UILabel()
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
+        /// 한글 특성 기반 줄 바꿈 설정
         lb.lineBreakStrategy = .hangulWordPriority
         lb.font = UIFont(name: "Helvetica-Bold", size: 18)
         return lb
@@ -42,7 +43,6 @@ class Contents_MainTextCell: UITableViewCell {
     
     let categoryButton: UIButton = {
         let bt = UIButton()
-        
         bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
         bt.titleLabel?.font = UIFont(name: "Helvetica", size: 13)
         return bt
@@ -62,12 +62,12 @@ class Contents_MainTextCell: UITableViewCell {
     
     let mainLabel: UILabel = {
         let lb = UILabel()
-        /// 줄간
+        /// 더미
         lb.text = "."
         lb.textColor = UIColor(named: CustomColor.text.rawValue)
         lb.numberOfLines = 0
         
-        /// 줄간격
+        /// 줄간격 + 줄바꿈
         let attrStr = NSMutableAttributedString(string: lb.text!)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -155,9 +155,7 @@ class Contents_MainTextCell: UITableViewCell {
         }
         
         
-        self.stackView = UIStackView.init(arrangedSubviews: [chatView,heartView,visitView])
-        stackView.spacing = 3
-        stackView.distribution = .fill
+        self.stackView = UIStackView(arrangedSubviews: [chatView,heartView,visitView], axis: .horizontal, spacing: 3, alignment: .center, distribution: .fill)
         
         [titleLabel, categoryButton, timeLabel, mainLabel, stackView].forEach { item in
             contentView.addSubview(item)
@@ -189,6 +187,5 @@ class Contents_MainTextCell: UITableViewCell {
             $0.top.equalTo(mainLabel.snp.bottom).offset(15)
             $0.bottom.equalToSuperview().inset(40)
         }
-        
     }
 }

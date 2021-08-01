@@ -28,6 +28,7 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        
         img.layer.masksToBounds = false
         img.layer.cornerRadius = img.frame.width / 2
         img.clipsToBounds = true
@@ -61,9 +62,6 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let degreeBar: UIProgressView = {
         let pv = UIProgressView(progressViewStyle: .bar)
-        pv.trackTintColor = #colorLiteral(red: 0.837947309, green: 0.8329667449, blue: 0.8417761326, alpha: 1)
-        pv.progressTintColor = UIColor.blue // by Lv
-        
         /// Progressbar rounded border
         for view in pv.subviews {
             if view is UIImageView {
@@ -74,7 +72,7 @@ class Contents_UserInfoCell: UITableViewCell {
         return pv
     }()
     
-    /// 온도에 따른 이미지 변경 필요 (현재는 이미지 리소스 부족ㅠ)
+    /// 온도에 따른 이미지 변경 필요 (현재는 이미지 더 추가해야할 필요가 있음)
     let degreeIcon: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "smile")?.scalePreservingAspectRatio(targetSize: CGSize(width: 23, height: 23))
@@ -136,39 +134,6 @@ class Contents_UserInfoCell: UITableViewCell {
             $0.top.equalTo(degreeIcon.snp.bottom).offset(10)
             $0.trailing.equalToSuperview().inset(15)
         }
-        
-    }
-
-}
-
-/// UIImage 스케일을 쉽게 조정하기 위함
-extension UIImage {
-    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
-        /// aspect ratio를 보존하기 위해 스케일을 정해둠
-        let widthRatio = targetSize.width / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        let scaleFactor = min(widthRatio, heightRatio)
-        
-        /// aspect ratio를 유지하며 사이즈 조정
-        let scaledImageSize = CGSize(
-            width: size.width * scaleFactor,
-            height: size.height * scaleFactor
-        )
-
-        /// 사이즈 조절된 이미지 그리고 반환
-        let renderer = UIGraphicsImageRenderer(
-            size: scaledImageSize
-        )
-
-        let scaledImage = renderer.image { _ in
-            self.draw(in: CGRect(
-                origin: .zero,
-                size: scaledImageSize
-            ))
-        }
-        
-        return scaledImage
     }
 }
 
@@ -176,19 +141,5 @@ extension UIImage {
 extension Contents_UserInfoCell: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
-    }
-}
-
-extension UIButton {
-    func addBottomLine(font: UIFont, color: UIColor, string: String) -> NSMutableAttributedString {
-        let attr: [NSAttributedString.Key:Any] = [
-            .font: font,
-            .foregroundColor: color,
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ]
-
-        let attrStr = NSMutableAttributedString(string: string ,attributes: attr)
-        
-        return attrStr
     }
 }

@@ -21,5 +21,4 @@ enum CustomColor: String {
     case manner4 = "Manner4"
     case manner5 = "Manner5"
     case manner6 = "Manner6"
-    
 }

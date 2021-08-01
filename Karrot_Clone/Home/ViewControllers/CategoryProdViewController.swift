@@ -11,9 +11,13 @@ import Firebase
 
 class CategoryProdViewController: UIViewController {
 
+    /// navigation title에 들어갈 카테고리명
     var categoryTitle = ""
+    
+    /// Firebase Realtime Database 세팅
     let ref = Database.database().reference()
     
+    /// 같은 테이블뷰 사용하니 HomeCell 재사용
     let categoryProdTable: UITableView = {
         let tb = UITableView()
         tb.register(HomeCell.self, forCellReuseIdentifier: HomeCell.identifier)
@@ -28,7 +32,7 @@ class CategoryProdViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NavigationItemConfig()
+        setNavigationButton()
         config()
     }
     
@@ -42,7 +46,7 @@ class CategoryProdViewController: UIViewController {
     }
     
     
-    private func NavigationItemConfig() {
+    private func setNavigationButton() {
         self.title = categoryTitle
         
         let nav = self.navigationItem
@@ -57,7 +61,6 @@ class CategoryProdViewController: UIViewController {
         
         let leftButton = UIBarButtonItem(customView: backButton)
         
-        
         let searchButton : UIButton = {
             let bt = UIButton()
             bt.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -70,8 +73,6 @@ class CategoryProdViewController: UIViewController {
         
         nav.leftBarButtonItem = leftButton
         nav.rightBarButtonItem = rightButton
-        
-        
     }
     
     @objc func backButtonClicked() {
@@ -79,7 +80,7 @@ class CategoryProdViewController: UIViewController {
     }
     
     @objc func searchButtonClicked() {
-        
+        /// [ ] SearchView로 이동
     }
     
     private func config() {
@@ -97,6 +98,7 @@ class CategoryProdViewController: UIViewController {
 
 }
 
+/// ---------- TableView Setting ----------
 extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categoryProdData.count
@@ -106,6 +108,7 @@ extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeCell.identifier, for: indexPath) as! HomeCell
         cell.selectionStyle = .none
         
+        /// upload 시간 기준으로 오름차순 정렬
         let data = categoryProdData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         
         cell.titleLabel.text = data.prodTitle
@@ -114,8 +117,11 @@ extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource
         cell.thumbnail.image = UIImage(named: data.prodImage)
         cell.locationLabel.text = data.location
         cell.priceLabel.text = data.price
+        
+        /// [ ] 시간 케이스별 정리 필요  ( ~ 일 전, ~ 시간 전, ~ 분 전, + 끌올)
         cell.timeLabel.text = " ・ " + "\(data.uploadTime)분 전"
         
+        /// 개수에 따라 초기화 or 데이터 할당
         if data.heartNum > 0 {
             cell.heartLabel.text = "\(data.heartNum)"
             cell.heartIcon.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -156,9 +162,12 @@ extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /// 선택 이후 선택 취소
         tableView.deselectRow(at: indexPath, animated: true)
+        /// 선택된 데이터 1개 넘겨줌
         let data = categoryProdData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         let vc = ContentsViewController(items: [data])
+        /// 하단 뷰에 들어갈 가격 데이터 전달
         vc.priceLabel.text = data.price
                 
         self.navigationController?.pushViewController(vc, animated: true)
@@ -166,12 +175,12 @@ extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource
     
 }
 
-
 extension CategoryProdViewController {
     func fetchCategoryData() {
         DispatchQueue.main.async {
             self.categoryProdData.removeAll()
             
+            /// 카테고리별로 필터링하여 쿼리 날리기
             let query = self.ref.queryOrdered(byChild: "category")
                 .queryEqual(toValue: self.categoryTitle)
             
@@ -183,6 +192,7 @@ extension CategoryProdViewController {
                             self.categoryProdData.append(data)
                         }
                     }
+                    /// 1개 일 경우 json 구조가 다르게 들어옴 > 별도 처리
                 } else {
                     if let result = snapshot.value as? [[String:Any]] {
                         result.forEach { item in
@@ -191,12 +201,7 @@ extension CategoryProdViewController {
                         }
                     }
                 }
-                
-                
             }
-            self.categoryProdTable.setNeedsLayout()
-            self.categoryProdTable.layoutIfNeeded()
-            
         }
     }
 }

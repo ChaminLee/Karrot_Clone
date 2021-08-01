@@ -46,6 +46,10 @@
 		C970694226B422B000C4AF54 /* CategoryProdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C970694126B422B000C4AF54 /* CategoryProdViewController.swift */; };
 		C970694426B42CC500C4AF54 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = C970694326B42CC500C4AF54 /* GoogleService-Info (1).plist */; };
 		C970694626B4305300C4AF54 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = C970694526B4305200C4AF54 /* data.json */; };
+		C9A7046A26B66C5900871CE9 /* Extensions+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046926B66C5900871CE9 /* Extensions+UIStackView.swift */; };
+		C9A7046C26B6775400871CE9 /* Extensions+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046B26B6775400871CE9 /* Extensions+NotificationCenter.swift */; };
+		C9A7046E26B681B700871CE9 /* Extensions+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046D26B681B700871CE9 /* Extensions+UIImage.swift */; };
+		C9A7047026B681F200871CE9 /* Extensions+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046F26B681F200871CE9 /* Extensions+UIButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +117,10 @@
 		C970694126B422B000C4AF54 /* CategoryProdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProdViewController.swift; sourceTree = "<group>"; };
 		C970694326B42CC500C4AF54 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (1).plist"; path = "../../../Downloads/GoogleService-Info (1).plist"; sourceTree = "<group>"; };
 		C970694526B4305200C4AF54 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = ../../../data.json; sourceTree = "<group>"; };
+		C9A7046926B66C5900871CE9 /* Extensions+UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIStackView.swift"; sourceTree = "<group>"; };
+		C9A7046B26B6775400871CE9 /* Extensions+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+NotificationCenter.swift"; sourceTree = "<group>"; };
+		C9A7046D26B681B700871CE9 /* Extensions+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIImage.swift"; sourceTree = "<group>"; };
+		C9A7046F26B681F200871CE9 /* Extensions+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIButton.swift"; sourceTree = "<group>"; };
 		CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone_Karrot_CloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				C967DCE626A04AFD009E58A1 /* AppDelegate.swift */,
+				C9A7046826B66C3000871CE9 /* Extensions */,
 				C967DD2926A05167009E58A1 /* Design */,
 				C967DD8A26A66175009E58A1 /* LocationPopOver */,
 				C967DD6F26A16CE2009E58A1 /* Home */,
@@ -331,6 +340,17 @@
 				C970694526B4305200C4AF54 /* data.json */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C9A7046826B66C3000871CE9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C9A7046926B66C5900871CE9 /* Extensions+UIStackView.swift */,
+				C9A7046B26B6775400871CE9 /* Extensions+NotificationCenter.swift */,
+				C9A7046F26B681F200871CE9 /* Extensions+UIButton.swift */,
+				C9A7046D26B681B700871CE9 /* Extensions+UIImage.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -575,6 +595,7 @@
 				C92159E826A6FDF7009C03CE /* NewLocationViewController.swift in Sources */,
 				C967DD1A26A04DED009E58A1 /* HomeViewController.swift in Sources */,
 				C967DD7326A1BCA1009E58A1 /* Contents_ReportCell.swift in Sources */,
+				C9A7046A26B66C5900871CE9 /* Extensions+UIStackView.swift in Sources */,
 				C970694026B156B400C4AF54 /* CategoryCell.swift in Sources */,
 				C967DD7D26A47269009E58A1 /* Contents_Seller_ProdCell.swift in Sources */,
 				C967DD1E26A04E19009E58A1 /* AroundViewController.swift in Sources */,
@@ -586,6 +607,7 @@
 				C967DD6C26A124EB009E58A1 /* CustomFont.swift in Sources */,
 				C967DD7926A45F16009E58A1 /* Contents_MainTextCell.swift in Sources */,
 				C967DD6E26A16ACF009E58A1 /* ContentsViewController.swift in Sources */,
+				C9A7046E26B681B700871CE9 /* Extensions+UIImage.swift in Sources */,
 				C97068FE26B12EFC00C4AF54 /* ImageSliderView.swift in Sources */,
 				C92159EE26A83E89009C03CE /* ProdData.swift in Sources */,
 				C967DCE726A04AFD009E58A1 /* AppDelegate.swift in Sources */,
@@ -595,6 +617,8 @@
 				C967DD1C26A04E02009E58A1 /* LifeViewController.swift in Sources */,
 				C97068FC26AEFE2000C4AF54 /* FloatingButtonController.swift in Sources */,
 				C967DD9226A665AC009E58A1 /* SetLocation.swift in Sources */,
+				C9A7047026B681F200871CE9 /* Extensions+UIButton.swift in Sources */,
+				C9A7046C26B6775400871CE9 /* Extensions+NotificationCenter.swift in Sources */,
 				C967DD7726A43118009E58A1 /* Contents_UserInfoCell.swift in Sources */,
 				C967DD8C26A661A0009E58A1 /* LocationOptionItem.swift in Sources */,
 				C92159F426A88511009C03CE /* Contents_RecommendCell.swift in Sources */,

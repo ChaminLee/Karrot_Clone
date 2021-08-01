@@ -280,10 +280,8 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             return bt
         }()
         
-        let rightStack = UIStackView.init(arrangedSubviews: [shareButton,moreButton])
+        let rightStack = UIStackView(arrangedSubviews: [shareButton,moreButton], axis: .horizontal, spacing: 20, alignment: .center, distribution: .fill)
             
-        rightStack.stackViewConfig(rightStack)
-        rightStack.spacing = 20
         let rightSection = UIBarButtonItem(customView: rightStack)
        
         navitem.rightBarButtonItem = rightSection

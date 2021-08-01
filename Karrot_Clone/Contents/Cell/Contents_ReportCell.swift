@@ -13,7 +13,7 @@ class Contents_ReportCell: UITableViewCell {
 
     static let identifier = "Contents_ReportCell"
     
-    // Input과 return이 없다는 의미
+    // Input과 return이 없다는 의미!
     // Closure optional로 만들기 위해 ()로 덮었씌움
     var reportButtonAction : (() -> ())?
     
