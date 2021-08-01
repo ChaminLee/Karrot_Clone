@@ -81,6 +81,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -466,13 +467,6 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
             cell.userID = data.userID
             
-//            cell.collectionView.snp.makeConstraints {
-//                $0.height.equalTo(160)
-//            }
-            let vc = HomeViewController()
-            print("확인해봇소 \(vc.prodData.count)")
-            print("확인해봇소 \(vc.prodData.filter { $0.userID == data.userID }.count)")
-
         
             return cell
         case 4:

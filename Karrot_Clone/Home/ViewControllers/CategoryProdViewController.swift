@@ -20,12 +20,15 @@ class CategoryProdViewController: UIViewController {
         return tb
     }()
     
-    var categoryProdData = [ProdData]()
+    var categoryProdData = [ProdData]() {
+        didSet {
+            self.categoryProdTable.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
-        topConfig()
+        NavigationItemConfig()
         config()
     }
     
@@ -33,11 +36,13 @@ class CategoryProdViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
-        fetchData()
+        self.navigationController?.navigationBar.shadowImage = .none
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.default
+        fetchCategoryData()
     }
     
     
-    func topConfig() {
+    private func NavigationItemConfig() {
         self.title = categoryTitle
         
         let nav = self.navigationItem
@@ -77,7 +82,7 @@ class CategoryProdViewController: UIViewController {
         
     }
     
-    func config() {
+    private func config() {
         self.view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         
         categoryProdTable.delegate = self
@@ -150,26 +155,48 @@ extension CategoryProdViewController: UITableViewDelegate, UITableViewDataSource
         return CGFloat(150.0)
     }
     
-    func fetchData() {
-        print("firebase 데이터 패치중")
-        self.categoryProdData.removeAll()
-        
-        let query = self.ref.queryOrdered(byChild: "category").queryEqual(toValue: self.categoryTitle)
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let data = categoryProdData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
+        let vc = ContentsViewController(items: [data])
+        vc.priceLabel.text = data.price
+                
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+
+extension CategoryProdViewController {
+    func fetchCategoryData() {
         DispatchQueue.main.async {
-            self.ref.observeSingleEvent(of: .value) { snapShot in
-                if let result = snapShot.value as? [[String:Any]] {
-                    print("카테고리 \(result)")
-                    result.forEach { item in
-                        let data = ProdData(dictionary: item as! [String:Any])
-                        self.categoryProdData.append(data)
+            self.categoryProdData.removeAll()
+            
+            let query = self.ref.queryOrdered(byChild: "category")
+                .queryEqual(toValue: self.categoryTitle)
+            
+            query.observe(.value) { snapshot in
+                if snapshot.childrenCount > 1 {
+                    if let result = snapshot.value as? [String:Any] {
+                        result.values.forEach { item in
+                            let data = ProdData(dictionary: item as! [String : Any])
+                            self.categoryProdData.append(data)
+                        }
                     }
-                    self.categoryProdTable.reloadData()
+                } else {
+                    if let result = snapshot.value as? [[String:Any]] {
+                        result.forEach { item in
+                            let data = ProdData(dictionary: item as! [String : Any])
+                            self.categoryProdData.append(data)
+                        }
+                    }
                 }
+                
                 
             }
             self.categoryProdTable.setNeedsLayout()
             self.categoryProdTable.layoutIfNeeded()
+            
         }
     }
 }

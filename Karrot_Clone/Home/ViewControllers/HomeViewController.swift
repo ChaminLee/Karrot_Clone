@@ -352,7 +352,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let data = prodData[indexPath.row]
+        let data = prodData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         let vc = ContentsViewController(items: [data])
         vc.priceLabel.text = data.price
                 
