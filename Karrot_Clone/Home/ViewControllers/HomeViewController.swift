@@ -188,7 +188,7 @@ class HomeViewController: UIViewController {
 
     /// For UIButton PopOver Action
     func presentOptionsPopOver(withOptionItems items: [[LocationOptionItem]], fromButtonItem ButtonItem: UIButton) {
-        let optionItemListVC = LocationOptionViewController()
+        let optionItemListVC = PopOverViewController()
         optionItemListVC.items = items
 
         /// 지역 선택 위임
@@ -377,7 +377,7 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 
 /// ---------- LocationViewController의 Protocol ----------
 extension HomeViewController: PopOverLocationSelectedDelegate {
-    func selectedLocation(controller: LocationOptionViewController, didSelectItem name: String) {
+    func selectedLocation(controller: PopOverViewController, didSelectItem name: String) {
         /// location 선택시 텍스트 변경
         locationButton.setTitle(name, for: .normal)
         /// Toast Popup 메시지 세팅
@@ -388,7 +388,6 @@ extension HomeViewController: PopOverLocationSelectedDelegate {
 extension HomeViewController {
     /// ---------- ViewWillAppear Method ----------
     private func fetchData() {
-        print("firebase 데이터 패치중")
         self.prodData.removeAll()
         
         DispatchQueue.main.async {
@@ -433,6 +432,4 @@ extension HomeViewController {
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
     }
 }
-
-
 

@@ -36,8 +36,10 @@
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/Add.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/update.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/prod.gif" width="300">|
 |상품 뷰 이동|상품 이미지 슬라이더|네비게이션 컬러 변경|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/move.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/slide.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/colorChange.gif" width="300">|
-|매너 온도 팝업| 하단 관심버튼 클릭||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/heart.gif" width="300">||
+|매너 온도 팝업| 하단 관심버튼 클릭|상품 뷰 > 카테고리 이동|
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/heart.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/category.gif" width="300">|
+|홈 > 카테고리 이동|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/category2.gif"|||
 
 ## Dark Mode
 |런치스크린|홈|지역 버튼 클릭|
@@ -47,5 +49,7 @@
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/Add.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/reload.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/prod.gif" width="300">|
 |상품 뷰 이동|상품 이미지 슬라이더|네비게이션 컬러 변경|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/move.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/slide.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/color.gif" width="300">|
-|매너 온도 팝업| 하단 관심버튼 클릭||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/heart.gif" width="300">||
+|매너 온도 팝업| 하단 관심버튼 클릭|상품 뷰 > 카테고리 이동|
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/heart.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/category.gif" width="300">|
+|홈 > 카테고리 이동|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/category2.gif"|||

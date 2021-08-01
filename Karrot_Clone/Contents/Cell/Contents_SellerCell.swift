@@ -10,11 +10,18 @@ import UIKit
 import SnapKit
 import Firebase
 
+/// 유저의 다른 상품 클릭시 상품뷰로 이동시키기 위한 프로토콜
+protocol cellToPushNavDelegate: AnyObject {
+    func pushNav(viewController: UIViewController)
+}
 
 class Contents_SellerCell: UITableViewCell {
     
+    /// Firebase Realtime Database 세팅
     let ref = Database.database().reference()
     
+    var userDelegate: cellToPushNavDelegate?
+    /// 유저 아이디
     var userID = ""
 
     var usersProd = [ProdData]() {
@@ -22,14 +29,14 @@ class Contents_SellerCell: UITableViewCell {
             self.collectionView.reloadData()
         }
     }
+    
     static let identifier = "Contents_SellerCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        getUsersProds()
+        fetchUsersProdsData()
         config()
     }
-    
     
     let titleLabel: UILabel = {
         let lb = UILabel()
@@ -52,7 +59,7 @@ class Contents_SellerCell: UITableViewCell {
         layout.scrollDirection = .vertical
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(Contents_Seller_ProdCell.self, forCellWithReuseIdentifier: Contents_Seller_ProdCell.identifier)
+        cv.register(Contents_ProdCell.self, forCellWithReuseIdentifier: Contents_ProdCell.identifier)
         cv.backgroundColor = .clear
         cv.isScrollEnabled = false
         return cv
@@ -83,29 +90,22 @@ class Contents_SellerCell: UITableViewCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().offset(-20)
-//            $0.height.equalTo(360)
+            /// [ ] userProd 개수 관리 해야함!
             if usersProd.count > 2 {
                 $0.height.equalTo(360)
             } else {
                 $0.height.equalTo(160)
             }
-            
-            
         }
-        self.setNeedsLayout()
-        print("콘피그중입니다")
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        userID = ""
-    }
 }
 
+/// ---------- CollectionView Setting ----------
 extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -114,7 +114,6 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        layout.minimumLineSpacing = 20.0
         layout.minimumInteritemSpacing = 6.0
 
         let numberOfItemsPerRow: CGFloat = 2.0
@@ -125,14 +124,10 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_ProdCell.identifier, for: indexPath) as! Contents_ProdCell
         
-        let data = usersProd[indexPath.row]
+        let data = usersProd.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         cell.prodImage.image = UIImage(named: data.prodImage)
         cell.prodLabel.text = data.prodTitle 
         cell.priceLabel.text = data.price
@@ -140,12 +135,19 @@ extension Contents_SellerCell: UICollectionViewDataSource, UICollectionViewDeleg
         return cell
     }
     
-    
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        /// 선택된 데이터 1개 넘겨줌
+        let data = usersProd.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
+        let vc = ContentsViewController(items: [data])
+        /// 하단 뷰에 들어갈 가격 데이터 전달
+        vc.priceLabel.text = data.price
+                
+        self.userDelegate?.pushNav(viewController: vc)
+    }
 }
 
 extension Contents_SellerCell {
-    func getUsersProds() {
+    func fetchUsersProdsData() {
         DispatchQueue.main.async {
             self.usersProd.removeAll()
             
@@ -161,6 +163,7 @@ extension Contents_SellerCell {
                             self.usersProd.append(data)
                         }
                     }
+                    /// 1개 일 경우 json 구조가 다르게 들어옴 > 별도 처리
                 } else {
                     if let result = snapshot.value as? [[String:Any]] {
                         result.forEach { item in
@@ -169,14 +172,7 @@ extension Contents_SellerCell {
                         }
                     }
                 }
-                
-                
             }
-            self.collectionView.reloadData()
-            self.collectionView.setNeedsLayout()
-            self.collectionView.layoutIfNeeded()
-            
         }
     }
-    
 }

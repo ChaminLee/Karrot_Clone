@@ -34,7 +34,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
         homeview.tabBarItem = homeitem
         
         
-        // Town
+        // life
         let lifeview = UINavigationController(rootViewController: LifeViewController())
         let lifeitem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill",withConfiguration: UIImage.SymbolConfiguration(weight: .bold)))
 

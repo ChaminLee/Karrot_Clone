@@ -9,16 +9,23 @@ import UIKit
 import SnapKit
 import Firebase
 
+/// 추천 상품 / 함께 본 상품 클릭시 상품뷰로 이동시키기 위한 프로토콜
+protocol recommendPushNavDelegate {
+    func recommendPushNav(viewController: UIViewController)
+}
+
 class Contents_RecommendCell: UITableViewCell {
-    
+    /// Firebase Realtime Database 세팅
     let ref = Database.database().reference()
     
+    var recommendDelegate: recommendPushNavDelegate?
     var recommendProd = [ProdData]()
+    
     static let identifier = "Contents_RecommendCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        fetchRecommendData()
+        fetchRecommendProdData()
         config()
     }
     
@@ -30,20 +37,12 @@ class Contents_RecommendCell: UITableViewCell {
         return lb
     }()
     
-    let moreButton: UIButton = {
-        let bt = UIButton()
-        bt.setTitle("더보기", for: .normal)
-        bt.setTitleColor(UIColor(named: CustomColor.reply.rawValue), for: .normal)
-        bt.titleLabel?.font = UIFont(name: "Helvetica", size: 15)
-        return bt
-    }()
-    
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(Contents_Seller_ProdCell.self, forCellWithReuseIdentifier: Contents_Seller_ProdCell.identifier)
+        cv.register(Contents_ProdCell.self, forCellWithReuseIdentifier: Contents_ProdCell.identifier)
         cv.backgroundColor = .clear
         cv.isScrollEnabled = false
         return cv
@@ -51,13 +50,12 @@ class Contents_RecommendCell: UITableViewCell {
         
     
     func config() {
-        [titleLabel, moreButton, collectionView].forEach { item in
+        [titleLabel, collectionView].forEach { item in
             contentView.addSubview(item)
         }
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(25)
@@ -65,18 +63,11 @@ class Contents_RecommendCell: UITableViewCell {
             $0.height.equalTo(20)
         }
         
-        moreButton.snp.makeConstraints {
-            $0.centerY.equalTo(titleLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(15)
-        }
-        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.height.equalTo(1950)
-            
-            
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(1900)
         }
     }
 
@@ -85,6 +76,7 @@ class Contents_RecommendCell: UITableViewCell {
     }
 }
 
+/// ---------- CollectionView Setting ----------
 extension Contents_RecommendCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -100,20 +92,16 @@ extension Contents_RecommendCell: UICollectionViewDataSource, UICollectionViewDe
         let numberOfItemsPerHeight: CGFloat = 10.0
         
         let width = (collectionView.bounds.width - layout.minimumInteritemSpacing * (numberOfItemsPerRow + 1)) / numberOfItemsPerRow
-        let height = (collectionView.bounds.height - layout.minimumLineSpacing * (numberOfItemsPerHeight + 2)) / numberOfItemsPerHeight
+        let height = (collectionView.bounds.height - layout.minimumLineSpacing * (numberOfItemsPerHeight + 1)) / numberOfItemsPerHeight
         
         return CGSize(width: width, height: height)
     }
     
-    /// 위에서 AutoLayout으로 이미 sectionInset을 잡은거나 다름없음
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_Seller_ProdCell.identifier, for: indexPath) as! Contents_Seller_ProdCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contents_ProdCell.identifier, for: indexPath) as! Contents_ProdCell
         
-        let data = recommendProd[indexPath.row]
+        let data = recommendProd.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         
         cell.prodImage.image = UIImage(named: data.prodImage)
         cell.prodLabel.text = data.prodTitle
@@ -122,11 +110,20 @@ extension Contents_RecommendCell: UICollectionViewDataSource, UICollectionViewDe
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        /// 선택된 데이터 1개 넘겨줌
+        let data = recommendProd.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
+        let vc = ContentsViewController(items: [data])
+        /// 하단 뷰에 들어갈 가격 데이터 전달
+        vc.priceLabel.text = data.price
+                
+        self.recommendDelegate?.recommendPushNav(viewController: vc)
+    }
+    
 }
 
 extension Contents_RecommendCell {
-    func fetchRecommendData() {
-        print("firebase 데이터 패치중")
+    func fetchRecommendProdData() {
         self.recommendProd.removeAll()
         
         DispatchQueue.main.async {

@@ -32,7 +32,7 @@ class Contents_ReportCell: UITableViewCell {
     }()
     
     @objc func reportClicked() {
-        print("신고해!!")
+        /// 신고 action 
         reportButtonAction?()
     }
     

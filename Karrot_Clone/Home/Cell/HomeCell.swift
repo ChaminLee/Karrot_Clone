@@ -214,6 +214,7 @@ class HomeCell: UITableViewCell {
         
         /// StackView 초기화
         self.stackView = UIStackView(arrangedSubviews: [replyView, chatView, heartView], axis: .horizontal, spacing: 3, alignment: .center, distribution: .fill)
+        stackView.isUserInteractionEnabled = false
 
         [thumbnail,titleLabel,locationLabel,timeLabel,priceLabel,stackView].forEach { item in
             contentView.addSubview(item)
@@ -246,7 +247,8 @@ class HomeCell: UITableViewCell {
         }
         
         stackView.snp.makeConstraints {
-            $0.bottom.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
     }

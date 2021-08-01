@@ -9,12 +9,13 @@ import UIKit
 import SnapKit
 import Firebase
 
-
 class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {        
     
+    /// Firebase Realtime Database 세팅
     let ref = Database.database().reference()
     var ContentsData = [ProdData]()
     
+    /// 데이터 초기 세팅
     init(items: [ProdData]) {
         self.ContentsData = items
         super.init(nibName: nil, bundle: nil)
@@ -24,15 +25,14 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var images = ["당근이","당근이2","당근이3","당근이4","당근이5"]
-    
+    /// 최하단 앵커바
     let bottomAnchor: UIView = {
         let ba = UIView()
         ba.backgroundColor = UIColor(named: CustomColor.background.rawValue)
         return ba
     }()
         
-    
+    /// 메인 상품 테이블
     let contentTable : UITableView = {
         let tv = UITableView(frame: CGRect.zero, style: .grouped)
         tv.register(Contents_UserInfoCell.self, forCellReuseIdentifier: Contents_UserInfoCell.identifier)
@@ -43,10 +43,12 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         tv.separatorColor = UIColor(named: CustomColor.separator.rawValue)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         tv.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+        /// contentInset은 조정되지 않음
         tv.contentInsetAdjustmentBehavior = .never
         return tv
     }()
     
+    /// 이미지 슬라이더 내 페이지 컨트롤
     let pageControl : UIPageControl = {
         let pc = UIPageControl()
         pc.currentPageIndicatorTintColor = .white
@@ -55,6 +57,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return pc
     }()
     
+    /// 이미지 슬라이더 이미지 스크롤 뷰
     let scrollView : UIScrollView = {
         let sv = UIScrollView()
         sv.showsHorizontalScrollIndicator = false
@@ -62,13 +65,19 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return sv
     }()
     
+    /// Statusbar
     let statusBarView = UIView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height)) // view.frame.size.width
     
+    /// 1. bottttomAnchorConfig() : 최하단 뷰 구성 세팅
+    /// 2. config() : 기본 세팅 (테이블뷰, 최하단뷰)
+    /// 3. setNavigationItems() : NavigationItem 세팅
+    /// 4. naviStyle() : 기본 Navigationcontroller 세팅 (색, 투명도)
+    /// 5. setStatusbar() : Statusbar 기본 세팅
     override func viewDidLoad() {
         super.viewDidLoad()
         bottttomAnchorConfig()
         config()
-        setNavItems()
+        setNavigationItems()
         naviStyle()
         setStatusbar()
     }
@@ -79,13 +88,12 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(statusBarView)
     }
     
+    /// 1. setNavigationColorByHeight() : Navigationcontroller 초기 세팅 ( by offset.y)
+    /// 2. tabbarcontroller : 해당 뷰에서는 숨기기
+    /// 3. 테이블뷰 리로드
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.black
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.tintColor = .white
+        setNavigationColorByHeight(contentTable)
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
         DispatchQueue.main.async {
@@ -93,35 +101,57 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.isTranslucent = false
+    /// 상단 그라데이션 레이어
+    let gradient: CAGradientLayer = {
+        let gl = CAGradientLayer()
+        gl.locations = [0.0,1.0]
+        gl.colors = [UIColor.lightGray.withAlphaComponent(0.4).cgColor, UIColor.clear.cgColor]
+        return gl
+    }()
+    
+    func setNavigationColorByHeight(_ sender: UITableView) {
+        /// navigation bar color 변경
+        if sender.contentOffset.y > 300 {
+            self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
+            self.navigationController?.navigationBar.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+            self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
+            self.statusBarView.alpha = 1
+            self.navigationController?.navigationBar.shadowImage = .none
+        }
+        else {
+            /// 우선 투명하게 만들고
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+            
+            /// gradient frame 설정
+            gradient.frame = CGRect(x: 0, y: 0, width: UIApplication.shared.statusBarFrame.width, height: UIApplication.shared.statusBarFrame.height + self.navigationController!.navigationBar.frame.height)
+            /// layer에 추가
+            self.view.layer.addSublayer(gradient)
+            self.view.backgroundColor = UIColor.clear
+        }
     }
     
     func naviStyle(){
         self.navigationController?.navigationBar.barStyle = UIBarStyle.black
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .clear
         
         // 네비 바 전체 Backgrond 이미지, 경계선 삭제
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        contentTable.frame = view.bounds
-        contentTable.reloadData()
-    }
-    
+    /// 최하단뷰 - 하트 뷰
     let heartButton: UIButton = {
         let bt = UIButton()
         bt.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
         let size: CGFloat = 23
         bt.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
         bt.imageView?.contentMode = .scaleAspectFit
-        bt.tintColor = UIColor(named: CustomColor.badge.rawValue)
+        bt.tintColor = UIColor(named: CustomColor.reply.rawValue)
         bt.setImage(UIImage(systemName: "heart"), for: .normal)
         bt.addTarget(self, action: #selector(heartClicked), for: .touchUpInside)
         return bt
@@ -131,21 +161,24 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func heartClicked() {
         if !heartStatus {
+            /// customColor.karrot 보다 조금 더 진하게
             heartButton.tintColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
             heartButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         } else {
-            heartButton.tintColor = UIColor(named: CustomColor.badge.rawValue)
+            heartButton.tintColor = UIColor(named: CustomColor.reply.rawValue)
             heartButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
         heartStatus = !heartStatus
     }
     
+    /// 최하단뷰 - 구분선
     let separatorLine: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: CustomColor.separator.rawValue)
         return view
     }()
     
+    /// 최하단뷰 - 가격
     let priceLabel: UILabel = {
         let lb = UILabel()
         lb.text = "17,000원"
@@ -154,6 +187,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return lb
     }()
     
+    /// 최하단뷰 - 네고 버튼
     let negoButton: UIButton = {
         let bt = UIButton()
         bt.setTitle("가격제안불가", for: .normal)
@@ -162,6 +196,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return bt
     }()
     
+    /// 최하단뷰 - 거래하기
     let chatTrade: UIButton = {
         let bt = UIButton()
         bt.setTitle("채팅으로 거래하기", for: .normal)
@@ -175,7 +210,9 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         return bt
     }()
     
+    /// 최하단뷰 구성요소 세팅
     func bottttomAnchorConfig() {
+        /// 가격제안여부 버튼 반영
         if ContentsData[0].nego {
             let attr = negoButton.addBottomLine(font: UIFont(name: "Helvetica", size: 14)!, color: UIColor(named: CustomColor.karrot.rawValue)!, string: "가격제안하기")
             negoButton.setAttributedTitle(attr, for: .normal)
@@ -209,7 +246,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             $0.top.equalTo(priceLabel.snp.bottom).offset(5)
         }
         
-        
         chatTrade.snp.makeConstraints {
             $0.centerY.equalTo(heartButton.snp.centerY)
             $0.trailing.equalToSuperview().inset(15)
@@ -229,7 +265,11 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         
         contentTable.delegate = self
         contentTable.dataSource = self
-        
+      
+        /// 최하단 separator line 지우기
+        contentTable.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: contentTable.frame.size.width, height: 1))
+
+
         view.backgroundColor = .white
 
         view.addSubview(contentTable)
@@ -244,12 +284,11 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         contentTable.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaInsets.top)
-            $0.bottom.equalTo(bottomAnchor.snp.top)
+            $0.bottom.equalTo(bottomAnchor.snp.top).inset(30)
         }
-    
     }
     
-    func setNavItems() {
+    func setNavigationItems() {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         let navitem = self.navigationItem
         
@@ -261,7 +300,16 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             return bt
         }()
         
-        let leftSection = UIBarButtonItem(customView: backButton)
+        let homeButton : UIButton = {
+            let bt = UIButton()
+            bt.setImage(UIImage(systemName: "house"), for: .normal)
+            bt.addTarget(self, action: #selector(homeButtonClicked), for: .touchUpInside)
+            return bt
+        }()
+        
+        let leftStack = UIStackView(arrangedSubviews: [backButton,homeButton], axis: .horizontal, spacing: 20, alignment: .center, distribution: .fill)
+        
+        let leftSection = UIBarButtonItem(customView: leftStack)
        
         navitem.leftBarButtonItem = leftSection
         
@@ -287,9 +335,14 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         navitem.rightBarButtonItem = rightSection
     }
     
+    @objc func homeButtonClicked() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     @objc func backButtonClicked() {
         self.navigationController?.popViewController(animated: true)
     }
+    
     @objc func shareButtonClicked() {
         if let name = URL(string: "https://github.com/ChaminLee") {
             let objectsToShare = [name]
@@ -297,6 +350,7 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             self.present(activityVC,animated: true,completion: nil)
         }
     }
+    
     @objc func moreButtonClicked() {
         let alert = UIAlertController()
             
@@ -313,23 +367,23 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func presentOptionsPopOver(withOptionItems mannerItems : [[MannerDetailnfo]], fromButtonItem ButtonItem: UIButton) {
-        let optionItemListVC = LocationOptionViewController()
+    /// 매너온도 클릭시 PopOver
+    func presentOptionsPopOver(withOptionItems mannerItems : [[MannerItem]], fromButtonItem ButtonItem: UIButton) {
+        let optionItemListVC = PopOverViewController()
         optionItemListVC.manners = mannerItems
         optionItemListVC.view.backgroundColor = UIColor(named: CustomColor.karrot.rawValue)
-        optionItemListVC.preferredContentSize = CGSize(width: 230, height: 90)
-        
+        optionItemListVC.preferredContentSize = CGSize(width: 230, height: 90) // popover size
         
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
         popOverPresentationController.permittedArrowDirections = .up
-        popoverPresentationController?.popoverLayoutMargins = UIEdgeInsets(top: 0, left: 0.5, bottom: 0, right: 0)
+//        popoverPresentationController?.popoverLayoutMargins = UIEdgeInsets(top: 10, left: 0.5, bottom: 0, right: 0)
         popOverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
 }
 
-
+/// ---------- TableView Setting ----------
 extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -345,8 +399,10 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_UserInfoCell",for: indexPath) as! Contents_UserInfoCell
+            
             cell.selectionStyle = .none
             
+            /// profile 이미지 스케일 > 동그랗게
             let img: UIImageView = {
                 let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
                 img.image = UIImage(named: data.userIcon)?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
@@ -383,13 +439,11 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.degreeLabel.textColor = color
             cell.degreeBar.progressTintColor = color
-            
             cell.degreeLabel.text = "\(data.mannerDegree)℃"
             cell.degreeBar.setProgress(data.mannerDegree * 0.01, animated: true)
             
+            /// 매너온도 등장!
             cell.buttonAction = { [unowned self] in
-                print("매너 설명 소환")
-           
                 let label : UILabel = {
                     let lb = UILabel()
                     lb.text = " "
@@ -404,6 +458,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_MainTextCell",for: indexPath) as! Contents_MainTextCell
+            
             cell.selectionStyle = .none
             cell.cellDelegate = self
             
@@ -411,14 +466,8 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.timeLabel.text = "・ " + "\(data.uploadTime)분 전"
             
             /// category
-            let attr: [NSAttributedString.Key:Any] = [
-                .font: UIFont(name: "Helvetica", size: 12),
-                .foregroundColor: UIColor(named: CustomColor.reply.rawValue),
-                .underlineStyle: NSUnderlineStyle.single.rawValue
-            ]
-
-            let attrStr = NSMutableAttributedString(string: data.category,attributes: attr)
-            cell.categoryButton.setAttributedTitle(attrStr, for: .normal)
+            let attr = cell.categoryButton.addBottomLine(font: UIFont(name: "Helvetica", size: 12)!, color: UIColor(named: CustomColor.reply.rawValue)!, string: data.category)
+            cell.categoryButton.setAttributedTitle(attr, for: .normal)
             
             cell.mainLabel.text = data.prodDescription
             
@@ -443,16 +492,13 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.visitView.isHidden = false
                 
             }
-            
-            
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_ReportCell",for: indexPath) as! Contents_ReportCell
             cell.selectionStyle = .none
                         
             /// ViewController > TableView > TableViewCell > reportButtonAction 사이클(순환참조)을 막기 위해
-            /// unowned로 설정 ( 값이 있음을 가정, 옵셔널일 경우 weak으로 해야하지만
-            /// ViewController가 여전히 메모리에 있음을 가정하고 진행
+            /// unowned로 설정 ( 값이 있음을 가정, 옵셔널일 경우 weak으로 해야하지만 ViewController가 여전히 메모리에 있음을 가정하고 진행)
             cell.reportButtonAction = { [unowned self] in
                 /// 신고 페이지로 이동 필요
                 print("신고")
@@ -461,18 +507,19 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_SellerCell",for: indexPath) as! Contents_SellerCell            
             cell.selectionStyle = .none
+            cell.userDelegate = self
             
             cell.titleLabel.text = "\(data.userID)님의 판매 상품"
             cell.userID = data.userID
-            
-        
+                    
             return cell
         case 4:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contents_RecommendCell",for: indexPath) as! Contents_RecommendCell
+            
             cell.selectionStyle = .none
+            cell.recommendDelegate = self
             
             cell.titleLabel.text = "차밍님, 이건 어때요?"
-//            cell.backgroundColor = UIColor(named: CustomColor.background.rawValue)
             return cell
             
         default:
@@ -491,18 +538,19 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    // HeaderView 이미지 스크롤
+    /// HeaderView - 이미지 슬라이더
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 390))
-
+        let detailImage = self.ContentsData[0].detailImages
+        
         let headerWidth = headerView.frame.width
         let headerHeight = headerView.frame.height
 
         // 페이지 컨트롤
         let pageControl = self.pageControl
         pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
-        pageControl.numberOfPages = images.count
+        pageControl.numberOfPages = detailImage.count
 
         // 스크롤 뷰
         let scrollView = self.scrollView
@@ -511,28 +559,23 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         scrollView.delegate = self
 
         headerView.addSubview(scrollView)
-        headerView.addSubview(pageControl)
-
-
-        for index in 0..<images.count {
+        
+        if detailImage.count > 1 {
+            headerView.addSubview(pageControl)
+        }
+        
+        for index in 0..<detailImage.count {
             let imageView = UIImageView()
-            imageView.layer.masksToBounds = false
-            imageView.layer.shadowColor = UIColor.black.cgColor
-            imageView.layer.shadowOffset = CGSize(width: 0, height: -10)
-            imageView.layer.shadowRadius = 2
-            imageView.layer.shadowOpacity = 0.25
-            imageView.clipsToBounds = true
-
             let xPos = headerWidth * CGFloat(index)
             imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-            imageView.image = UIImage(named: images[index])
+            imageView.image = UIImage(named: detailImage[index])
             scrollView.addSubview(imageView)
 
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
         }
 
-        scrollView.contentSize.width = scrollView.frame.width * CGFloat(images.count)
+        scrollView.contentSize.width = scrollView.frame.width * CGFloat(detailImage.count)
 
         return headerView
     }
@@ -546,8 +589,6 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         /// Stretch 확인
-            
-            
         /// navigation bar color 변경
         if scrollView.contentOffset.y > 300 {
             self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
@@ -555,24 +596,22 @@ extension ContentsViewController: UIScrollViewDelegate {
             self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
             self.statusBarView.alpha = 1
             self.navigationController?.navigationBar.shadowImage = .none
-        }
-        else {
-//            self.navigationController?.navigationBar.barStyle = UIBarStyle.black // Status Bar 글씨 색상 검정색
+            gradient.isHidden = true
+        } else {
             self.statusBarView.alpha = 0
             self.navigationController?.navigationBar.backgroundColor = .clear
             self.naviStyle()
-            
+            gradient.isHidden = false
         }
         
     }
     
     private func setPageControl() {
-        self.pageControl.numberOfPages = images.count
+        self.pageControl.numberOfPages = self.ContentsData[0].detailImages.count
     }
     
     private func setPageControlSelectedPage(currentPage:Int) {
         self.pageControl.currentPage = currentPage
-        print("현재페이지 :\(currentPage)")
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -589,7 +628,6 @@ extension ContentsViewController: UIPopoverPresentationControllerDelegate {
 
 extension ContentsViewController: ContentsMainTextDelegate {
     func categoryButtonTapped() {
-        // ToDo - 해당 카테고리 이동
         let vc = CategoryProdViewController()
         let data = ContentsData[0]
         
@@ -599,11 +637,16 @@ extension ContentsViewController: ContentsMainTextDelegate {
     }
 }
 
-extension UIApplication {
-    var statusBarView: UIView? {
-        if responds(to: Selector("statusBar")) {
-            return value(forKey: "statusBar") as? UIView
-        }
-        return nil
+/// 유저의 다른 상품 클릭시 상품뷰 이동
+extension ContentsViewController: cellToPushNavDelegate {
+    func pushNav(viewController: UIViewController) {
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+/// 추천 상품 클릭시 상품뷰 이동
+extension ContentsViewController: recommendPushNavDelegate {
+    func recommendPushNav(viewController: UIViewController) {
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
