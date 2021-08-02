@@ -28,7 +28,7 @@ class Contents_UserInfoCell: UITableViewCell {
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        
+        img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
         img.layer.masksToBounds = false
         img.layer.cornerRadius = img.frame.width / 2
         img.clipsToBounds = true

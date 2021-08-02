@@ -404,9 +404,10 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             
             /// profile 이미지 스케일 > 동그랗게
             let img: UIImageView = {
-                let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
                 img.image = UIImage(named: data.userIcon)?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
                 img.layer.masksToBounds = false
+                img.contentMode = .scaleAspectFill
                 img.layer.cornerRadius = img.frame.width / 2
                 img.clipsToBounds = true
                     

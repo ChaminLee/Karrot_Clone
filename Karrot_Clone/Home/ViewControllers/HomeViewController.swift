@@ -348,8 +348,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /// 선택 이후 선택 취소
-        tableView.deselectRow(at: indexPath, animated: true)
         /// 선택된 데이터 1개 넘겨줌
         let data = prodData.sorted(by: {$0.uploadTime < $1.uploadTime})[indexPath.row]
         let vc = ContentsViewController(items: [data])
@@ -390,7 +388,7 @@ extension HomeViewController {
     private func fetchData() {
         self.prodData.removeAll()
         
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .userInteractive).async {
             self.ref.observeSingleEvent(of: .value) { snapShot in
                 if let result = snapShot.value as? [[String:Any]] {
                     result.forEach { item in

@@ -20,7 +20,7 @@ class Contents_SellerCell: UITableViewCell {
     /// Firebase Realtime Database 세팅
     let ref = Database.database().reference()
     
-    var userDelegate: cellToPushNavDelegate?
+    weak var userDelegate: cellToPushNavDelegate?
     /// 유저 아이디
     var userID = ""
 

@@ -36,8 +36,8 @@ class PopOverViewController: UIViewController {
         
     private weak var tableView: UITableView?
     
-    var delegate: LocationOptionViewControllerDelegate?
-    var selectedDelegate: PopOverLocationSelectedDelegate?
+    weak var delegate: LocationOptionViewControllerDelegate?
+    weak var selectedDelegate: PopOverLocationSelectedDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

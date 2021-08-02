@@ -172,7 +172,7 @@ class FloatingButtonController: UIViewController {
     
     @objc func floatingButtonClicked(_ sender: UIButton) {
         let imgSize: CGFloat = 60
-                        
+
         if isShowFloating {
             self.view.isUserInteractionEnabled = true
             /// 뒷 배경 클릭시 닫히도록
@@ -253,7 +253,7 @@ extension FloatingButtonController {
         buttons.map {$0.isHidden = true}
         
         let image = UIImage(named: "Add")
-        /// 다시 원래 상태로 돌리기 
+        /// 다시 원래 상태로 돌리기
         let rotation = CGAffineTransform.identity
         
         UIView.animate(withDuration: 0.3) {

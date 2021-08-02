@@ -16,8 +16,8 @@ protocol ContentsMainTextDelegate: AnyObject {
 
 class Contents_MainTextCell: UITableViewCell {
     
-    /// delegate
-    var cellDelegate: ContentsMainTextDelegate?
+    /// delegate + retain cycle 방지
+    weak var cellDelegate: ContentsMainTextDelegate?
     
     static let identifier = "Contents_MainTextCell"
     
