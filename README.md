@@ -20,7 +20,7 @@
 |Index|Detail|
 |------|---|
 |구현 기간| **2021.07.23~**|
-|구현 내용| - 지역 선택시 토스트 메시지 보이도록 <br> - 지역선택시 화살표 rotate 애니메이션 추가 <br> - 모델 구조 개선 <br> - 글쓰기 플로팅 버튼 개선 <br> - 상품 뷰 유저의 다른 상품/추천 상품 간 마진 개선 <br> - Firebase Realtime Database 연동 <br> - 카테고리 컬렉션/테이블뷰 추가 <br> - 버튼 개선(카테고리, 매너온도, 가격제안하기) <br> - 카테고리 뷰 > 상품 뷰 연결|
+|구현 내용| - 지역 선택시 토스트 메시지 보이도록 <br> - 지역선택시 화살표 rotate 애니메이션 추가 <br> - 모델 구조 개선 <br> - 글쓰기 플로팅 버튼 개선 <br> - 상품 뷰 유저의 다른 상품/추천 상품 간 마진 개선 <br> - Firebase Realtime Database 연동 <br> - 카테고리 컬렉션/테이블뷰 추가 <br> - 버튼 개선(카테고리, 매너온도, 가격제안하기) <br> - 카테고리 뷰(홈/상품뷰) > 상품 뷰 연결 <br> - 홈으로 가기 버튼 추가 <br> - 상품 뷰 상단 dimmed 추가 <br> - 유저상품 & 추천상품 > 상품 뷰 연결|
 
 
 -------------
@@ -39,7 +39,7 @@
 |매너 온도 팝업| 하단 관심버튼 클릭|상품 뷰 > 카테고리 이동|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/heart.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/category.gif" width="300">|
 |홈 > 카테고리 이동|||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/category2.gif"|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Light/homeCategory.gif" width="300">|||
 
 ## Dark Mode
 |런치스크린|홈|지역 버튼 클릭|
@@ -52,4 +52,4 @@
 |매너 온도 팝업| 하단 관심버튼 클릭|상품 뷰 > 카테고리 이동|
 |<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/manner.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/heart.gif" width="300">|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/category.gif" width="300">|
 |홈 > 카테고리 이동|||
-|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/category2.gif"|||
+|<img src="https://github.com/ChaminLee/Karrot_Clone/blob/master/samples/Dark/category2.gif" width="300">|||
