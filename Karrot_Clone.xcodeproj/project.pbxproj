@@ -48,6 +48,7 @@
 		C9A7046C26B6775400871CE9 /* Extensions+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046B26B6775400871CE9 /* Extensions+NotificationCenter.swift */; };
 		C9A7046E26B681B700871CE9 /* Extensions+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046D26B681B700871CE9 /* Extensions+UIImage.swift */; };
 		C9A7047026B681F200871CE9 /* Extensions+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7046F26B681F200871CE9 /* Extensions+UIButton.swift */; };
+		C9A7047226B937B800871CE9 /* StretchTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A7047126B937B800871CE9 /* StretchTableHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		C9A7046B26B6775400871CE9 /* Extensions+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+NotificationCenter.swift"; sourceTree = "<group>"; };
 		C9A7046D26B681B700871CE9 /* Extensions+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIImage.swift"; sourceTree = "<group>"; };
 		C9A7046F26B681F200871CE9 /* Extensions+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIButton.swift"; sourceTree = "<group>"; };
+		C9A7047126B937B800871CE9 /* StretchTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchTableHeaderView.swift; sourceTree = "<group>"; };
 		CE5D8F1493FF990E9E57F3BB /* Pods_Karrot_Clone_Karrot_CloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Karrot_Clone_Karrot_CloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87A8531737270412C9FCBD5 /* Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_Clone-Karrot_CloneUITests/Pods-Karrot_Clone-Karrot_CloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED77E6140FA24B604C168C24 /* Pods-Karrot_CloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Karrot_CloneTests.release.xcconfig"; path = "Target Support Files/Pods-Karrot_CloneTests/Pods-Karrot_CloneTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				C967DD6D26A16ACE009E58A1 /* ContentsViewController.swift */,
+				C9A7047126B937B800871CE9 /* StretchTableHeaderView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				C967DD6926A10E39009E58A1 /* HomeCell.swift in Sources */,
 				C967DD9426A6924B009E58A1 /* MannerItem.swift in Sources */,
 				C967DD2226A04E2F009E58A1 /* MyViewController.swift in Sources */,
+				C9A7047226B937B800871CE9 /* StretchTableHeaderView.swift in Sources */,
 				C967DD6C26A124EB009E58A1 /* CustomFont.swift in Sources */,
 				C967DD7926A45F16009E58A1 /* Contents_MainTextCell.swift in Sources */,
 				C967DD6E26A16ACF009E58A1 /* ContentsViewController.swift in Sources */,

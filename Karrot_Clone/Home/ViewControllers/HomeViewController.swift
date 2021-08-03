@@ -22,6 +22,9 @@ class HomeViewController: UIViewController {
     /// 좌상단 현재 지역 표기
     var locationData = "지역을 선택해주세요"
         
+    /// tableview loading
+    var indicator = UIActivityIndicatorView()
+    
     /// 메인 홈 Tableview
     let hometable : UITableView = {
         let tv = UITableView(frame:CGRect.zero, style: .plain)
@@ -31,15 +34,17 @@ class HomeViewController: UIViewController {
         return tv
     }()
         
-    /// 1. setHomeTable() :  hometable 세팅
-    /// 2. setNavigationItem() : Navigationbar Item 버튼 세팅
-    /// 3. addLocationList() : 선택가능한 지역 추가
-    /// 4. setToast() : Toast Popup 세팅
-    /// 5. NotificationCenter
+    /// 1. fetchData() : prodData에 Firebase 데이터 패치
+    /// 2. setHomeTable() :  hometable 세팅
+    /// 3. setNavigationItem() : Navigationbar Item 버튼 세팅
+    /// 4. addLocationList() : 선택가능한 지역 추가
+    /// 5. setToast() : Toast Popup 세팅
+    /// 6. NotificationCenter
     ///   - rotate : 지역 선택뷰 사라질 때 arrow 다시 원복하는 애니메이션 실행
     ///   - viewToast : Toast Popup 실행
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchData()
         setHomeTable()
         setNavigationItem()
         addLocationList()
@@ -57,14 +62,13 @@ class HomeViewController: UIViewController {
             self.locationArrowButton.transform = CGAffineTransform.identity
         }
     }
-    
-    /// 1. fetchData() : prodData에 Firebase 데이터 패치
-    /// 2. tabbarController 사라지지 않도록 (다른 뷰컨트롤러 영향으로)
-    /// 3. navStyle() : Navigationcontroller 기본 세팅
-    /// 4. UIApplication.shared.windows.last!.isHidden : 글쓰기 추가 버튼 윈도우에서 보이도록
+        
+    /// 1. tabbarController 사라지지 않도록 (다른 뷰컨트롤러 영향으로)
+    /// 2. navStyle() : Navigationcontroller 기본 세팅
+    /// 3. UIApplication.shared.windows.last!.isHidden : 글쓰기 추가 버튼 윈도우에서 보이도록
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchData()
+//        fetchData()
         self.tabBarController?.tabBar.isHidden = false
         self.tabBarController?.tabBar.isTranslucent = false
         navStyle()
@@ -96,8 +100,7 @@ class HomeViewController: UIViewController {
     }
     
     /// Tableview의 RefreshControl Action
-    @objc func pullRefresh(_ sender: Any) {
-        print("업데이트중")
+    @objc func pullRefresh(_ sender: Any) {        
         self.hometable.reloadData()
         hometable.refreshControl?.endRefreshing()
     }
@@ -386,15 +389,20 @@ extension HomeViewController: PopOverLocationSelectedDelegate {
 extension HomeViewController {
     /// ---------- ViewWillAppear Method ----------
     private func fetchData() {
+        tableViewLoadingIndicator()
+        self.indicator.startAnimating()
+        self.hometable.isHidden = true
         self.prodData.removeAll()
         
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .background).async {
             self.ref.observeSingleEvent(of: .value) { snapShot in
                 if let result = snapShot.value as? [[String:Any]] {
                     result.forEach { item in
                         let data = ProdData(dictionary: item as! [String:Any])
                         self.prodData.append(data)
                     }
+                    self.indicator.stopAnimating()
+                    self.hometable.isHidden = false
                     self.hometable.reloadData()
                 }
                 
@@ -416,6 +424,14 @@ extension HomeViewController {
 //                imgView.image = UIImage(data: data!)
 //            }
 //        }.resume()
+    }
+    
+    func tableViewLoadingIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = self.view.center
+        indicator.color = UIColor(named: CustomColor.karrot.rawValue)
+        self.view.addSubview(indicator)
     }
     
     private func navStyle() {

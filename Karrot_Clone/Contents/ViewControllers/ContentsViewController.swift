@@ -61,9 +61,11 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     let scrollView : UIScrollView = {
         let sv = UIScrollView()
         sv.showsHorizontalScrollIndicator = false
+        sv.backgroundColor = .blue
         sv.isPagingEnabled = true
         return sv
     }()
+    
     
     /// Statusbar
     let statusBarView = UIView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height)) // view.frame.size.width
@@ -260,6 +262,36 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func config() {
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
+
+        let headerView = StretchTableHeaderView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 390))
+        
+        let slider = headerView.sliderView
+        if ContentsData[0].detailImages.count > 1 {
+            headerView.pageControl.numberOfPages = ContentsData[0].detailImages.count
+        }
+        
+        for i in 0..<ContentsData[0].detailImages.count {
+            let imageView = UIImageView()
+            let xPos = slider.bounds.width * CGFloat(i)
+            print("xPos: \(xPos)")
+            imageView.clipsToBounds = true
+            imageView.image = UIImage(named: ContentsData[0].detailImages[i])
+            imageView.frame = CGRect(x: xPos, y: 0, width: slider.bounds.width, height: slider.bounds.height)
+            imageView.contentMode = .scaleAspectFill
+            slider.addSubview(imageView)
+            
+            imageView.snp.makeConstraints {
+//                $0.bottom.leading.trailing.equalToSuperview()
+                $0.width.height.equalToSuperview()
+            }
+        }
+        
+        
+
+        slider.contentSize.width = CGFloat(ContentsData[0].detailImages.count) * slider.frame.width
+        
+        contentTable.tableHeaderView = headerView
+        
         contentTable.estimatedRowHeight = 100
         contentTable.rowHeight = UITableView.automaticDimension
         
@@ -377,7 +409,6 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
         guard let popOverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Modal Presentation Style을 설정하세요!")}
         popOverPresentationController.barButtonItem = UIBarButtonItem(customView: ButtonItem)
         popOverPresentationController.permittedArrowDirections = .up
-//        popoverPresentationController?.popoverLayoutMargins = UIEdgeInsets(top: 10, left: 0.5, bottom: 0, right: 0)
         popOverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
@@ -538,48 +569,51 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    func setHeaderView() {
+        
+    }
     
     /// HeaderView - 이미지 슬라이더
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 390))
-        let detailImage = self.ContentsData[0].detailImages
-        
-        let headerWidth = headerView.frame.width
-        let headerHeight = headerView.frame.height
-
-        // 페이지 컨트롤
-        let pageControl = self.pageControl
-        pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
-        pageControl.numberOfPages = detailImage.count
-
-        // 스크롤 뷰
-        let scrollView = self.scrollView
-        scrollView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
-
-        scrollView.delegate = self
-
-        headerView.addSubview(scrollView)
-        
-        if detailImage.count > 1 {
-            headerView.addSubview(pageControl)
-        }
-        
-        for index in 0..<detailImage.count {
-            let imageView = UIImageView()
-            let xPos = headerWidth * CGFloat(index)
-            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-            imageView.image = UIImage(named: detailImage[index])
-            scrollView.addSubview(imageView)
-
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-        }
-
-        scrollView.contentSize.width = scrollView.frame.width * CGFloat(detailImage.count)
-
-        return headerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 390))
+//        let detailImage = self.ContentsData[0].detailImages
+//
+//        let headerWidth = headerView.frame.width
+//        let headerHeight = headerView.frame.height
+//
+//        // 페이지 컨트롤
+//        let pageControl = self.pageControl
+//        pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
+//        pageControl.numberOfPages = detailImage.count
+//
+//        // 스크롤 뷰
+//        let scrollView = self.scrollView
+//        scrollView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
+//
+//        scrollView.delegate = self
+//
+//        headerView.addSubview(scrollView)
+//
+//        if detailImage.count > 1 {
+//            headerView.addSubview(pageControl)
+//        }
+//
+//        for index in 0..<detailImage.count {
+//            let imageView = UIImageView()
+//            let xPos = headerWidth * CGFloat(index)
+//            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+//            imageView.image = UIImage(named: detailImage[index])
+//            imageView.contentMode = .scaleAspectFill
+//            imageView.clipsToBounds = true
+//            scrollView.addSubview(imageView)
+//        }
+//
+//
+//        scrollView.contentSize.width = scrollView.frame.width * CGFloat(detailImage.count)
+//
+//        return headerView
+//    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 390
@@ -590,8 +624,13 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
 extension ContentsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         /// Stretch 확인
+        let offsetY = scrollView.contentOffset.y
+        let headerView = self.contentTable.tableHeaderView as! StretchTableHeaderView
+        headerView.pushDownScroll(scrollView: scrollView)
+        
+        
         /// navigation bar color 변경
-        if scrollView.contentOffset.y > 300 {
+        if offsetY > 300 {
             self.navigationController?.navigationBar.barStyle = UIBarStyle.default // Status Bar 글씨 색상 흰색
             self.navigationController?.navigationBar.backgroundColor = UIColor(named: CustomColor.background.rawValue)
             self.navigationController?.navigationBar.tintColor = UIColor(named: CustomColor.text.rawValue)
@@ -606,19 +645,19 @@ extension ContentsViewController: UIScrollViewDelegate {
         }
         
     }
-    
-    private func setPageControl() {
-        self.pageControl.numberOfPages = self.ContentsData[0].detailImages.count
-    }
-    
-    private func setPageControlSelectedPage(currentPage:Int) {
-        self.pageControl.currentPage = currentPage
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let value = self.scrollView.contentOffset.x/self.scrollView.frame.size.width
-        self.setPageControlSelectedPage(currentPage: Int(round(value)))
-    }
+//    
+//    private func setPageControl() {
+//        self.pageControl.numberOfPages = self.ContentsData[0].detailImages.count
+//    }
+//
+//    private func setPageControlSelectedPage(currentPage:Int) {
+//        self.pageControl.currentPage = currentPage
+//    }
+//
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let value = self.scrollView.contentOffset.x/self.scrollView.frame.size.width
+//        self.setPageControlSelectedPage(currentPage: Int(round(value)))
+//    }
 }
 
 extension ContentsViewController: UIPopoverPresentationControllerDelegate {

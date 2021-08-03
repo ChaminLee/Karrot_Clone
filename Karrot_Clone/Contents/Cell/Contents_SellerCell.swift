@@ -155,7 +155,6 @@ extension Contents_SellerCell {
                 .queryEqual(toValue: self.userID).queryLimited(toLast: 4)
             
             query.observe(.value) { snapshot in
-                print(snapshot.value as? [String:Any])
                 if snapshot.childrenCount > 1 {
                     if let result = snapshot.value as? [String:Any] {
                         result.values.forEach { item in
