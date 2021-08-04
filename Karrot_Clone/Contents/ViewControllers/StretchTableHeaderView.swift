@@ -10,15 +10,26 @@ import SnapKit
 
 class StretchTableHeaderView: UIView {
 
+    let headerWidth: CGFloat = UIScreen.main.bounds.size.width
+    let headerHeight: CGFloat = 390
+    
     var sliderHeight = NSLayoutConstraint()
     var sliderBottom = NSLayoutConstraint()
-    var imageViewTop = NSLayoutConstraint()
-    lazy var images = ["당근이7","당근이3","당근이4"]
+    var containerViewHeight = NSLayoutConstraint()
+    
+    var images = [String]()
     
     var containerView: UIView!
     
+    let botttomGradient: CAGradientLayer = {
+        let gl = CAGradientLayer()
+        gl.locations = [0.0, 1.0]
+        gl.colors = [UIColor.clear.cgColor, UIColor.lightGray.withAlphaComponent(0.4).cgColor]
+        return gl
+    }()
+    
     var sliderView: UIScrollView = {
-        let sv = UIScrollView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 390))
+        let sv = UIScrollView()
         sv.showsHorizontalScrollIndicator = false
         sv.isPagingEnabled = true
         sv.backgroundColor = .yellow
@@ -27,12 +38,11 @@ class StretchTableHeaderView: UIView {
     
     var imageView: UIImageView!
     var pageControl: UIPageControl = {
-        let pc = UIPageControl(frame: CGRect(x: 0, y: 390 - 30, width: UIScreen.main.bounds.size.width , height: 10))
-
+        let pc = UIPageControl()
         return pc
     }()
     
-    var containerViewHeight = NSLayoutConstraint()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,14 +60,18 @@ class StretchTableHeaderView: UIView {
     
     func createViews() {
         // Container View
-        containerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 390))
+        containerView = UIView(frame: CGRect(x: 0, y: 0, width: headerWidth, height: 390))
         self.addSubview(containerView)
     
+        botttomGradient.frame = CGRect(x: 0, y: headerHeight - 40, width: headerWidth, height: 40)
+        pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 5)
+        sliderView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
         sliderView.delegate = self
-        
+    
         containerView.addSubview(sliderView)
+        containerView.layer.addSublayer(botttomGradient)
         containerView.addSubview(pageControl)
-        
+        containerView.backgroundColor = UIColor.clear
     }
     
     func setImages(_ images: [String]) {
@@ -65,7 +79,7 @@ class StretchTableHeaderView: UIView {
         
 
         for i in 0..<images.count {
-            let imageView = UIImageView()
+            imageView = UIImageView()
             let xPos = self.sliderView.bounds.width * CGFloat(i)
             print("xPos: \(xPos)")
             imageView.clipsToBounds = true
@@ -79,10 +93,9 @@ class StretchTableHeaderView: UIView {
         self.sliderView.contentSize.width = CGFloat(images.count) * self.sliderView.frame.width
     }
     func setViewConstraints() {
-        
         pageControl.snp.makeConstraints {
             $0.centerX.width.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(5)
         }
         
         NSLayoutConstraint.activate([
@@ -98,7 +111,7 @@ class StretchTableHeaderView: UIView {
         containerViewHeight = containerView.heightAnchor.constraint(equalTo: self.heightAnchor)
         containerViewHeight.isActive = true
 
-        // ImageView Constraints
+        // sliderView Constraints
         sliderView.translatesAutoresizingMaskIntoConstraints = false
 
         sliderBottom = sliderView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
@@ -107,13 +120,13 @@ class StretchTableHeaderView: UIView {
         sliderHeight.isActive = true
     }
     
-    func pushDownScroll(scrollView: UIScrollView) {
+//    func pushDownScroll(scrollView: UIScrollView) {
 //        containerViewHeight.constant = scrollView.contentInset.top
-        let offsetY = -(scrollView.contentOffset.y + scrollView.contentInset.top)
-        containerView.clipsToBounds = offsetY <= 0
-        sliderBottom.constant = offsetY >= 0 ? 0 : -offsetY / 2
-        sliderHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
-    }
+//        let offsetY = -(scrollView.contentOffset.y + scrollView.contentInset.top)
+//        containerView.clipsToBounds = offsetY <= 0
+//        sliderBottom.constant = offsetY >= 0 ? 0 : -offsetY / 2
+//        sliderHeight.constant = max(offsetY + scrollView.contentInset.top, scrollView.contentInset.top)
+//    }
 }
 
 extension StretchTableHeaderView: UIScrollViewDelegate {

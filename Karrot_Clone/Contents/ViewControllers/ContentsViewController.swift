@@ -280,15 +280,9 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             imageView.frame = CGRect(x: xPos, y: 0, width: slider.bounds.width, height: slider.bounds.height)
             imageView.contentMode = .scaleAspectFill
             slider.addSubview(imageView)
-
-//            imageView.snp.makeConstraints {
-//                $0.bottom.leading.trailing.equalToSuperview()
-//                $0.width.height.equalToSuperview()
-//            }
         }
 
         slider.contentSize.width = CGFloat(ContentsData[0].detailImages.count) * slider.frame.width
-//
         contentTable.tableHeaderView = headerView
         
         contentTable.estimatedRowHeight = 100
@@ -432,19 +426,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.selectionStyle = .none
             
-            /// profile 이미지 스케일 > 동그랗게
-            let img: UIImageView = {
-                let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-                img.image = UIImage(named: data.userIcon)?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
-                img.layer.masksToBounds = false
-                img.contentMode = .scaleAspectFill
-                img.layer.cornerRadius = img.frame.width / 2
-                img.clipsToBounds = true
-                    
-                return img
-            }()
-            
-            cell.profileImage.image = img.image
+            cell.profileImage.image = UIImage(named: data.userIcon)?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
             cell.idLabel.text = data.userID
             cell.locationLabel.text = data.location
             
@@ -482,7 +464,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
                     lb.numberOfLines = 0
                     return lb
                 }()
-                let manner = SetMannerDetailInfo(label: label, font: UIFont(name: "Helvetica", size: 13)!)
+                let manner = SetMannerDetailInfo(label: label, font: UIFont(name: "Helvetica", size: 13)!,setType: .mannerInfo)
                 presentOptionsPopOver(withOptionItems: [[manner]], fromButtonItem: cell.mannerInfo)
             }
             
@@ -567,52 +549,7 @@ extension ContentsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    func setHeaderView() {
-        
-    }
-    
-    /// HeaderView - 이미지 슬라이더
 
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 390))
-//        let detailImage = self.ContentsData[0].detailImages
-//
-//        let headerWidth = headerView.frame.width
-//        let headerHeight = headerView.frame.height
-//
-//        // 페이지 컨트롤
-//        let pageControl = self.pageControl
-//        pageControl.frame = CGRect(x: 0, y: headerHeight - 30, width: headerWidth , height: 10)
-//        pageControl.numberOfPages = detailImage.count
-//
-//        // 스크롤 뷰
-//        let scrollView = self.scrollView
-//        scrollView.frame = CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight)
-//
-//        scrollView.delegate = self
-//
-//        headerView.addSubview(scrollView)
-//
-//        if detailImage.count > 1 {
-//            headerView.addSubview(pageControl)
-//        }
-//
-//        for index in 0..<detailImage.count {
-//            let imageView = UIImageView()
-//            let xPos = headerWidth * CGFloat(index)
-//            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-//            imageView.image = UIImage(named: detailImage[index])
-//            imageView.contentMode = .scaleAspectFill
-//            imageView.clipsToBounds = true
-//            scrollView.addSubview(imageView)
-//        }
-//
-//
-//        scrollView.contentSize.width = scrollView.frame.width * CGFloat(detailImage.count)
-//
-//        return headerView
-//    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 390
@@ -625,7 +562,7 @@ extension ContentsViewController: UIScrollViewDelegate {
         /// Stretch 확인
         let offsetY = scrollView.contentOffset.y
         let headerView = self.contentTable.tableHeaderView as! StretchTableHeaderView
-        headerView.pushDownScroll(scrollView: scrollView)
+//        headerView.pushDownScroll(scrollView: scrollView)
         
         
         /// navigation bar color 변경
@@ -642,21 +579,7 @@ extension ContentsViewController: UIScrollViewDelegate {
             self.naviStyle()
             gradient.isHidden = false
         }
-        
     }
-//    
-//    private func setPageControl() {
-//        self.pageControl.numberOfPages = self.ContentsData[0].detailImages.count
-//    }
-//
-//    private func setPageControlSelectedPage(currentPage:Int) {
-//        self.pageControl.currentPage = currentPage
-//    }
-//
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        let value = self.scrollView.contentOffset.x/self.scrollView.frame.size.width
-//        self.setPageControlSelectedPage(currentPage: Int(round(value)))
-//    }
 }
 
 extension ContentsViewController: UIPopoverPresentationControllerDelegate {

@@ -24,4 +24,5 @@ struct SetLocationOptionItem: LocationOptionItem {
 struct SetMannerDetailInfo: MannerItem {
     var label: UILabel
     var font = UIFont.systemFont(ofSize: 13)
+    var setType: SetPopOver
 }

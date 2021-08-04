@@ -27,10 +27,11 @@ class Contents_UserInfoCell: UITableViewCell {
     var buttonAction: (() -> ())?
     
     let profileImage: UIImageView = {
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
         img.image = UIImage(named: "당근이")?.scalePreservingAspectRatio(targetSize: CGSize(width: 45, height: 45))
-        img.layer.masksToBounds = false
         img.layer.cornerRadius = img.frame.width / 2
+        img.layer.borderWidth = 0.5
+        img.layer.borderColor = UIColor(named: CustomColor.reply.rawValue)?.cgColor
         img.clipsToBounds = true
             
         return img
