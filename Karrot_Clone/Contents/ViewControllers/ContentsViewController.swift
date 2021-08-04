@@ -263,13 +263,14 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
     func config() {
         view.backgroundColor = UIColor(named: CustomColor.background.rawValue)
 
+        /// header view
         let headerView = StretchTableHeaderView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 390))
         
         let slider = headerView.sliderView
         if ContentsData[0].detailImages.count > 1 {
             headerView.pageControl.numberOfPages = ContentsData[0].detailImages.count
         }
-        
+
         for i in 0..<ContentsData[0].detailImages.count {
             let imageView = UIImageView()
             let xPos = slider.bounds.width * CGFloat(i)
@@ -279,17 +280,15 @@ class ContentsViewController: UIViewController, UIGestureRecognizerDelegate {
             imageView.frame = CGRect(x: xPos, y: 0, width: slider.bounds.width, height: slider.bounds.height)
             imageView.contentMode = .scaleAspectFill
             slider.addSubview(imageView)
-            
-            imageView.snp.makeConstraints {
+
+//            imageView.snp.makeConstraints {
 //                $0.bottom.leading.trailing.equalToSuperview()
-                $0.width.height.equalToSuperview()
-            }
+//                $0.width.height.equalToSuperview()
+//            }
         }
-        
-        
 
         slider.contentSize.width = CGFloat(ContentsData[0].detailImages.count) * slider.frame.width
-        
+//
         contentTable.tableHeaderView = headerView
         
         contentTable.estimatedRowHeight = 100
