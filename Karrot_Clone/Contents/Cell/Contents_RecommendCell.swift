@@ -19,7 +19,7 @@ class Contents_RecommendCell: UITableViewCell {
     let ref = Database.database().reference()
     
     var recommendDelegate: recommendPushNavDelegate?
-    var recommendProd = [ProdData]()
+    var recommendProd = [ProdData]() 
     
     static let identifier = "Contents_RecommendCell"
     

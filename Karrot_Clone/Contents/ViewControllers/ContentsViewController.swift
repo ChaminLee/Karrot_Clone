@@ -573,11 +573,14 @@ extension ContentsViewController: UIScrollViewDelegate {
             self.statusBarView.alpha = 1
             self.navigationController?.navigationBar.shadowImage = .none
             gradient.isHidden = true
+        } else if offsetY < 0 {
+            headerView.botttomGradient.isHidden = true
         } else {
             self.statusBarView.alpha = 0
             self.navigationController?.navigationBar.backgroundColor = .clear
             self.naviStyle()
             gradient.isHidden = false
+            headerView.botttomGradient.isHidden = false
         }
     }
 }

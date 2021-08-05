@@ -33,6 +33,7 @@ class StretchTableHeaderView: UIView {
         sv.showsHorizontalScrollIndicator = false
         sv.isPagingEnabled = true
         sv.backgroundColor = .yellow
+        sv.bounces = false
         return sv
     }()
     
@@ -47,7 +48,6 @@ class StretchTableHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createViews()
-//        setImages(images)
         setViewConstraints()
         
     }
@@ -74,24 +74,6 @@ class StretchTableHeaderView: UIView {
         containerView.backgroundColor = UIColor.clear
     }
     
-    func setImages(_ images: [String]) {
-        pageControl.numberOfPages = images.count
-        
-
-        for i in 0..<images.count {
-            imageView = UIImageView()
-            let xPos = self.sliderView.bounds.width * CGFloat(i)
-            print("xPos: \(xPos)")
-            imageView.clipsToBounds = true
-            imageView.image = UIImage(named: images[i])
-            imageView.frame = CGRect(x: xPos, y: 0, width: self.sliderView.bounds.width, height: self.sliderView.bounds.height)
-            imageView.contentMode = .scaleAspectFill
-            self.sliderView.addSubview(imageView)
-
-        }
-
-        self.sliderView.contentSize.width = CGFloat(images.count) * self.sliderView.frame.width
-    }
     func setViewConstraints() {
         pageControl.snp.makeConstraints {
             $0.centerX.width.equalToSuperview()
